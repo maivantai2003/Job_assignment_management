@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Job_assignment_management.Api", "Job_assignment_management.Api\Job_assignment_management.Api.csproj", "{476CB0AC-E0C6-4D19-A303-2417E81331CA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Job_assignment_management.Api", "Job_assignment_management.Api\Job_assignment_management.Api.csproj", "{476CB0AC-E0C6-4D19-A303-2417E81331CA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Job_assignment_management.Domain", "Job_assignment_management.Domain\Job_assignment_management.Domain.csproj", "{732625C9-CB43-4176-99EE-8F6E0A32F855}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Job_assignment_management.Domain", "Job_assignment_management.Domain\Job_assignment_management.Domain.csproj", "{732625C9-CB43-4176-99EE-8F6E0A32F855}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Job_assignment_management.Application", "Job_assignment_management.Application\Job_assignment_management.Application.csproj", "{1D966CB1-E309-425E-8E83-5F388F96B200}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Job_assignment_management.Application", "Job_assignment_management.Application\Job_assignment_management.Application.csproj", "{1D966CB1-E309-425E-8E83-5F388F96B200}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Job_assignment_management.Infrastructure", "Job_assignment_management.Infrastructure\Job_assignment_management.Infrastructure.csproj", "{8ACC7A55-950A-453B-B045-FF6FA1CCADCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Job_assignment_management.Infrastructure", "Job_assignment_management.Infrastructure\Job_assignment_management.Infrastructure.csproj", "{8ACC7A55-950A-453B-B045-FF6FA1CCADCA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Job_assignment_management.Shared", "Job_assignment_management.Shared\Job_assignment_management.Shared.csproj", "{E5DAC40D-27B7-4E73-AD44-44BAB8472698}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{8ACC7A55-950A-453B-B045-FF6FA1CCADCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8ACC7A55-950A-453B-B045-FF6FA1CCADCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8ACC7A55-950A-453B-B045-FF6FA1CCADCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E5DAC40D-27B7-4E73-AD44-44BAB8472698}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E5DAC40D-27B7-4E73-AD44-44BAB8472698}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E5DAC40D-27B7-4E73-AD44-44BAB8472698}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E5DAC40D-27B7-4E73-AD44-44BAB8472698}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
