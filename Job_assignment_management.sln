@@ -4,12 +4,24 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.11.35222.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Job_assignment_management.Api", "Job_assignment_management.Api\Job_assignment_management.Api.csproj", "{476CB0AC-E0C6-4D19-A303-2417E81331CA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1D966CB1-E309-425E-8E83-5F388F96B200} = {1D966CB1-E309-425E-8E83-5F388F96B200}
+		{8ACC7A55-950A-453B-B045-FF6FA1CCADCA} = {8ACC7A55-950A-453B-B045-FF6FA1CCADCA}
+		{E5DAC40D-27B7-4E73-AD44-44BAB8472698} = {E5DAC40D-27B7-4E73-AD44-44BAB8472698}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Job_assignment_management.Domain", "Job_assignment_management.Domain\Job_assignment_management.Domain.csproj", "{732625C9-CB43-4176-99EE-8F6E0A32F855}"
+	ProjectSection(ProjectDependencies) = postProject
+		{E5DAC40D-27B7-4E73-AD44-44BAB8472698} = {E5DAC40D-27B7-4E73-AD44-44BAB8472698}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Job_assignment_management.Application", "Job_assignment_management.Application\Job_assignment_management.Application.csproj", "{1D966CB1-E309-425E-8E83-5F388F96B200}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Job_assignment_management.Infrastructure", "Job_assignment_management.Infrastructure\Job_assignment_management.Infrastructure.csproj", "{8ACC7A55-950A-453B-B045-FF6FA1CCADCA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{732625C9-CB43-4176-99EE-8F6E0A32F855} = {732625C9-CB43-4176-99EE-8F6E0A32F855}
+		{E5DAC40D-27B7-4E73-AD44-44BAB8472698} = {E5DAC40D-27B7-4E73-AD44-44BAB8472698}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Job_assignment_management.Shared", "Job_assignment_management.Shared\Job_assignment_management.Shared.csproj", "{E5DAC40D-27B7-4E73-AD44-44BAB8472698}"
 EndProject
