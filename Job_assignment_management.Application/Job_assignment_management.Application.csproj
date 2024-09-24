@@ -12,4 +12,8 @@
     <ProjectReference Include="..\Job_assignment_management.Shared\Job_assignment_management.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\" />
+  </ItemGroup>
+
 </Project>
