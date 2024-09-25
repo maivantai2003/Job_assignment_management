@@ -14,6 +14,7 @@ namespace Job_assignment_management.Domain.Entities
         public string? TenFile {  get; set; }   
         public string? DuongDan {  get; set; }  
         public string? LoaiFile {  get; set; }
-        public bool TrangThai { get; set; } = true;    
+        public bool TrangThai { get; set; } = true;   
+        public ICollection<TraoDoiThongTin> ?TraoDoiThongTins { get; set; }  
     }
 }
