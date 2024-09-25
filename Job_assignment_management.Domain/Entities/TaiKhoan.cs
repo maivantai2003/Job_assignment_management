@@ -20,5 +20,6 @@ namespace Job_assignment_management.Domain.Entities
         public NhomQuyen? NhomQuyen { get; set; }
         [ForeignKey(nameof(MaNhanVien))]
         public NhanVien? NhanVien { get; set; }
+        public ICollection<TaiKhoanRefreshToken>? RefreshTokens { get; set; }
     }
 }
