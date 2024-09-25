@@ -7,15 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.8" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Job_assignment_management.Domain\Job_assignment_management.Domain.csproj" />
+    <ProjectReference Include="..\Job_assignment_management.Shared\Job_assignment_management.Shared.csproj" />
   </ItemGroup>
 
 </Project>
