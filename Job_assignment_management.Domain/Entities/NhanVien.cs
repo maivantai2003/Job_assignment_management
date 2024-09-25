@@ -24,5 +24,6 @@ namespace Job_assignment_management.Domain.Entities
         public PhongBan? PhongBan { get; set; }
         public ICollection<ChuyenGiaoCongViec>? chuyenGiaoCongViecs { get; set; }
         public ICollection<ThongBao>? ThongBaos { get; set; }    
+        public ICollection<TraoDoiThongTin>? TraoDoiThongTins { get; set; }
     }
 }
