@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Job_assignment_management.Domain.Entities
 {
-    public class File
+    public class Files
     {
         [Key]
         public int MaFile {  get; set; }

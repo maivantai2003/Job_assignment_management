@@ -18,7 +18,7 @@ namespace Job_assignment_management.Domain.Entities
         public string? SoDienThoai {  get; set; }
         public string? Email {  get; set; } 
         public bool TrangThai {  get; set; }=true;
-        [ForeignKey(nameof(MaNhanVien))]
+        //[ForeignKey(nameof(MaNhanVien))]
         public TaiKhoan? TaiKhoan { get; set; }
         [ForeignKey(nameof(MaPhongBan))]
         public PhongBan? PhongBan { get; set; }
