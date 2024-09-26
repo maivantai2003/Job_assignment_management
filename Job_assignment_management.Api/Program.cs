@@ -96,10 +96,10 @@ builder.Services.AddAuthentication(options =>
         var ipAddress = context?.Request?.HttpContext?.Connection?.RemoteIpAddress?.ToString();
         var jwtService = context?.Request.HttpContext.RequestServices.GetService<IJwtService>();
         var jwtToken = context?.SecurityToken as JwtSecurityToken;
-        if (!await jwtService?.IsTokenValid(jwtToken?.RawData,ipAddress))
+        /*if (!await jwtService?.IsTokenValid(jwtToken?.RawData,ipAddress))
         {
             context?.Fail("Invalid Token Details");
-        }
+        }*/
     };
 });
 var app = builder.Build();
