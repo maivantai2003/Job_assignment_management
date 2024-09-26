@@ -18,9 +18,9 @@ namespace Job_assignment_management.Domain.Entities
         public string? MoTa {  get; set; }
         public string? MucDoUuTien {  get; set; }   
         public DateTime ThoiGianBatDau {  get; set; }=DateTime.Now;
-        public DateTime ThoiGianKetThuc { get; set; }
+        public DateTime? ThoiGianKetThuc { get; set; }
         public bool TrangThaiCongViec { get; set; }=false;
-        public double MucDoHoanThanh {  get; set; }  
+        public double MucDoHoanThanh { get; set; } = 0;
         public bool TrangThai {  get; set; }=true;
         [ForeignKey(nameof(MaPhanDuAn))]
         public PhanDuAn? PhanDuAn{ get; set; }

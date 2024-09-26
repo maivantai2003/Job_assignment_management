@@ -34,7 +34,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
 
         public async Task<List<NhomQuyen>> GetAllAsync(string? search, int page = 1)
         {
-            var listNhomQuyen = _context.nhomQuyens.AsNoTracking().AsQueryable();
+            var listNhomQuyen = _context.nhomQuyens.Include(x => x.ChiTietQuyens).AsNoTracking().AsQueryable();
             if (!string.IsNullOrEmpty(search))
             {
                 listNhomQuyen = listNhomQuyen.Where(x => x.TenQuyen.Contains(search));
