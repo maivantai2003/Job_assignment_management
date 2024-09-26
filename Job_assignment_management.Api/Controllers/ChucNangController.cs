@@ -15,13 +15,13 @@ namespace Job_assignment_management.Api.Controllers
         {
             _chucNangRepository = chucNangRepository;
         }
-        [HttpGet("GetAllChucNang")]
+        [HttpGet]
         public async Task<IActionResult> GetAllChucNang(string ?search,int page=1)
         {
             var listChucNang=await _chucNangRepository.GetAllAsync(search,page);
             return Ok(listChucNang);
         }
-        [HttpPost("AddChucNang")]
+        [HttpPost]
         public async Task<IActionResult> CreateChucNang(ChucNangViewModel model)
         {
             var chucNang = new ChucNang()
@@ -31,13 +31,13 @@ namespace Job_assignment_management.Api.Controllers
             var result = await _chucNangRepository.CreateAsync(chucNang);
             return Ok(model);
         }
-        [HttpGet("GetChucNangById/{id}")]
+        [HttpGet("{id}")]
         public async Task<ActionResult> GetChucNangById(int id)
         {
             var chucNang = await _chucNangRepository.GetByIdAsync(id);
             return Ok(chucNang);
         }
-        [HttpPut("UpdateChucNang/{id}")]
+        [HttpPut("{id}")]
         public async Task<IActionResult> UpdateChucNang(int id,ChucNangViewModel chucNangVM)
         {
             var chucNang = new ChucNang()
@@ -47,7 +47,7 @@ namespace Job_assignment_management.Api.Controllers
             var update = await _chucNangRepository.UpdateAsync(id, chucNang);
             return NoContent();
         }
-        [HttpDelete("DeleteChucNang/{id}")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteChucNang(int id)
         {
             int maChucNang = await _chucNangRepository.DeleteAsync(id);
