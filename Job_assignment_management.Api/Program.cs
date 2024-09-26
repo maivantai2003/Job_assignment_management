@@ -1,5 +1,6 @@
 using Job_assignment_management.Api.Hubs;
 using Job_assignment_management.Application.Services;
+using Job_assignment_management.Domain.Interfaces;
 using Job_assignment_management.Infrastructure.Data;
 using Job_assignment_management.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -63,6 +64,7 @@ builder.Services.AddSwaggerGen(opt =>
 });
 builder.Services.AddTransient<IJwtService,JwtService>();
 builder.Services.AddTransient<INhomQuyenRepository, NhomQuyenRepository>();
+builder.Services.AddTransient<IChucNangRepository, ChucNangRepository>();
 var jwtKey = builder.Configuration.GetValue<string>("Jwt:key");
 var keyBytes = Encoding.ASCII.GetBytes(jwtKey);
 TokenValidationParameters TokenValidation = new TokenValidationParameters
@@ -87,10 +89,10 @@ builder.Services.AddAuthentication(options =>
         var ipAddress = context.Request.HttpContext.Connection.RemoteIpAddress.ToString();
         var jwtService = context.Request.HttpContext.RequestServices.GetService<IJwtService>();
         var jwtToken = context.SecurityToken as JwtSecurityToken;
-        /*if (!await jwtService.IsTokenValid(jwtToken.RawData,ipAddress))
+        if (!await jwtService.IsTokenValid(jwtToken.RawData,ipAddress))
         {
             context.Fail("Invalid Token Details");
-        }*/
+        }
     };
 });
 var app = builder.Build();

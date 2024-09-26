@@ -9,7 +9,7 @@ namespace Job_assignment_management.Domain.Interfaces
 {
     public interface IChucNangRepository
     {
-        Task<IEnumerable<ChucNang>> GetAllAsync(string? search, int page = 1);
+        Task<List<ChucNang>> GetAllAsync(string? search, int page = 1);
         Task<ChucNang> GetByIdAsync(int id);
         Task<ChucNang> CreateAsync(ChucNang chucNang);
         Task<int> UpdateAsync(int id, ChucNang chucNang);

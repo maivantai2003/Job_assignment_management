@@ -50,11 +50,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
 
         public async Task<int> UpdateAsync(int id, NhomQuyen nhomQuyen)
         {
-            var model = await _context.nhomQuyens.FirstOrDefaultAsync(x => x.MaQuyen == id);
-            model.TrangThai = false;
-            model.TenQuyen=nhomQuyen.TenQuyen;
-            await _context.SaveChangesAsync();
-            return id;
+            return await _context.nhomQuyens.Where(x => x.MaQuyen == id).ExecuteUpdateAsync(x => x.SetProperty(m=>m.TenQuyen,nhomQuyen.TenQuyen));
         }
     }
 }

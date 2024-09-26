@@ -15,6 +15,16 @@ namespace Job_assignment_management.Api.Controllers
         {
             _nhomQuyenRepository = nhomQuyenRepository;
         }
+        [HttpPost("AddNhomQuyen")]
+        public async Task<IActionResult> AddNhomQuyen(NhomQuyenViewModel nhomQuyenVM)
+        {
+            var nhomQuyen=new NhomQuyen()
+            {
+                TenQuyen=nhomQuyenVM.TenQuyen,
+            };
+            var create = await _nhomQuyenRepository.CreateAsync(nhomQuyen);
+            return Ok(create);
+        }
         [HttpGet("GetAllNhomQuyen")]
         public async Task<ActionResult> GetAllNhomQuyen(string ?search,int page=1)
         {
@@ -28,9 +38,14 @@ namespace Job_assignment_management.Api.Controllers
             return Ok(nhomQuyen);
         }
         [HttpPut("UpdateNhomQuyen/{id}")]
-        public IActionResult UpdateNhomQuyen(int id,NhomQuyenViewModel nhomQuyenVM)
+        public async Task<IActionResult> UpdateNhomQuyen(int id,NhomQuyenViewModel nhomQuyenVM)
         {
-            return Ok();
+            var nhomQuyen = new NhomQuyen()
+            {
+                TenQuyen = nhomQuyenVM.TenQuyen,
+            };
+            var update=await _nhomQuyenRepository.UpdateAsync(id, nhomQuyen);
+            return NoContent();
         }
         [HttpDelete("DeleteNhomQuyen/{id}")]
         public async Task<IActionResult> DeleteNhomQuyen(int id) { 
