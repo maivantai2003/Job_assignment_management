@@ -65,6 +65,7 @@ builder.Services.AddSwaggerGen(opt =>
 builder.Services.AddTransient<IJwtService,JwtService>();
 builder.Services.AddTransient<INhomQuyenRepository, NhomQuyenRepository>();
 builder.Services.AddTransient<IChucNangRepository, ChucNangRepository>();
+builder.Services.AddTransient<IChiTietQuyenReposity, ChiTietQuyenRepository>();
 var jwtKey = builder.Configuration.GetValue<string>("Jwt:key");
 var keyBytes = Encoding.ASCII.GetBytes(jwtKey);
 TokenValidationParameters TokenValidation = new TokenValidationParameters
