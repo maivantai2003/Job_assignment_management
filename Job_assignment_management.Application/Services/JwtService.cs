@@ -9,12 +9,17 @@ using Job_assignment_management.Application.Services;
 using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Infrastructure.Data;
 using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using Microsoft.EntityFrameworkCore;
 namespace RefreshToken.Services
 {
     public class JwtService : IJwtService
     {
         private readonly ApplicationDbContext _context;
         private readonly IConfiguration _configuration;
+        public static int MaNhomQuyen;
+        public static string TenQuyen;
+        public static List<string> listChucNang;
         public JwtService(ApplicationDbContext context, IConfiguration configuration)
         {
             _context = context;
@@ -31,11 +36,14 @@ namespace RefreshToken.Services
 
         public async Task<AuthResponse> GetTokenAsync(AuthRequest request, string ipAddress)
         {
-            var user = _context.taiKhoans.FirstOrDefault(x => x.TenTaiKhoan.Equals(request.TenTaiKhoan) && x.MatKhau.Equals(request.MatKhau));
+            var user =await _context.taiKhoans.AsNoTracking().Include(x=>x.NhomQuyen).FirstOrDefaultAsync(x => x.TenTaiKhoan.Equals(request.TenTaiKhoan) && x.MatKhau.Equals(request.MatKhau));
             if (user == null)
             {
                 return await Task.FromResult<AuthResponse>(null);
             }
+            MaNhomQuyen = user.MaNhomQuyen;
+            TenQuyen = user.NhomQuyen?.TenQuyen;
+            listChucNang= await _context.chiTietQuyens.AsNoTracking().Include(x=>x.ChucNang).Where(x => x.MaNhomQuyen == MaNhomQuyen).Select(x => x.ChucNang.TenChucNang).ToListAsync();
             string tokenString = GenerateToken(user.TenTaiKhoan);
             string refreshToken = GenerateRefreshToken();
             return await SaveTokenDetails(ipAddress, user.MaNhanVien, tokenString, refreshToken);
@@ -78,14 +86,18 @@ namespace RefreshToken.Services
             var JwtKey = _configuration.GetSection("Jwt")["key"];
             var keyBytes = Encoding.ASCII.GetBytes(JwtKey);
             var TokenHandler = new JwtSecurityTokenHandler();
+            var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.NameIdentifier, TenTaiKhoan),
+                        new Claim(ClaimTypes.Role, TenQuyen),
+                    };
+            foreach (var chucnang in listChucNang)
+            {
+                claims.Add(new Claim("ChucNang", chucnang));
+            }
             var descriptor = new SecurityTokenDescriptor()
             {
-                Subject = new System.Security.Claims.ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.NameIdentifier,TenTaiKhoan),
-                    new Claim(ClaimTypes.Role,"Admin"),
-                    new Claim(ClaimTypes.Role,"Employee")
-                }),
+                Subject = new System.Security.Claims.ClaimsIdentity(claims),
                 Expires = DateTime.UtcNow.AddSeconds(60),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(keyBytes),
                 SecurityAlgorithms.HmacSha256
