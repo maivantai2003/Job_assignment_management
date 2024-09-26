@@ -14,7 +14,7 @@ namespace Job_assignment_management.Domain.Entities
         public int MaTraoDoiThongTin {  get; set; } 
         public int MaCongViec {  get; set; }    
         public int MaNhanVien {  get; set; }    
-        public int MaFile {  get; set; }    
+        public int? MaFile {  get; set; }    
         public DateTime ThoiGianGui { get; set; }= DateTime.Now;    
         public string? NoiDungTraoDoi {  get; set; }
         public bool TrangThai {  get; set; }=true;
