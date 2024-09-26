@@ -22,7 +22,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
 
         public async Task<List<DuAn>> GetAllAsync(string? search, int page = 1)
         {
-            var listDuAn = _context.duAns.AsNoTracking().AsQueryable();
+            var listDuAn = _context.duAns.Include(x=>x.PhanDuAn).AsNoTracking().AsQueryable();
             if (!string.IsNullOrEmpty(search))
             {
                 listDuAn = listDuAn.Where(x => x.TenDuAn.Contains(search));

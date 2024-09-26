@@ -71,6 +71,7 @@ builder.Services.AddTransient<INhanVienRepository, NhanVienRepository>();
 builder.Services.AddTransient<IPhongBanRepository, PhongBanRepository>();
 builder.Services.AddTransient<IDuAnRepository, DuAnRepository>();
 builder.Services.AddTransient<IPhanDuAnRepository,PhanDuAnRepository>();
+builder.Services.AddTransient<ICongViecRepository, CongViecRepository>();
 var jwtKey = builder.Configuration.GetValue<string>("Jwt:key");
 var keyBytes = Encoding.ASCII.GetBytes(jwtKey);
 TokenValidationParameters TokenValidation = new TokenValidationParameters
