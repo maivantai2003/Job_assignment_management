@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Job_assignment_management.Application\Job_assignment_management.Application.csproj" />
     <ProjectReference Include="..\Job_assignment_management.Infrastructure\Job_assignment_management.Infrastructure.csproj" />
   </ItemGroup>
 

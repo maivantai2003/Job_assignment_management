@@ -28,6 +28,6 @@ namespace Job_assignment_management.Domain.Entities
         public bool IsInvalidades { get; set; }
         public int MaTaiKhoan { get; set; }
         [ForeignKey(nameof(MaTaiKhoan))]
-        public virtual TaiKhoan? TaiKhoan { get; set; }
+        public  TaiKhoan? TaiKhoan { get; set; }
     }
 }
