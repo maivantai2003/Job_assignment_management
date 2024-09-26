@@ -95,12 +95,12 @@ builder.Services.AddAuthentication(options =>
     options.Events = new JwtBearerEvents();
     options.Events.OnTokenValidated = async (context) =>
     {
-        var ipAddress = context.Request.HttpContext.Connection.RemoteIpAddress.ToString();
-        var jwtService = context.Request.HttpContext.RequestServices.GetService<IJwtService>();
-        var jwtToken = context.SecurityToken as JwtSecurityToken;
-        if (!await jwtService.IsTokenValid(jwtToken.RawData,ipAddress))
+        var ipAddress = context?.Request?.HttpContext?.Connection?.RemoteIpAddress?.ToString();
+        var jwtService = context?.Request.HttpContext.RequestServices.GetService<IJwtService>();
+        var jwtToken = context?.SecurityToken as JwtSecurityToken;
+        if (!await jwtService?.IsTokenValid(jwtToken?.RawData,ipAddress))
         {
-            context.Fail("Invalid Token Details");
+            context?.Fail("Invalid Token Details");
         }
     };
 });
