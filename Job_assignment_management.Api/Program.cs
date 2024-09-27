@@ -74,11 +74,9 @@ builder.Services.AddTransient<IPhanDuAnRepository,PhanDuAnRepository>();
 builder.Services.AddTransient<ITraoDoiThongTinRepository,TraoDoiThongTinRepository>();
 builder.Services.AddTransient<IFilesRepository, FilesRepository>();
 builder.Services.AddTransient<ICongViecRepository, CongViecRepository>();
-
 builder.Services.AddTransient<ITienDoCongViecRepository, TienDoCongViecRepository>();
 builder.Services.AddTransient<IMocThoiGianRepository, MocThoiGianRepository>();
-
-
+builder.Services.AddTransient<ICongViecPhongBanRepository, CongViecPhongBanRepository>();
 var jwtKey = builder.Configuration.GetValue<string>("Jwt:key");
 var keyBytes = Encoding.ASCII.GetBytes(jwtKey);
 TokenValidationParameters TokenValidation = new TokenValidationParameters
