@@ -19,7 +19,7 @@ namespace Job_assignment_management.Infrastructure.Data
         public DbSet<CongViec> congViecs { get; set; }  
         public DbSet<ChuyenGiaoCongViec> chuyenGiaoCongViecs { get; set; }  
         public DbSet<ThongBao> thongBaos { get; set; }  
-        public DbSet<MocThoiGian> MocThoiGians { get; set; }    
+        public DbSet<MocThoiGian> mocThoiGians { get; set; }    
         public DbSet<TienDoCongViec> tienDoCongViecs { get; set; }
         public DbSet<DuAn> duAns { get; set; }
         public DbSet<PhanDuAn> phanDuAns { get; set; }  
