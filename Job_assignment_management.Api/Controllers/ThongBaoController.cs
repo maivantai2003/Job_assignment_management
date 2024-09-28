@@ -84,12 +84,26 @@ public class ThongBaoController:ControllerBase
         }
     }
 
+    private void PagingProcess(ref int page, ref int limit)
+    {
+        if (page <= 0)
+        {
+            page = 1;
+        }
+
+        if (limit <= 0)
+        {
+            limit = 10;
+        }
+    }
+
     [HttpGet]
     public async Task<IActionResult> GetAllThongBaoByCongViec()
     {
         int.TryParse(HttpContext.Request.Query["ma_cong_viec"], out int maCongViec);
         int.TryParse(HttpContext.Request.Query["page"], out int page);
         int.TryParse(HttpContext.Request.Query["limit"], out int limit);
+        PagingProcess(ref page, ref limit);
         var result = await thongBaoRepository.GetAllAsync(maCongViec, page, limit);
         return Ok(result);
     }
