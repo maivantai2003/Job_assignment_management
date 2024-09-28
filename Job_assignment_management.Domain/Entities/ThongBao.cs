@@ -21,5 +21,11 @@ namespace Job_assignment_management.Domain.Entities
         public CongViec? CongViec { set; get; }
         [ForeignKey(nameof(MaNhanVien))]
         public NhanVien? NhanVien { set; get; }
+
+        public ThongBao()
+        {
+            NgayGui = DateTime.Now;
+            TrangThai = true;
+        }
     }
 }

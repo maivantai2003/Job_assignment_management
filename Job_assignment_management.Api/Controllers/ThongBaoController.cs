@@ -23,11 +23,74 @@ public class ThongBaoController:ControllerBase
         var thongBao = new ThongBao();
         thongBao.MaNhanVien = thongBaoModel.MaNhanVien;
         thongBao.MaCongViec = thongBaoModel.MaCongViec;
-        thongBao.NgayGui = thongBaoModel.NgayGui;
         thongBao.NoiDungThongBao = thongBaoModel.NoiDungThongBao;
-        thongBao.TrangThai = thongBaoModel.TrangThai;
+        
+        //business logic checking
+        if (thongBao.NoiDungThongBao == "")
+        {
+            return BadRequest("NoiDungThongBao can not be blank");
+        }
 
         var result = await thongBaoRepository.CreateAsync(thongBao);
+        return Ok(result);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetThongBao(int id)
+    {
+        var result = await thongBaoRepository.GetByIdAsync(id);
+        if (result == null)
+        {
+            return NotFound("No Notifications Found");
+        }
+        return Ok(result);
+    }
+
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateThongBao(int id, ThongBaoModel thongBaoModel)
+    {
+        var thongBao = new ThongBao();
+        thongBao.NoiDungThongBao = thongBaoModel.NoiDungThongBao;
+        thongBao.TrangThai = thongBaoModel.TrangThai;
+        
+        //business logic checking
+        if (thongBao.NoiDungThongBao == "")
+        {
+            return BadRequest("NoiDungThongBao can not be blank");
+        }
+
+        try
+        {
+            var result = await thongBaoRepository.UpdateAsync(id ,thongBao);
+            return Ok(result);
+        }
+        catch (KeyNotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteThongBao(int id)
+    {
+        try
+        {
+            var result = await thongBaoRepository.DeleteAsync(id);
+            return Ok(result);
+        }
+        catch (KeyNotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> GetAllThongBaoByCongViec()
+    {
+        int.TryParse(HttpContext.Request.Query["ma_cong_viec"], out int maCongViec);
+        int.TryParse(HttpContext.Request.Query["page"], out int page);
+        int.TryParse(HttpContext.Request.Query["limit"], out int limit);
+        var result = await thongBaoRepository.GetAllAsync(maCongViec, page, limit);
         return Ok(result);
     }
 }
