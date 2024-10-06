@@ -1,8 +1,10 @@
-﻿using Job_assignment_management.Domain.Entities;
+﻿using Job_assignment_management.Api.Hubs;
+using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Domain.Interfaces;
 using Job_assignment_management.Shared.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Job_assignment_management.Api.Controllers
 {
@@ -11,10 +13,12 @@ namespace Job_assignment_management.Api.Controllers
     public class CongViecController : ControllerBase
     {
         private readonly ICongViecRepository _congViecRepository;
+        private readonly IHubContext<myHub> _hubContext;
 
-        public CongViecController(ICongViecRepository congViecRepository)
+        public CongViecController(ICongViecRepository congViecRepository, IHubContext<myHub> hubContext)
         {
             _congViecRepository = congViecRepository;
+            _hubContext = hubContext;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllCongViec(string? search, int page = 1)
@@ -44,6 +48,7 @@ namespace Job_assignment_management.Api.Controllers
                 MucDoHoanThanh = model.MucDoHoanThanh
             };
             var result = await _congViecRepository.CreateAsync(congViec);
+            await _hubContext.Clients.All.SendAsync("loadCongViec");
             return Ok(result);
         }
         [HttpPut("{id}")]

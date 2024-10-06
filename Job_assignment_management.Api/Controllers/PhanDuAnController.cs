@@ -1,8 +1,10 @@
-﻿using Job_assignment_management.Domain.Entities;
+﻿using Job_assignment_management.Api.Hubs;
+using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Domain.Interfaces;
 using Job_assignment_management.Shared.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Job_assignment_management.Api.Controllers
 {
@@ -11,10 +13,11 @@ namespace Job_assignment_management.Api.Controllers
     public class PhanDuAnController : ControllerBase
     {
         private readonly IPhanDuAnRepository _phanDuAnRepository;
-
-        public PhanDuAnController(IPhanDuAnRepository phanDuAnRepository)
+        private readonly IHubContext<myHub> _hubContext;
+        public PhanDuAnController(IPhanDuAnRepository phanDuAnRepository, IHubContext<myHub> hubContext)
         {
             _phanDuAnRepository = phanDuAnRepository;
+            _hubContext = hubContext;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllPhanDuAn(string? search, int page = 1)
@@ -37,6 +40,7 @@ namespace Job_assignment_management.Api.Controllers
                 TenPhan = model.TenPhan
             };
             var result = await _phanDuAnRepository.CreateAsync(phanDuAn);
+            await _hubContext.Clients.All.SendAsync("loadDuAn");
             return Ok(result);
         }
         [HttpPut("{id}")]

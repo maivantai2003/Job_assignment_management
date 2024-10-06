@@ -1,8 +1,10 @@
-﻿using Job_assignment_management.Domain.Entities;
+﻿using Job_assignment_management.Api.Hubs;
+using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Domain.Interfaces;
 using Job_assignment_management.Shared.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Job_assignment_management.Api.Controllers
 {
@@ -11,9 +13,11 @@ namespace Job_assignment_management.Api.Controllers
     public class NhanVienController : ControllerBase
     {
         private readonly INhanVienRepository _nhanVienRepository;
-        public NhanVienController(INhanVienRepository nhanVienRepository)
+        private readonly IHubContext<myHub> _hubContext;
+        public NhanVienController(INhanVienRepository nhanVienRepository, IHubContext<myHub> hubContext)
         {
             _nhanVienRepository = nhanVienRepository;
+            _hubContext = hubContext;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllNhanVien(string? search, int page = 1)
@@ -41,6 +45,7 @@ namespace Job_assignment_management.Api.Controllers
                 MaPhongBan = model.MaPhongBan
             };
             var result = await _nhanVienRepository.CreateAsync(nhanVien);
+            await _hubContext.Clients.All.SendAsync("loadEmployee");
             return Ok(result);
         }
         [HttpPut("{id}")]
@@ -55,6 +60,7 @@ namespace Job_assignment_management.Api.Controllers
                 MaPhongBan = model.MaPhongBan
             };
             var result = await _nhanVienRepository.UpdateAsync(id, nhanVien);
+            await _hubContext.Clients.All.SendAsync("loadEmployee");
             return NoContent();
         }
 

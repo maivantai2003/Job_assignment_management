@@ -24,7 +24,6 @@ namespace Job_assignment_management.Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return phanCong;
         }
-
         public async Task DeleteAsync(int id)
         {
             var phanCong = await _context.phanCongs.FirstOrDefaultAsync(x => x.MaPhanCong == id);

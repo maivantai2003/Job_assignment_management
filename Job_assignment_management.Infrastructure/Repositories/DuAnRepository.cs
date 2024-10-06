@@ -32,7 +32,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
         }
         public async Task<DuAn> GetByIdAsync(int id)
         {
-            return await _context.duAns.AsNoTracking()
+            return await _context.duAns.Include(x => x.PhanDuAn).ThenInclude(x => x.congViecs).AsNoTracking()
                 .FirstOrDefaultAsync(x => x.MaDuAn == id) ?? new DuAn();
         }
 

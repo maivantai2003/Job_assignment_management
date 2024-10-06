@@ -41,17 +41,16 @@ namespace Job_assignment_management.Api.Controllers
         {
             var entity = new PhanCong
             {
-                MaPhanCong = model.MaPhanCong,
+                
                 MaCongViec = model.MaCongViec,
                 MaNhanVien = model.MaNhanVien,
                 VaiTro = model.VaiTro,
-                TrangThai = model.TrangThai,
-                TrangThaiCongViec = model.TrangThaiCongViec,
             };
 
             var createdEntity = await _repository.CreateAsync(entity);
-            model.MaPhanCong = createdEntity.MaPhanCong;
-            return CreatedAtAction(nameof(GetPhanCongById), new { id = model.MaPhanCong }, model);
+            //model.MaPhanCong = createdEntity.MaPhanCong;
+            //return CreatedAtAction(nameof(GetPhanCongById), new { id = model.MaPhanCong }, model);
+            return Ok(createdEntity);
         }
 
         [HttpPut("{id}")]
@@ -59,12 +58,11 @@ namespace Job_assignment_management.Api.Controllers
         {
             var entity = new PhanCong
             {
-                MaPhanCong = model.MaPhanCong,
                 MaCongViec = model.MaCongViec,
                 MaNhanVien = model.MaNhanVien,
                 VaiTro = model.VaiTro,
-                TrangThai = model.TrangThai,
-                TrangThaiCongViec = model.TrangThaiCongViec,
+                //TrangThai = model.TrangThai,
+                //TrangThaiCongViec = model.TrangThaiCongViec,
             };
 
             await _repository.UpdateAsync(id, entity);

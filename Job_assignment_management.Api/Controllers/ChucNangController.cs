@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Job_assignment_management.Api.Controllers
 {
-    [Authorize]
+    
     [Route("api/[controller]")]
     [ApiController]
     public class ChucNangController : ControllerBase

@@ -22,12 +22,13 @@ namespace Job_assignment_management.Infrastructure.Repositories
 
         public async Task<List<PhongBan>> GetAllAsync(string? search, int page = 1)
         {
-            var listPhongBan = _context.phongBans.AsNoTracking().AsQueryable();
+            var listPhongBan = _context.phongBans.Include(x=>x.NhanVien).AsNoTracking().AsQueryable();
             if (!string.IsNullOrEmpty(search))
             {
                 listPhongBan = listPhongBan.Where(x => x.TenPhongBan.Contains(search));
             }
-            var result = PageList<PhongBan>.Create(listPhongBan, 10, page);
+            //var result = PageList<PhongBan>.Create(listPhongBan, 10, page);
+            var result = listPhongBan.Take(page);
             return result.ToList();
         }
         public async Task<PhongBan> GetByIdAsync(int id)
@@ -42,7 +43,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return phongBan;
         }
-        public async Task<int> UpdateAsync(int id, PhongBan phongBan)
+        public async Task<int> UpdateAsync(int id,PhongBan phongBan)
         {
             return await _context.phongBans.Where(x => x.MaPhongBan == id)
                 .ExecuteUpdateAsync(x => x

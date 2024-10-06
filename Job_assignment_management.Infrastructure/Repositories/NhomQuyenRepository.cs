@@ -1,4 +1,5 @@
-﻿using Job_assignment_management.Domain.Entities;
+﻿using Azure;
+using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Infrastructure.Data;
 using Job_assignment_management.Shared.Common;
 using Microsoft.EntityFrameworkCore;
@@ -39,8 +40,14 @@ namespace Job_assignment_management.Infrastructure.Repositories
             {
                 listNhomQuyen = listNhomQuyen.Where(x => x.TenQuyen.Contains(search));
             }
-            var result = PageList<NhomQuyen>.Create(listNhomQuyen, 10, page);
+            //var result = PageList<NhomQuyen>.Create(listNhomQuyen, 10, page);
+            var result = listNhomQuyen.Take(page);
             return result.ToList();
+        }
+
+        public async Task<List<NhomQuyen>> GetAllAsync()
+        {
+            return await _context.nhomQuyens.ToListAsync();
         }
 
         public async Task<NhomQuyen> GetByIdAsync(int id)

@@ -11,6 +11,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
     public interface INhomQuyenRepository
     {
         Task<List<NhomQuyen>> GetAllAsync(string ?search,int page=1);
+        Task<List<NhomQuyen>> GetAllAsync();
         Task<NhomQuyen> GetByIdAsync(int id);
         Task<NhomQuyen> CreateAsync(NhomQuyen nhomQuyen);
         Task<int> UpdateAsync(int id, NhomQuyen nhomQuyen);

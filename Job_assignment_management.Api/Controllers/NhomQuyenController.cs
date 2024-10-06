@@ -25,6 +25,11 @@ namespace Job_assignment_management.Api.Controllers
             var create = await _nhomQuyenRepository.CreateAsync(nhomQuyen);
             return Ok(create);
         }
+        /*[HttpGet]
+        public async Task<ActionResult> GetAllNhomQuyen()
+        {
+            return Ok(await _nhomQuyenRepository.GetAllAsync());
+        }*/
         [HttpGet]
         public async Task<ActionResult> GetAllNhomQuyen(string ?search,int page=1)
         {

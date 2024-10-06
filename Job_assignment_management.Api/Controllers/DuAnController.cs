@@ -1,8 +1,10 @@
-﻿using Job_assignment_management.Domain.Entities;
+﻿using Job_assignment_management.Api.Hubs;
+using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Domain.Interfaces;
 using Job_assignment_management.Shared.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Job_assignment_management.Api.Controllers
 {
@@ -11,10 +13,12 @@ namespace Job_assignment_management.Api.Controllers
     public class DuAnController : ControllerBase
     {
         private readonly IDuAnRepository _duAnRepository;
+        private readonly IHubContext<myHub> _hubContext;    
 
-        public DuAnController(IDuAnRepository duAnRepository)
+        public DuAnController(IDuAnRepository duAnRepository, IHubContext<myHub> hubContext)
         {
             _duAnRepository = duAnRepository;
+            _hubContext = hubContext;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllDuAn(string? search, int page = 1)
@@ -36,6 +40,7 @@ namespace Job_assignment_management.Api.Controllers
                 TenDuAn = model.TenDuAn
             };
             var result = await _duAnRepository.CreateAsync(duAn);
+            await _hubContext.Clients.All.SendAsync("loadDuAn");
             return Ok(result);
         }
         [HttpPut("{id}")]

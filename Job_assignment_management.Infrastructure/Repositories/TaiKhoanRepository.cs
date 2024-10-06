@@ -26,7 +26,8 @@ namespace Job_assignment_management.Infrastructure.Repositories
             {
                 listTaiKhoan = listTaiKhoan.Where(x => x.TenTaiKhoan.Contains(search));
             }
-            var result = PageList<TaiKhoan>.Create(listTaiKhoan, 10, page);
+            //var result = PageList<TaiKhoan>.Create(listTaiKhoan, 10, page);
+            var result = listTaiKhoan.Take(page);
             return result.ToList();
         }
         public async Task<TaiKhoan> GetByIdAsync(int id)

@@ -29,7 +29,7 @@ namespace RefreshToken.Services
         public async Task<AuthResponse> GetRefreshTokenAsync(string ipAddress, int userId, string userName)
         {
             var refreshToken = GenerateRefreshToken();
-            var accessToken = GenerateToken(userName);
+            var accessToken = GenerateToken(userName,userId);
             return await SaveTokenDetails(ipAddress, userId, accessToken, refreshToken);
 
         }
@@ -44,7 +44,7 @@ namespace RefreshToken.Services
             MaNhomQuyen = user.MaNhomQuyen;
             TenQuyen = user.NhomQuyen?.TenQuyen;
             listChucNang= await _context.chiTietQuyens.AsNoTracking().Include(x=>x.ChucNang).Where(x => x.MaNhomQuyen == MaNhomQuyen).Select(x => x.ChucNang.TenChucNang).ToListAsync();
-            string tokenString = GenerateToken(user.TenTaiKhoan);
+            string tokenString = GenerateToken(user.TenTaiKhoan,user.MaNhanVien);
             string refreshToken = GenerateRefreshToken();
             return await SaveTokenDetails(ipAddress, user.MaNhanVien, tokenString, refreshToken);
 
@@ -81,7 +81,7 @@ namespace RefreshToken.Services
             }
         }
 
-        private string GenerateToken(string TenTaiKhoan)
+        private string GenerateToken(string TenTaiKhoan,int userId)
         {
             var JwtKey = _configuration.GetSection("Jwt")["key"];
             var keyBytes = Encoding.ASCII.GetBytes(JwtKey);
@@ -90,6 +90,7 @@ namespace RefreshToken.Services
                     {
                         new Claim(ClaimTypes.NameIdentifier, TenTaiKhoan),
                         new Claim(ClaimTypes.Role, TenQuyen),
+                        new Claim("MaTaiKhoan", userId.ToString())
                     };
             foreach (var chucnang in listChucNang)
             {

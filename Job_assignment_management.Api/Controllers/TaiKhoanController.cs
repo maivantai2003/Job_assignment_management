@@ -1,8 +1,10 @@
-﻿using Job_assignment_management.Domain.Entities;
+﻿using Job_assignment_management.Api.Hubs;
+using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Domain.Interfaces;
 using Job_assignment_management.Shared.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Job_assignment_management.Api.Controllers
 {
@@ -11,9 +13,11 @@ namespace Job_assignment_management.Api.Controllers
     public class TaiKhoanController : ControllerBase
     {
         private readonly ITaiKhoanRepository _taiKhoanRepository;
-        public TaiKhoanController(ITaiKhoanRepository taiKhoanRepository)
+        private readonly IHubContext<myHub> _hubContext;
+        public TaiKhoanController(ITaiKhoanRepository taiKhoanRepository, IHubContext<myHub> hubContext)
         {
             _taiKhoanRepository = taiKhoanRepository;
+            _hubContext = hubContext;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllTaiKhoan(string? search, int page = 1)
@@ -39,6 +43,7 @@ namespace Job_assignment_management.Api.Controllers
                 MaNhomQuyen = model.MaNhomQuyen
             };
             var result = await _taiKhoanRepository.CreateAsync(taiKhoan);
+            await _hubContext.Clients.All.SendAsync("loadTaiKhoan");
             return Ok(result);
         }
         [HttpPut("{id}")]

@@ -32,7 +32,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
         }
         public async Task<CongViec> GetByIdAsync(int id)
         {
-            return await _context.congViecs.AsNoTracking()
+            return await _context.congViecs.Include(x=>x.PhanCongs).ThenInclude(x=>x.NhanVien).AsNoTracking()
                 .FirstOrDefaultAsync(x => x.MaCongViec == id) ?? new CongViec();
         }
 
