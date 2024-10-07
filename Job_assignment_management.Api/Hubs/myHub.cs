@@ -18,6 +18,7 @@ namespace Job_assignment_management.Api.Hubs
         public async Task ThamGiaNhom(string maCongViec)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, maCongViec);
+            await Clients.Group(maCongViec).SendAsync("UserJoined", $"{Context.ConnectionId} has joined the group {maCongViec}");
         }
 
         public async Task RoiNhom(string maCongViec)

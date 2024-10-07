@@ -26,6 +26,7 @@ namespace Job_assignment_management.Domain.Entities
         [JsonIgnore]
         [ForeignKey(nameof(MaPhanDuAn))]
         public PhanDuAn? PhanDuAn{ get; set; }
+        [JsonIgnore]
         [ForeignKey(nameof(MaCongViecCha))]
         public CongViec? CongViecCha{ get; set; }
         public ICollection<CongViec>? listCongViecCon { get; set;}

@@ -22,7 +22,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
 
         public async Task<List<CongViec>> GetAllAsync(string? search, int page = 1)
         {
-            var listCongViec = _context.congViecs.AsNoTracking().AsQueryable();
+            var listCongViec = _context.congViecs.Include(x=>x.listCongViecCon).AsNoTracking().AsQueryable();
             if (!string.IsNullOrEmpty(search))
             {
                 listCongViec = listCongViec.Where(x => x.TenCongViec.Contains(search));

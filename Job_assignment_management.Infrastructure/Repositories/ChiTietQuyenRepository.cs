@@ -27,7 +27,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
         public async Task<int> DeleteAsync(int id)
         {
             var chiTietQuyen = await _context.chiTietQuyens.FirstOrDefaultAsync(x => x.MaChiTietQuyen == id);
-            chiTietQuyen.TrangThai = false;
+            chiTietQuyen.HanhDong = "X";
             await _context.SaveChangesAsync();
             return id;
         }

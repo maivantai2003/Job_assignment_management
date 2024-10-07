@@ -1,6 +1,7 @@
 ﻿using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Domain.Interfaces;
 using Job_assignment_management.Shared.Common;
+using Job_assignment_management.Shared.Common.Heplers;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,10 +13,12 @@ namespace Job_assignment_management.Api.Controllers
     public class PhanCongController : ControllerBase
     {
         private readonly IPhanCongRepository _repository;
+        private readonly INhanVienRepository _nhanVienRepository;
 
-        public PhanCongController(IPhanCongRepository repository)
+        public PhanCongController(IPhanCongRepository repository, INhanVienRepository nhanVienRepository)
         {
             _repository = repository;
+            _nhanVienRepository = nhanVienRepository;
         }
 
         [HttpGet]
@@ -48,8 +51,6 @@ namespace Job_assignment_management.Api.Controllers
             };
 
             var createdEntity = await _repository.CreateAsync(entity);
-            //model.MaPhanCong = createdEntity.MaPhanCong;
-            //return CreatedAtAction(nameof(GetPhanCongById), new { id = model.MaPhanCong }, model);
             return Ok(createdEntity);
         }
 

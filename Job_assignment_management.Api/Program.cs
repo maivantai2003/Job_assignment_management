@@ -1,4 +1,5 @@
 using Job_assignment_management.Api.Hubs;
+using Job_assignment_management.Application.Interfaces;
 using Job_assignment_management.Application.Services;
 using Job_assignment_management.Domain.Interfaces;
 using Job_assignment_management.Infrastructure.Data;
@@ -80,6 +81,7 @@ builder.Services.AddTransient<ICongViecPhongBanRepository, CongViecPhongBanRepos
 builder.Services.AddTransient<IThongBaoRepository, ThongBaoRepository>();
 builder.Services.AddTransient<IChuyenGiaoCongViecRepository, ChuyenGiaoCongViecRepository>();
 builder.Services.AddTransient<IPhanCongRepository, PhanCongRepository>();
+builder.Services.AddTransient<ISendGmailService, SendGmailService>();
 var jwtKey = builder.Configuration.GetValue<string>("Jwt:key");
 var keyBytes = Encoding.ASCII.GetBytes(jwtKey);
 TokenValidationParameters TokenValidation = new TokenValidationParameters

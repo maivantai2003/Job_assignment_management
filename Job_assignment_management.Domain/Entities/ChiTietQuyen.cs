@@ -15,7 +15,7 @@ namespace Job_assignment_management.Domain.Entities
         public int MaChiTietQuyen {  get; set; }
         public int MaChucNang {  get; set; }
         public int MaNhomQuyen {  get; set; } 
-        public bool TrangThai {  get; set; }=true;
+        public string HanhDong {  get; set; }="X";
         [JsonIgnore]
         [ForeignKey(nameof(MaChucNang))]    
         public ChucNang? ChucNang { get; set; }

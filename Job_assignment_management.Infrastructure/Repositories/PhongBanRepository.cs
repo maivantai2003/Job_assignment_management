@@ -22,7 +22,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
 
         public async Task<List<PhongBan>> GetAllAsync(string? search, int page = 1)
         {
-            var listPhongBan = _context.phongBans.Include(x=>x.NhanVien).AsNoTracking().AsQueryable();
+            var listPhongBan = _context.phongBans.Include(x=>x.NhanVien).Include(x=>x.TruongPhong).AsNoTracking().AsQueryable();
             if (!string.IsNullOrEmpty(search))
             {
                 listPhongBan = listPhongBan.Where(x => x.TenPhongBan.Contains(search));
