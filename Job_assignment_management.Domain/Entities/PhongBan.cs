@@ -18,5 +18,6 @@ namespace Job_assignment_management.Domain.Entities
         public ICollection<NhanVien>? NhanVien { get; set; }
         [ForeignKey(nameof(MaTruongPhong))]
         public NhanVien? TruongPhong {  set; get; }
+        public ICollection<CongViecPhongBan>? CongViecPhongBans { get; set; }
     }
 }

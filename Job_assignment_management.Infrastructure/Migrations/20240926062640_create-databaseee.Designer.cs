@@ -4,6 +4,7 @@ using Job_assignment_management.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Job_assignment_management.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240926062640_create-databaseee")]
+    partial class createdatabaseee
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,7 +141,7 @@ namespace Job_assignment_management.Infrastructure.Migrations
                     b.Property<DateTime>("ThoiGianBatDau")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime?>("ThoiGianKetThuc")
+                    b.Property<DateTime>("ThoiGianKetThuc")
                         .HasColumnType("datetime2");
 
                     b.Property<bool>("TrangThai")
@@ -250,7 +253,7 @@ namespace Job_assignment_management.Infrastructure.Migrations
 
                     b.HasIndex("MaCongViec");
 
-                    b.ToTable("mocThoiGians");
+                    b.ToTable("MocThoiGians");
                 });
 
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.NhanVien", b =>
@@ -512,7 +515,7 @@ namespace Job_assignment_management.Infrastructure.Migrations
                     b.Property<int>("MaCongViec")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MaFile")
+                    b.Property<int>("MaFile")
                         .HasColumnType("int");
 
                     b.Property<int>("MaNhanVien")
@@ -615,7 +618,7 @@ namespace Job_assignment_management.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("Job_assignment_management.Domain.Entities.PhongBan", "PhongBan")
-                        .WithMany("CongViecPhongBans")
+                        .WithMany()
                         .HasForeignKey("MaPhongBan")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -757,7 +760,9 @@ namespace Job_assignment_management.Infrastructure.Migrations
 
                     b.HasOne("Job_assignment_management.Domain.Entities.Files", "Files")
                         .WithMany("TraoDoiThongTins")
-                        .HasForeignKey("MaFile");
+                        .HasForeignKey("MaFile")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("Job_assignment_management.Domain.Entities.NhanVien", "NhanVien")
                         .WithMany("TraoDoiThongTins")
@@ -829,8 +834,6 @@ namespace Job_assignment_management.Infrastructure.Migrations
 
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.PhongBan", b =>
                 {
-                    b.Navigation("CongViecPhongBans");
-
                     b.Navigation("NhanVien");
                 });
 

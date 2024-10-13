@@ -71,6 +71,8 @@ builder.Services.AddTransient<INhanVienRepository, NhanVienRepository>();
 builder.Services.AddTransient<IPhongBanRepository, PhongBanRepository>();
 builder.Services.AddTransient<IDuAnRepository, DuAnRepository>();
 builder.Services.AddTransient<IPhanDuAnRepository,PhanDuAnRepository>();
+builder.Services.AddTransient<ITraoDoiThongTinRepository,TraoDoiThongTinRepository>();
+builder.Services.AddTransient<IFilesRepository, FilesRepository>();
 builder.Services.AddTransient<ICongViecRepository, CongViecRepository>();
 builder.Services.AddTransient<IChuyenGiaoCongViecRepository, ChuyenGiaoCongViecRepository>();
 builder.Services.AddTransient<IPhanCongRepository, PhanCongRepository>();
@@ -95,13 +97,13 @@ builder.Services.AddAuthentication(options =>
     options.Events = new JwtBearerEvents();
     options.Events.OnTokenValidated = async (context) =>
     {
-        var ipAddress = context.Request.HttpContext.Connection.RemoteIpAddress.ToString();
-        var jwtService = context.Request.HttpContext.RequestServices.GetService<IJwtService>();
-        var jwtToken = context.SecurityToken as JwtSecurityToken;
-        if (!await jwtService.IsTokenValid(jwtToken.RawData,ipAddress))
+        var ipAddress = context?.Request?.HttpContext?.Connection?.RemoteIpAddress?.ToString();
+        var jwtService = context?.Request.HttpContext.RequestServices.GetService<IJwtService>();
+        var jwtToken = context?.SecurityToken as JwtSecurityToken;
+        /*if (!await jwtService?.IsTokenValid(jwtToken?.RawData,ipAddress))
         {
-            context.Fail("Invalid Token Details");
-        }
+            context?.Fail("Invalid Token Details");
+        }*/
     };
 });
 var app = builder.Build();
