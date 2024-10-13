@@ -13,5 +13,6 @@ namespace Job_assignment_management.Shared.Common
         public int MaChucNang { get; set; }
         [Required]
         public int MaNhomQuyen { get; set; }
+        public string HanhDong { get; set; } = "X";
     }
 }

@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Job_assignment_management.Infrastructure.Repositories
 {
-    public class PhongBanRepository:IPhongBanRepository
+    public class PhongBanRepository : IPhongBanRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -33,9 +33,10 @@ namespace Job_assignment_management.Infrastructure.Repositories
         }
         public async Task<PhongBan> GetByIdAsync(int id)
         {
-            return await _context.phongBans.AsNoTracking()
+            return await _context.phongBans.Include(x => x.NhanVien).Include(x => x.TruongPhong).AsNoTracking()
                 .FirstOrDefaultAsync(x => x.MaPhongBan == id) ?? new PhongBan();
         }
+
 
         public async Task<PhongBan> CreateAsync(PhongBan phongBan)
         {
@@ -60,6 +61,11 @@ namespace Job_assignment_management.Infrastructure.Repositories
                 await _context.SaveChangesAsync();
             }
             return id;
+        }
+
+        public async Task<List<PhongBan>> GetTruongPhongByIdAsync(int id)
+        {
+            return await _context.phongBans.Where(x => x.MaTruongPhong == id).Include(x => x.NhanVien).AsNoTracking().ToListAsync();
         }
     }
 }

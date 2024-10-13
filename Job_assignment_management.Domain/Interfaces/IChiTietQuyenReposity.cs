@@ -14,5 +14,6 @@ namespace Job_assignment_management.Domain.Interfaces
         Task<ChiTietQuyen> CreateAsync(ChiTietQuyen chiTietQuyen);
         Task<int> UpdateAsync(int id, ChiTietQuyen chiTietQuyen);
         Task<int> DeleteAsync(int id);
+        Task<bool> CheckQuyen(int MaQuyen,int MaChucNang,string HanhDong);
     }
 }

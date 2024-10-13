@@ -1,4 +1,5 @@
 using Job_assignment_management.Api.Hubs;
+using Job_assignment_management.Api.Quarts;
 using Job_assignment_management.Application.Interfaces;
 using Job_assignment_management.Application.Services;
 using Job_assignment_management.Domain.Interfaces;
@@ -8,14 +9,15 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Quartz;
+using Quartz.Impl;
+using Quartz.Spi;
 using RefreshToken.Services;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
-
 // Add services to the container.
-
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -25,13 +27,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("Connection") ?? throw new InvalidOperationException("Connectionstring not found."));
 });
-//builder.Services.AddCors(option =>
-//{
-//    option.AddPolicy("ApiPolicy", builder =>
-//    {
-//        builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
-//    });
-//});
 builder.Services.AddSwaggerGen(opt =>
 {
     opt.SwaggerDoc("v1", new OpenApiInfo { Title = "JWTRefreshTokens", Version = "v1" });
@@ -82,6 +77,10 @@ builder.Services.AddTransient<IThongBaoRepository, ThongBaoRepository>();
 builder.Services.AddTransient<IChuyenGiaoCongViecRepository, ChuyenGiaoCongViecRepository>();
 builder.Services.AddTransient<IPhanCongRepository, PhanCongRepository>();
 builder.Services.AddTransient<ISendGmailService, SendGmailService>();
+builder.Services.AddSingleton<IJobFactory, SingletonJobFactory>();
+builder.Services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+builder.Services.AddSingleton<myQuart>();
+builder.Services.AddHostedService<Job_assignment_management.Api.Quarts.QuartzHostedService>();
 var jwtKey = builder.Configuration.GetValue<string>("Jwt:key");
 var keyBytes = Encoding.ASCII.GetBytes(jwtKey);
 TokenValidationParameters TokenValidation = new TokenValidationParameters

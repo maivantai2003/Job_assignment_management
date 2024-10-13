@@ -35,7 +35,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
 
         public async Task<List<NhomQuyen>> GetAllAsync(string? search, int page = 1)
         {
-            var listNhomQuyen = _context.nhomQuyens.Include(x => x.ChiTietQuyens).AsNoTracking().AsQueryable();
+            var listNhomQuyen = _context.nhomQuyens.Include(x => x.ChiTietQuyens).ThenInclude(x=>x.ChucNang).AsNoTracking().AsQueryable();
             if (!string.IsNullOrEmpty(search))
             {
                 listNhomQuyen = listNhomQuyen.Where(x => x.TenQuyen.Contains(search));
@@ -52,7 +52,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
 
         public async Task<NhomQuyen> GetByIdAsync(int id)
         {
-            return await _context.nhomQuyens.AsNoTracking().FirstOrDefaultAsync(x => x.MaQuyen == id)??new NhomQuyen();
+            return await _context.nhomQuyens.Include(x=>x.ChiTietQuyens).ThenInclude(x => x.ChucNang).AsNoTracking().FirstOrDefaultAsync(x => x.MaQuyen == id)??new NhomQuyen();
         }
 
         public async Task<int> UpdateAsync(int id, NhomQuyen nhomQuyen)

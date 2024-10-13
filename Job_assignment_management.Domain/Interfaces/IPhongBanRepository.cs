@@ -11,6 +11,7 @@ namespace Job_assignment_management.Domain.Interfaces
     {
         Task<List<PhongBan>> GetAllAsync(string? search, int page = 1);
         Task<PhongBan> GetByIdAsync(int id);
+        Task<List<PhongBan>> GetTruongPhongByIdAsync(int id);
         Task<PhongBan> CreateAsync(PhongBan phongBan);
         Task<int> UpdateAsync(int id, PhongBan phongBan);
         Task<int> DeleteAsync(int id);

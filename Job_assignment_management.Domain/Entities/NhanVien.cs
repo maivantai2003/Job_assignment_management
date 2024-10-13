@@ -27,5 +27,7 @@ namespace Job_assignment_management.Domain.Entities
         public ICollection<ChuyenGiaoCongViec>? chuyenGiaoCongViecs { get; set; }
         public ICollection<ThongBao>? ThongBaos { get; set; }    
         public ICollection<TraoDoiThongTin>? TraoDoiThongTins { get; set; }
+        //[JsonIgnore]
+        //public ICollection<PhanCong>? phanCongs { get; set; }    
     }
 }

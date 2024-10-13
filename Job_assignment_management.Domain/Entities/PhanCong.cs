@@ -23,6 +23,7 @@ namespace Job_assignment_management.Domain.Entities
         [JsonIgnore]   
         
         public CongViec? CongViec { set; get; }
+        
         [ForeignKey(nameof(MaNhanVien))]
         public NhanVien? NhanVien { set; get; }  
         public ICollection<ChuyenGiaoCongViec>? chuyenGiaoCongViecs { get; set; }

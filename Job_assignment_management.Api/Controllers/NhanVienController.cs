@@ -64,7 +64,6 @@ namespace Job_assignment_management.Api.Controllers
             return NoContent();
         }
 
-        // DELETE: api/NhanVien/{id}
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteNhanVien(int id)
         {

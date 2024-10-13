@@ -17,6 +17,12 @@ namespace Job_assignment_management.Infrastructure.Repositories
         public ChiTietQuyenRepository(ApplicationDbContext context) { 
             _context = context; 
         }
+
+        public Task<bool> CheckQuyen(int MaQuyen, int MaChucNang, string HanhDong)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<ChiTietQuyen> CreateAsync(ChiTietQuyen chiTietQuyen)
         {
             await _context.chiTietQuyens.AddAsync(chiTietQuyen);
@@ -50,7 +56,8 @@ namespace Job_assignment_management.Infrastructure.Repositories
 
         public async Task<int> UpdateAsync(int id, ChiTietQuyen chiTietQuyen)
         {
-            return await _context.chiTietQuyens.Where(x => x.MaChiTietQuyen == id).ExecuteUpdateAsync(x => x.SetProperty(m => m.MaNhomQuyen, chiTietQuyen.MaNhomQuyen).SetProperty(m=>m.MaChucNang,chiTietQuyen.MaChucNang));
+            return await _context.chiTietQuyens.Where(x => x.MaChiTietQuyen == id).ExecuteUpdateAsync(x => x.SetProperty(m => m.MaNhomQuyen, chiTietQuyen.MaNhomQuyen)
+            .SetProperty(m=>m.MaChucNang,chiTietQuyen.MaChucNang).SetProperty(m=>m.HanhDong, chiTietQuyen.HanhDong));
         }
     }
 }

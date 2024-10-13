@@ -46,6 +46,12 @@ namespace Job_assignment_management.Infrastructure.Repositories
             return result.ToList();
         }
 
+        public async Task<List<PhanCong>> GetPhanCongNhanVienAsync(int maNhanVien)
+        {
+            var listPhanCong = _context.phanCongs.Where(x=>x.MaNhanVien==maNhanVien).Include(x=>x.CongViec).AsNoTracking().AsQueryable();
+            return listPhanCong.ToList();
+        }
+
         public async Task<PhanCong> GetByIdAsync(int id)
         {
             return await _context.phanCongs.AsNoTracking().FirstOrDefaultAsync(x => x.MaPhanCong == id) ?? new PhanCong();
@@ -58,7 +64,8 @@ namespace Job_assignment_management.Infrastructure.Repositories
                 .ExecuteUpdateAsync(x => x
                     .SetProperty(m => m.VaiTro, phanCong.VaiTro)
                     .SetProperty(m => m.MaNhanVien, phanCong.MaNhanVien)
-                    .SetProperty(m => m.MaCongViec, phanCong.MaCongViec));
+                    .SetProperty(m => m.MaCongViec, phanCong.MaCongViec)
+                    .SetProperty(m=>m.TrangThaiCongViec,phanCong.TrangThaiCongViec));
         }
     }
 }

@@ -26,7 +26,8 @@ namespace Job_assignment_management.Infrastructure.Repositories
             {
                 listDuAn = listDuAn.Where(x => x.TenDuAn.Contains(search));
             }
-            var result = PageList<DuAn>.Create(listDuAn, 10, page);
+            //var result = PageList<DuAn>.Create(listDuAn, 20, page);
+            var result = listDuAn.Take(page);
             return result.ToList();
         }
         public async Task<DuAn> GetByIdAsync(int id)
