@@ -27,6 +27,11 @@ namespace Job_assignment_management.Api.Controllers
             var congViecPhongBan = await _congViecPhongBanRepository.GetByIdAsync(id);
             return Ok(congViecPhongBan);
         }
+        [HttpGet("[action]/{id}")]
+        public async Task<IActionResult> GetPhongBanPhanCong(int id)
+        {
+            return Ok(await _congViecPhongBanRepository.GetPhongBanPhanCongAsync(id));
+        }
         [HttpPost]
         public async Task<IActionResult> AddCongViecPhongBan(CongViecPhongBanViewModel model)
         {

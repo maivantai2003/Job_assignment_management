@@ -19,5 +19,6 @@ namespace Job_assignment_management.Domain.Entities
         [JsonIgnore]
         [ForeignKey(nameof(MaDuAn))]
         public DuAn? DuAn { get; set; }
+        public ICollection<CongViec> ?congViecs { get; set; }
     }
 }

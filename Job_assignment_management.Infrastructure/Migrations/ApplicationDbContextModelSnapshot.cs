@@ -30,14 +30,15 @@ namespace Job_assignment_management.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaChiTietQuyen"));
 
+                    b.Property<string>("HanhDong")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("MaChucNang")
                         .HasColumnType("int");
 
                     b.Property<int>("MaNhomQuyen")
                         .HasColumnType("int");
-
-                    b.Property<bool>("TrangThai")
-                        .HasColumnType("bit");
 
                     b.HasKey("MaChiTietQuyen");
 
@@ -462,6 +463,16 @@ namespace Job_assignment_management.Infrastructure.Migrations
                     b.Property<int>("MaNhanVien")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("NgayGui")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NoiDungThongBao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TrangThai")
+                        .HasColumnType("bit");
+
                     b.HasKey("MaThongBao");
 
                     b.HasIndex("MaCongViec");
@@ -596,7 +607,7 @@ namespace Job_assignment_management.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("Job_assignment_management.Domain.Entities.PhanDuAn", "PhanDuAn")
-                        .WithMany()
+                        .WithMany("congViecs")
                         .HasForeignKey("MaPhanDuAn")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -825,6 +836,11 @@ namespace Job_assignment_management.Infrastructure.Migrations
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.PhanCong", b =>
                 {
                     b.Navigation("chuyenGiaoCongViecs");
+                });
+
+            modelBuilder.Entity("Job_assignment_management.Domain.Entities.PhanDuAn", b =>
+                {
+                    b.Navigation("congViecs");
                 });
 
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.PhongBan", b =>

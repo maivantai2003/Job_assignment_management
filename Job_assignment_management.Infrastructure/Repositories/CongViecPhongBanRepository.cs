@@ -48,6 +48,10 @@ namespace Job_assignment_management.Infrastructure.Repositories
         {
             return await _context.congViecPhongBans.AsNoTracking().FirstOrDefaultAsync(x => x.MaCongViecPhongBan == id) ?? new CongViecPhongBan();
         }
+        public async Task<List<CongViecPhongBan>> GetPhongBanPhanCongAsync(int id)
+        {
+            return await _context.congViecPhongBans.AsNoTracking().Where(x => x.MaPhongBan == id).ToListAsync();
+        }
 
         public async Task<int> UpdateAsync(int id, CongViecPhongBan congViecPhongBan)
         {

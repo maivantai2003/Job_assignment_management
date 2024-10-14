@@ -46,7 +46,8 @@ namespace Job_assignment_management.Infrastructure.Repositories
             {
                 listNhanVien = listNhanVien.Where(x => x.TenNhanVien.Contains(search));
             }
-            var result = PageList<NhanVien>.Create(listNhanVien, 10, page);
+            //var result = PageList<NhanVien>.Create(listNhanVien, 10, page);
+            var result=listNhanVien.Take(page);
             return result.ToList();
         }
 

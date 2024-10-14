@@ -1,8 +1,10 @@
-﻿using Job_assignment_management.Domain.Entities;
+﻿using Job_assignment_management.Api.Hubs;
+using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Infrastructure.Repositories;
 using Job_assignment_management.Shared.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Job_assignment_management.Api.Controllers
 {
@@ -11,9 +13,11 @@ namespace Job_assignment_management.Api.Controllers
     public class NhomQuyenController : ControllerBase
     {
         private readonly INhomQuyenRepository _nhomQuyenRepository;
-        public NhomQuyenController(INhomQuyenRepository nhomQuyenRepository)
+        private readonly IHubContext<myHub> _hubContext;
+        public NhomQuyenController(INhomQuyenRepository nhomQuyenRepository, IHubContext<myHub> hubContext)
         {
             _nhomQuyenRepository = nhomQuyenRepository;
+            _hubContext = hubContext;
         }
         [HttpPost]
         public async Task<IActionResult> AddNhomQuyen(NhomQuyenViewModel nhomQuyenVM)
@@ -23,8 +27,14 @@ namespace Job_assignment_management.Api.Controllers
                 TenQuyen=nhomQuyenVM.TenQuyen,
             };
             var create = await _nhomQuyenRepository.CreateAsync(nhomQuyen);
+            await _hubContext.Clients.All.SendAsync("loadnhomQuyen");
             return Ok(create);
         }
+        /*[HttpGet]
+        public async Task<ActionResult> GetAllNhomQuyen()
+        {
+            return Ok(await _nhomQuyenRepository.GetAllAsync());
+        }*/
         [HttpGet]
         public async Task<ActionResult> GetAllNhomQuyen(string ?search,int page=1)
         {

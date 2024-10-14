@@ -19,20 +19,20 @@ namespace Job_assignment_management.Infrastructure.Repositories
         {
             _context = context;
         }
-
         public async Task<List<DuAn>> GetAllAsync(string? search, int page = 1)
         {
-            var listDuAn = _context.duAns.Include(x=>x.PhanDuAn).AsNoTracking().AsQueryable();
+            var listDuAn = _context.duAns.Include(x=>x.PhanDuAn).ThenInclude(x => x.congViecs).AsNoTracking().AsQueryable();
             if (!string.IsNullOrEmpty(search))
             {
                 listDuAn = listDuAn.Where(x => x.TenDuAn.Contains(search));
             }
-            var result = PageList<DuAn>.Create(listDuAn, 10, page);
+            //var result = PageList<DuAn>.Create(listDuAn, 20, page);
+            var result = listDuAn.Take(page);
             return result.ToList();
         }
         public async Task<DuAn> GetByIdAsync(int id)
         {
-            return await _context.duAns.AsNoTracking()
+            return await _context.duAns.Include(x => x.PhanDuAn).ThenInclude(x => x.congViecs).ThenInclude(x => x.listCongViecCon).AsNoTracking()
                 .FirstOrDefaultAsync(x => x.MaDuAn == id) ?? new DuAn();
         }
 

@@ -40,7 +40,8 @@ namespace Job_assignment_management.Infrastructure.Repositories
             {
                 listChucNang = listChucNang.Where(x => x.TenChucNang.Contains(search));
             }
-            var result = PageList<ChucNang>.Create(listChucNang, 10, page);
+            //var result = PageList<ChucNang>.Create(listChucNang, 10, page);
+            var result = listChucNang.Take(page);
             return result.ToList();
         }
 

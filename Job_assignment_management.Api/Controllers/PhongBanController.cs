@@ -1,8 +1,10 @@
-﻿using Job_assignment_management.Domain.Entities;
+﻿using Job_assignment_management.Api.Hubs;
+using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Domain.Interfaces;
 using Job_assignment_management.Shared.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Job_assignment_management.Api.Controllers
 {
@@ -11,10 +13,11 @@ namespace Job_assignment_management.Api.Controllers
     public class PhongBanController : ControllerBase
     {
         private readonly IPhongBanRepository _phongBanRepository;
-
-        public PhongBanController(IPhongBanRepository phongBanRepository)
+        private readonly IHubContext<myHub> _hubContext;
+        public PhongBanController(IPhongBanRepository phongBanRepository, IHubContext<myHub> hubContext)
         {
             _phongBanRepository = phongBanRepository;
+            _hubContext = hubContext;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllPhongBan(string? search, int page = 1)
@@ -28,6 +31,12 @@ namespace Job_assignment_management.Api.Controllers
             var phongBan = await _phongBanRepository.GetByIdAsync(id);
             return Ok(phongBan);
         }
+        [HttpGet("[action]/{id}")]
+        public async Task<IActionResult> GetTruongPhongByIdAsync(int id)
+        {
+            var listPhongBan = await _phongBanRepository.GetTruongPhongByIdAsync(id);
+            return Ok(listPhongBan);
+        }
         [HttpPost]
         public async Task<IActionResult> CreatePhongBan(PhongBanViewModel model)
         {
@@ -37,10 +46,11 @@ namespace Job_assignment_management.Api.Controllers
                 TenPhongBan = model.TenPhongBan
             };
             var result = await _phongBanRepository.CreateAsync(phongBan);
+            await _hubContext.Clients.All.SendAsync("loadPhongBan");
             return Ok(result);
         }
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdatePhongBan(int id, PhongBanViewModel model)
+        public async Task<IActionResult> UpdatePhongBan(int id,[FromBody] PhongBanViewModel model)
         {
             var phongBan = new PhongBan
             {
@@ -48,6 +58,7 @@ namespace Job_assignment_management.Api.Controllers
                 TenPhongBan = model.TenPhongBan
             };
             var result = await _phongBanRepository.UpdateAsync(id, phongBan);
+            await _hubContext.Clients.All.SendAsync("loadPhongBan");
             return NoContent();
         }
         [HttpDelete("{id}")]

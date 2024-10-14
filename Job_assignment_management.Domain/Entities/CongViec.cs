@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Job_assignment_management.Domain.Entities
@@ -22,8 +23,10 @@ namespace Job_assignment_management.Domain.Entities
         public bool TrangThaiCongViec { get; set; }=false;
         public double MucDoHoanThanh { get; set; } = 0;
         public bool TrangThai {  get; set; }=true;
+        [JsonIgnore]
         [ForeignKey(nameof(MaPhanDuAn))]
         public PhanDuAn? PhanDuAn{ get; set; }
+        [JsonIgnore]
         [ForeignKey(nameof(MaCongViecCha))]
         public CongViec? CongViecCha{ get; set; }
         public ICollection<CongViec>? listCongViecCon { get; set;}

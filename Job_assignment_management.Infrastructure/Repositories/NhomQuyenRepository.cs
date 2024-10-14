@@ -1,4 +1,5 @@
-﻿using Job_assignment_management.Domain.Entities;
+﻿using Azure;
+using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Infrastructure.Data;
 using Job_assignment_management.Shared.Common;
 using Microsoft.EntityFrameworkCore;
@@ -34,18 +35,24 @@ namespace Job_assignment_management.Infrastructure.Repositories
 
         public async Task<List<NhomQuyen>> GetAllAsync(string? search, int page = 1)
         {
-            var listNhomQuyen = _context.nhomQuyens.Include(x => x.ChiTietQuyens).AsNoTracking().AsQueryable();
+            var listNhomQuyen = _context.nhomQuyens.Include(x => x.ChiTietQuyens).ThenInclude(x=>x.ChucNang).AsNoTracking().AsQueryable();
             if (!string.IsNullOrEmpty(search))
             {
                 listNhomQuyen = listNhomQuyen.Where(x => x.TenQuyen.Contains(search));
             }
-            var result = PageList<NhomQuyen>.Create(listNhomQuyen, 10, page);
+            //var result = PageList<NhomQuyen>.Create(listNhomQuyen, 10, page);
+            var result = listNhomQuyen.Take(page);
             return result.ToList();
+        }
+
+        public async Task<List<NhomQuyen>> GetAllAsync()
+        {
+            return await _context.nhomQuyens.ToListAsync();
         }
 
         public async Task<NhomQuyen> GetByIdAsync(int id)
         {
-            return await _context.nhomQuyens.AsNoTracking().FirstOrDefaultAsync(x => x.MaQuyen == id)??new NhomQuyen();
+            return await _context.nhomQuyens.Include(x=>x.ChiTietQuyens).ThenInclude(x => x.ChucNang).AsNoTracking().FirstOrDefaultAsync(x => x.MaQuyen == id)??new NhomQuyen();
         }
 
         public async Task<int> UpdateAsync(int id, NhomQuyen nhomQuyen)
