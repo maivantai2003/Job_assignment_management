@@ -70,7 +70,7 @@ builder.Services.AddTransient<IPhanDuAnRepository,PhanDuAnRepository>();
 builder.Services.AddTransient<ITraoDoiThongTinRepository,TraoDoiThongTinRepository>();
 builder.Services.AddTransient<IFilesRepository, FilesRepository>();
 builder.Services.AddTransient<ICongViecRepository, CongViecRepository>();
-builder.Services.AddTransient<ITienDoCongViecRepository, TienDoCongViecRepository>();
+builder.Services.AddTransient<ILichSuCongViecRepository, LichSuCongViecRepository>();
 builder.Services.AddTransient<IMocThoiGianRepository, MocThoiGianRepository>();
 builder.Services.AddTransient<ICongViecPhongBanRepository, CongViecPhongBanRepository>();
 builder.Services.AddTransient<IThongBaoRepository, ThongBaoRepository>();

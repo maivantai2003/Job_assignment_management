@@ -54,12 +54,9 @@ namespace Job_assignment_management.Api.Controllers
             };
             var result = await _congViecRepository.CreateAsync(congViec);
             await _hubContext.Clients.All.SendAsync("loadCongViec");
-            //var triggerTime = model.ThoiGianKetThuc.HasValue
-            //            ? model.ThoiGianKetThuc.Value.AddHours(-7).AddMinutes(-1)
-            //            : DateTime.Now.AddDays(1).AddHours(-7);
             IScheduler scheduler = await _schedulerFactory.GetScheduler();
             var job = JobBuilder.Create<myQuart>()
-                                .UsingJobData("TenCongViec", result.TenCongViec)
+                                .UsingJobData("TenCongViec", model.TenCongViec)
                                 .UsingJobData("MaCongViec", result.MaCongViec+"")
                                 .WithIdentity($"job-{result.MaCongViec}", "group2")
                                 .Build();

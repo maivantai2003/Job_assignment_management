@@ -7,15 +7,12 @@ using System.Threading.Tasks;
 
 namespace Job_assignment_management.Shared.Common
 {
-        public class TienDoCongViecViewModel
+        public class LichSuCongViecViewModel
         {
             [Required]
             public int MaCongViec { get; set; }
             [Required]
-            public DateTime NgayCapNhat { get; set; }
-            [Required]
-            public double MucDoHoanThanh { get; set; }
+            public DateTime NgayCapNhat { get; set; }=DateTime.Now;
             public string? NoiDung { get; set; }
-            public bool TrangThai { get; set; } = true;
         }
 }

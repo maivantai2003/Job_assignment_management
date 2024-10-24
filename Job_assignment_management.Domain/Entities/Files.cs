@@ -13,7 +13,7 @@ namespace Job_assignment_management.Domain.Entities
         public int MaFile {  get; set; }
         public string? TenFile {  get; set; }   
         public string? DuongDan {  get; set; }  
-        public string? LoaiFile {  get; set; }
+        public string? LoaiFile {  get; set; }=String.Empty;
         public bool TrangThai { get; set; } = true;   
         public ICollection<TraoDoiThongTin> ?TraoDoiThongTins { get; set; }  
     }

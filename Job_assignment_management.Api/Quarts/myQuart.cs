@@ -1,5 +1,6 @@
 ﻿using Job_assignment_management.Api.Hubs;
 using Microsoft.AspNetCore.SignalR;
+using Microsoft.IdentityModel.Tokens;
 using Quartz;
 
 namespace Job_assignment_management.Api.Quarts
@@ -16,7 +17,7 @@ namespace Job_assignment_management.Api.Quarts
             var tenCongViec = context.JobDetail.JobDataMap.GetString("TenCongViec");
             var maCongViec = context.JobDetail.JobDataMap.GetString("MaCongViec");
             Console.WriteLine($"Executing job for task: {tenCongViec}");
-            await _hubContext.Clients.All.SendAsync("task","Quart Connected");
+            await _hubContext.Clients.All.SendAsync("task",$"Công việc {tenCongViec} sẽ hết hạn sau 1 ngày");
         }
     }
 }

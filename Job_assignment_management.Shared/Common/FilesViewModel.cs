@@ -10,6 +10,6 @@ namespace Job_assignment_management.Shared.Common
     {
         public string? TenFile { get; set; }
         public string? DuongDan { get; set; }
-        public string? LoaiFile { get; set; }
+        public string? LoaiFile { get; set; }=String.Empty; 
     }
 }

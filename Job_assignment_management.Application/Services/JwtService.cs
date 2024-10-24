@@ -43,7 +43,7 @@ namespace RefreshToken.Services
             }
             MaNhomQuyen = user.MaNhomQuyen;
             TenQuyen = user.NhomQuyen?.TenQuyen;
-            listChucNang= await _context.chiTietQuyens.AsNoTracking().Include(x=>x.ChucNang).Where(x => x.MaNhomQuyen == MaNhomQuyen).Select(x => x.ChucNang.TenChucNang).ToListAsync();
+            //listChucNang= await _context.chiTietQuyens.AsNoTracking().Include(x=>x.ChucNang).Where(x => x.MaNhomQuyen == MaNhomQuyen).Select(x => x.ChucNang.TenChucNang).ToListAsync();
             string tokenString = GenerateToken(user.TenTaiKhoan,user.MaNhanVien);
             string refreshToken = GenerateRefreshToken();
             return await SaveTokenDetails(ipAddress, user.MaNhanVien, tokenString, refreshToken);
@@ -90,12 +90,13 @@ namespace RefreshToken.Services
                     {
                         new Claim(ClaimTypes.NameIdentifier, TenTaiKhoan),
                         new Claim(ClaimTypes.Role, TenQuyen),
-                        new Claim("MaTaiKhoan", userId.ToString())
+                        new Claim("MaTaiKhoan", userId.ToString()),
+                        new Claim("MaNhomQuyen",MaNhomQuyen.ToString())
                     };
-            foreach (var chucnang in listChucNang)
-            {
-                claims.Add(new Claim("ChucNang", chucnang));
-            }
+            //foreach (var chucnang in listChucNang)
+            //{
+            //    claims.Add(new Claim("ChucNang", chucnang));
+            //}
             var descriptor = new SecurityTokenDescriptor()
             {
                 Subject = new System.Security.Claims.ClaimsIdentity(claims),
