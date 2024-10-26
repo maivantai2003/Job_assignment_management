@@ -17,6 +17,11 @@ namespace Job_assignment_management.Api.Controllers
         {
             _filesRepository = filesRepository;
         }
+        [HttpGet]
+        public async  Task<IActionResult> GetAllFiles()
+        {
+            return Ok(await _filesRepository.GetAllAsync());
+        }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdFiles(int id)
@@ -31,7 +36,8 @@ namespace Job_assignment_management.Api.Controllers
             {
                TenFile = model.TenFile,
                DuongDan = model.DuongDan,
-               LoaiFile = model.LoaiFile
+               LoaiFile = model.LoaiFile,
+               KichThuocFile = model.KichThuocFile,
             };
             var res = await _filesRepository.CreateAsync(file);
             return Ok(res);

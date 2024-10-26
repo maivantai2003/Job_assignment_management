@@ -19,5 +19,6 @@ namespace Job_assignment_management.Domain.Entities
         public PhanCong? PhanCong { get; set; }
         [ForeignKey(nameof(MaFile))]
         public Files? Files { get; set; }
+        public bool TrangThai { get; set; } = true;
     }
 }

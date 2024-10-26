@@ -31,6 +31,7 @@ namespace Job_assignment_management.Infrastructure.Data
         public DbSet<PhongBan> phongBans { get; set; } 
         public DbSet<TaiKhoanRefreshToken> taiKhoanRefreshTokens { get; set; }
         public DbSet<ChiTietFile>chiTietFiles { get; set; }
+        public DbSet<NhacNho> nhacNhos { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

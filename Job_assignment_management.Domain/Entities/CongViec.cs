@@ -36,5 +36,6 @@ namespace Job_assignment_management.Domain.Entities
         public ICollection<LichSuCongViec>? lichSuCongViecs { get; set; }
         public ICollection<ThongBao>? ThongBaos { get; set; }
         public ICollection<TraoDoiThongTin>? TraoDoiThongTins { get; set; }
+        public ICollection<NhacNho>? nhacNhos { get; set; }
     }
 }
