@@ -1,9 +1,11 @@
-﻿using Job_assignment_management.Domain.Entities;
+﻿using Job_assignment_management.Api.Hubs;
+using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Domain.Interfaces;
 using Job_assignment_management.Infrastructure.Repositories;
 using Job_assignment_management.Shared.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Job_assignment_management.Api.Controllers
 {
@@ -12,13 +14,15 @@ namespace Job_assignment_management.Api.Controllers
     public class FilesController : ControllerBase
     {
         private readonly IFilesRepository _filesRepository;
+        private readonly IHubContext<myHub> _hubContext;
 
-        public FilesController(IFilesRepository filesRepository)
+        public FilesController(IFilesRepository filesRepository, IHubContext<myHub> hubContext)
         {
             _filesRepository = filesRepository;
+            _hubContext = hubContext;   
         }
         [HttpGet]
-        public async  Task<IActionResult> GetAllFiles()
+        public async Task<IActionResult> GetAllFiles()
         {
             return Ok(await _filesRepository.GetAllAsync());
         }
@@ -40,6 +44,7 @@ namespace Job_assignment_management.Api.Controllers
                KichThuocFile = model.KichThuocFile,
             };
             var res = await _filesRepository.CreateAsync(file);
+            await _hubContext.Clients.All.SendAsync("loadFile");
             return Ok(res);
         }
 

@@ -23,7 +23,7 @@ namespace Job_assignment_management.Api.Controllers
         {
             _congViecRepository = congViecRepository;
             _hubContext = hubContext;
-            _schedulerFactory= schedulerFactory;    
+            _schedulerFactory = schedulerFactory;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllCongViec(string? search, int page = 1)
@@ -57,7 +57,7 @@ namespace Job_assignment_management.Api.Controllers
             IScheduler scheduler = await _schedulerFactory.GetScheduler();
             var job = JobBuilder.Create<myQuart>()
                                 .UsingJobData("TenCongViec", model.TenCongViec)
-                                .UsingJobData("MaCongViec", result.MaCongViec+"")
+                                .UsingJobData("MaCongViec", result.MaCongViec + "")
                                 .WithIdentity($"job-{result.MaCongViec}", "group2")
                                 .Build();
 
@@ -91,6 +91,12 @@ namespace Job_assignment_management.Api.Controllers
         {
             var result = await _congViecRepository.DeleteAsync(id);
             return Ok(result);
+        }
+        [HttpPut("[action]/{id}")]
+        public async Task<IActionResult> UpdateCompleteTask(int id,bool trangThai)
+        {
+            var result=await _congViecRepository.UpdateComplete(id, trangThai);
+            return Ok(result);  
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Domain.Interfaces;
 using Job_assignment_management.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,21 +16,26 @@ namespace Job_assignment_management.Infrastructure.Repositories
         public ChiTietFileRepository(ApplicationDbContext context) { 
             _context = context;
         }
-        public Task<ChiTietFile> CreateAsync(ChiTietFile chiTietFile)
+        public async Task<ChiTietFile> CreateAsync(ChiTietFile chiTietFile)
         {
-            throw new NotImplementedException();
+            await _context.chiTietFiles.AddAsync(chiTietFile);
+            await _context.SaveChangesAsync();
+            return chiTietFile;
         }
 
-        public Task<int> DeleteAsync(int id)
+        public async Task<int> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var chiTietFile=await _context.chiTietFiles.AsNoTracking().FirstOrDefaultAsync(x=>x.MaChiTietFile==id);
+            chiTietFile.TrangThai=false;
+            await _context.SaveChangesAsync();
+            return id;
         }
 
-        public Task<List<ChiTietFile>> GetByFilePhanCongAsync(int maPhanCong)
+        public async Task<List<ChiTietFile>> GetByFilePhanCongAsync(int maPhanCong)
         {
-            throw new NotImplementedException();
+             var listFile=await _context.chiTietFiles.AsNoTracking().Where(x=>x.MaPhanCong==maPhanCong).ToListAsync();
+             return listFile;    
         }
-
         public Task<List<ChiTietFile>> GetByIdAsync(int maPhanCong)
         {
             throw new NotImplementedException();

@@ -13,7 +13,7 @@ namespace Job_assignment_management.Domain.Entities
         [Key]
         public int MaNhacNho {  get; set; }
         public int MaCongViec { get; set; }
-        public DateTime ThoiGianNhacNho { get; set; }
+        public DateTime ThoiGianNhacNho { get; set; } = DateTime.Now;
         public string? NoiDungNhacNho { get; set; }
         public bool TrangThai { get; set; } = true;
         [ForeignKey(nameof(MaCongViec))]

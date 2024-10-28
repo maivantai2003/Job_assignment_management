@@ -14,7 +14,7 @@ namespace Job_assignment_management.Domain.Entities
         public int MaChiTietFile {  get; set; }
         public int MaFile {  get; set; }
         public int MaPhanCong {  get; set; }
-        public DateTime NgayGui {  get; set; }
+        public DateTime NgayGui {  get; set; }=DateTime.Now;
         [ForeignKey(nameof(MaPhanCong))]
         public PhanCong? PhanCong { get; set; }
         [ForeignKey(nameof(MaFile))]

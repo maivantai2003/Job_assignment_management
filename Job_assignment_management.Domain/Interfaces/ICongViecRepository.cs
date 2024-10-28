@@ -14,5 +14,6 @@ namespace Job_assignment_management.Domain.Interfaces
         Task<CongViec> CreateAsync(CongViec congViec);
         Task<int> UpdateAsync(int id, CongViec congViec);
         Task<int> DeleteAsync(int id);
+        Task<int> UpdateComplete(int id,bool trangThai);
     }
 }
