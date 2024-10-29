@@ -56,6 +56,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
             if (duAn != null)
             {
                 duAn.TrangThai = false;
+                await _context.SaveChangesAsync();
             }
             return id;
         }
