@@ -78,6 +78,7 @@ builder.Services.AddTransient<IChuyenGiaoCongViecRepository, ChuyenGiaoCongViecR
 builder.Services.AddTransient<IPhanCongRepository, PhanCongRepository>();
 builder.Services.AddTransient<ISendGmailService, SendGmailService>();
 builder.Services.AddTransient<IChiTietFileRepository, ChiTietFileRepository>();
+builder.Services.AddTransient<INhacNhoRepository,NhacNhoRepository>();
 builder.Services.AddSingleton<IJobFactory, SingletonJobFactory>();
 builder.Services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
 builder.Services.AddSingleton<myQuart>();
