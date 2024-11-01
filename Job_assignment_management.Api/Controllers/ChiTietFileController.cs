@@ -37,5 +37,12 @@ namespace Job_assignment_management.Api.Controllers
             var listFile=await _chiTietFileRepository.GetByFilePhanCongAsync(id);
             return Ok(listFile);    
         }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> DeleteFile(int id)
+        {
+            var result=await _chiTietFileRepository.DeleteAsync(id);
+            await _hubContext.Clients.All.SendAsync("loadFile");
+            return Ok(result);
+        }
     }
 }

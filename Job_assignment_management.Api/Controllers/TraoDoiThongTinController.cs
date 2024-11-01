@@ -34,7 +34,6 @@ namespace Job_assignment_management.Api.Controllers
             var traoDoiThongTin = new TraoDoiThongTin()
             {
                 NoiDungTraoDoi = model.NoiDungTraoDoi,
-                MaFile = model.MaFile,
                 MaCongViec = model.MaCongViec,
                 MaNhanVien = model.MaNhanVien
             };
@@ -48,7 +47,6 @@ namespace Job_assignment_management.Api.Controllers
             var traoDoiThongTin = new TraoDoiThongTin()
             {
                 NoiDungTraoDoi = model.NoiDungTraoDoi,
-                MaFile = model.MaFile,
                 MaCongViec = model.MaCongViec,
                 MaNhanVien = model.MaNhanVien
             };
