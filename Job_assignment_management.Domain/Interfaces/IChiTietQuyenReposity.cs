@@ -14,6 +14,6 @@ namespace Job_assignment_management.Domain.Interfaces
         Task<ChiTietQuyen> CreateAsync(ChiTietQuyen chiTietQuyen);
         Task<int> UpdateAsync(int id, ChiTietQuyen chiTietQuyen);
         Task<int> DeleteAsync(int id);
-        Task<bool> CheckQuyenAsync(ChiTietQuyen chiTietQuyen);
+        Task<List<string>> CheckQuyenAsync(ChiTietQuyen chiTietQuyen);
     }
 }

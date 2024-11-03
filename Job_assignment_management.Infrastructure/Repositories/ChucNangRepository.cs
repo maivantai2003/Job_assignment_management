@@ -50,6 +50,12 @@ namespace Job_assignment_management.Infrastructure.Repositories
             return await _context.chucNangs.AsNoTracking().FirstOrDefaultAsync(x => x.MaChucNang == id) ?? new ChucNang();
         }
 
+        public async Task<ChucNang> GetFunctionAsync(string tenChucNang)
+        {
+            var result = await _context.chucNangs.AsNoTracking().FirstOrDefaultAsync(x => x.TenChucNang == tenChucNang);
+            return result;
+        }
+
         public async Task<int> UpdateAsync(int id, ChucNang chucNang)
         {
             return await _context.chucNangs.Where(x => x.MaChucNang == id).ExecuteUpdateAsync(x => x.SetProperty(m => m.TenChucNang, chucNang.TenChucNang));

@@ -18,15 +18,25 @@ namespace Job_assignment_management.Infrastructure.Repositories
             _context = context; 
         }
 
-        public async Task<bool> CheckQuyenAsync(ChiTietQuyen chiTietQuyen)
+        public async Task<List<string>> CheckQuyenAsync(ChiTietQuyen chiTietQuyen)
         {
-            var result= await _context.chiTietQuyens.AsNoTracking().FirstOrDefaultAsync(x=>x.MaNhomQuyen==chiTietQuyen.MaNhomQuyen && x.MaChucNang==chiTietQuyen.MaChucNang && x.HanhDong==x.HanhDong);
+            var result =await _context.chiTietQuyens.AsNoTracking().Where(x => x.MaNhomQuyen == chiTietQuyen.MaNhomQuyen && x.MaChucNang == chiTietQuyen.MaChucNang).Select(x=>x.HanhDong).ToListAsync();
             if (result == null)
             {
-                return true;
+                return new List<string>();
             }
-            return false;
+            return result;
         }
+
+        //public async Task<bool> CheckQuyenAsync(ChiTietQuyen chiTietQuyen)
+        //{
+        //    var result= await _context.chiTietQuyens.AsNoTracking().FirstOrDefaultAsync(x=>x.MaNhomQuyen==chiTietQuyen.MaNhomQuyen && x.MaChucNang==chiTietQuyen.MaChucNang && x.HanhDong==x.HanhDong);
+        //    if (result == null)
+        //    {
+        //        return true;
+        //    }
+        //    return false;
+        //}
 
         public async Task<ChiTietQuyen> CreateAsync(ChiTietQuyen chiTietQuyen)
         {

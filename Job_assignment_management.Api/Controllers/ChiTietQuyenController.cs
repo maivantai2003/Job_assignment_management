@@ -12,9 +12,11 @@ namespace Job_assignment_management.Api.Controllers
     public class ChiTietQuyenController : ControllerBase
     {
         private readonly IChiTietQuyenReposity _chiTietQuyenReposity;
-        public ChiTietQuyenController(IChiTietQuyenReposity chiTietQuyenReposity)
+        private readonly IChucNangRepository _chucNangRepository;
+        public ChiTietQuyenController(IChiTietQuyenReposity chiTietQuyenReposity, IChucNangRepository chucNangRepository)
         {
             _chiTietQuyenReposity = chiTietQuyenReposity;
+            _chucNangRepository = chucNangRepository;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllChiTietQuyen()
@@ -41,13 +43,18 @@ namespace Job_assignment_management.Api.Controllers
             return Ok(result);
         }
         [HttpPost("[action]")]
-        public async Task<IActionResult> CheckQuyen(ChiTietQuyenViewModel chiTietQuyenViewModel)
+        public async Task<IActionResult> KiemTraQuyen(ChiTietChucNangQuyenViewModel chiTietChucNangQuyen)
         {
+            var tmp = await _chucNangRepository.GetFunctionAsync(chiTietChucNangQuyen.tenChucNang);
+            if(tmp== null)
+            {
+                return Ok(new List<string>());
+            }
             var chiTietQuyen = new ChiTietQuyen()
             {
-                MaChucNang = chiTietQuyenViewModel.MaChucNang,
-                MaNhomQuyen = chiTietQuyenViewModel.MaNhomQuyen,
-                HanhDong = chiTietQuyenViewModel.HanhDong
+                MaChucNang = tmp.MaChucNang,
+                MaNhomQuyen = chiTietChucNangQuyen.MaQuyen,
+                HanhDong = chiTietChucNangQuyen.HanhDong
             };
             var result=await _chiTietQuyenReposity.CheckQuyenAsync(chiTietQuyen);
             return Ok(result);

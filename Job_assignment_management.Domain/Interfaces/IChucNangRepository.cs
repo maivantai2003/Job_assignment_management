@@ -11,6 +11,7 @@ namespace Job_assignment_management.Domain.Interfaces
     {
         Task<List<ChucNang>> GetAllAsync(string? search, int page = 1);
         Task<ChucNang> GetByIdAsync(int id);
+        Task<ChucNang> GetFunctionAsync(string tenChucNang);
         Task<ChucNang> CreateAsync(ChucNang chucNang);
         Task<int> UpdateAsync(int id, ChucNang chucNang);
         Task<int> DeleteAsync(int id);
