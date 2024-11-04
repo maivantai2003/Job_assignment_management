@@ -35,7 +35,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
 
         public async Task<List<ChucNang>> GetAllAsync(string? search, int page = 1)
         {
-            var listChucNang = _context.chucNangs.Include(x=>x.ChiTietQuyens).AsNoTracking().AsQueryable();
+            var listChucNang = _context.chucNangs.AsNoTracking().Include(x=>x.ChiTietQuyens).AsQueryable();
             if (!string.IsNullOrEmpty(search))
             {
                 listChucNang = listChucNang.Where(x => x.TenChucNang.Contains(search));
@@ -47,12 +47,12 @@ namespace Job_assignment_management.Infrastructure.Repositories
 
         public async Task<ChucNang> GetByIdAsync(int id)
         {
-            return await _context.chucNangs.AsNoTracking().FirstOrDefaultAsync(x => x.MaChucNang == id) ?? new ChucNang();
+            return await _context.chucNangs.AsNoTracking().FirstOrDefaultAsync(x => x.MaChucNang == id && x.TrangThai == true) ?? new ChucNang();
         }
 
         public async Task<ChucNang> GetFunctionAsync(string tenChucNang)
         {
-            var result = await _context.chucNangs.AsNoTracking().FirstOrDefaultAsync(x => x.TenChucNang == tenChucNang);
+            var result = await _context.chucNangs.AsNoTracking().FirstOrDefaultAsync(x => x.TenChucNang == tenChucNang && x.TrangThai==true);
             return result;
         }
 

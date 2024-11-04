@@ -33,7 +33,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
         public async Task<TaiKhoan> GetByIdAsync(int id)
         {
             return await _context.taiKhoans.AsNoTracking()
-                .FirstOrDefaultAsync(x => x.MaNhanVien == id) ?? new TaiKhoan();
+                .FirstOrDefaultAsync(x => x.MaNhanVien == id && x.TrangThai == true) ?? new TaiKhoan();
         }
 
         public async Task<TaiKhoan> CreateAsync(TaiKhoan taiKhoan)

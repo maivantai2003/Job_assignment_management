@@ -1,22 +1,28 @@
-﻿using Job_assignment_management.Domain.Entities;
+﻿using Job_assignment_management.Api.Hubs;
+using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Domain.Interfaces;
 using Job_assignment_management.Infrastructure.Repositories;
 using Job_assignment_management.Shared.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Job_assignment_management.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ChiTietQuyenController : ControllerBase
     {
         private readonly IChiTietQuyenReposity _chiTietQuyenReposity;
         private readonly IChucNangRepository _chucNangRepository;
-        public ChiTietQuyenController(IChiTietQuyenReposity chiTietQuyenReposity, IChucNangRepository chucNangRepository)
+        private readonly IHubContext<myHub> _hubContext;
+        public ChiTietQuyenController(IChiTietQuyenReposity chiTietQuyenReposity, IChucNangRepository chucNangRepository, IHubContext<myHub> hubContext)
         {
             _chiTietQuyenReposity = chiTietQuyenReposity;
             _chucNangRepository = chucNangRepository;
+            _hubContext = hubContext;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllChiTietQuyen()
@@ -39,7 +45,8 @@ namespace Job_assignment_management.Api.Controllers
                 MaNhomQuyen = model.MaNhomQuyen,
                 HanhDong=model.HanhDong,
             };
-            var result=await _chiTietQuyenReposity.CreateAsync(chiTietQuyen);   
+            var result=await _chiTietQuyenReposity.CreateAsync(chiTietQuyen);
+            await _hubContext.Clients.All.SendAsync("loadHanhDong");
             return Ok(result);
         }
         [HttpPost("[action]")]
@@ -79,6 +86,7 @@ namespace Job_assignment_management.Api.Controllers
             {
                 return BadRequest();
             }
+            await _hubContext.Clients.All.SendAsync("loadHanhDong");
             return Ok(maChiTietQuyen);
         }
     }

@@ -2,6 +2,7 @@
 using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Domain.Interfaces;
 using Job_assignment_management.Shared.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 
@@ -9,6 +10,7 @@ namespace Job_assignment_management.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class LichSuCongViecController : ControllerBase
     {
         private readonly ILichSuCongViecRepository _lichSuCongViecRepository;
@@ -44,7 +46,7 @@ namespace Job_assignment_management.Api.Controllers
                 NoiDung = model.NoiDung
             };
             var result = await _lichSuCongViecRepository.CreateAsync(tienDoCongViec);
-            await _hubContext.Clients.All.SendAsync("loadLichSuCongViec");
+            //await _hubContext.Clients.All.SendAsync("loadLichSuCongViec");
             return Ok(result);
         }
 

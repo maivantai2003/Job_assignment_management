@@ -34,7 +34,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
         public async Task<PhongBan> GetByIdAsync(int id)
         {
             return await _context.phongBans.Include(x => x.NhanVien).Include(x => x.TruongPhong).AsNoTracking()
-                .FirstOrDefaultAsync(x => x.MaPhongBan == id) ?? new PhongBan();
+                .FirstOrDefaultAsync(x => x.MaPhongBan == id && x.TrangThai == true) ?? new PhongBan();
         }
 
 
@@ -65,7 +65,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
 
         public async Task<List<PhongBan>> GetTruongPhongByIdAsync(int id)
         {
-            return await _context.phongBans.Where(x => x.MaTruongPhong == id).Include(x => x.NhanVien).AsNoTracking().ToListAsync();
+            return await _context.phongBans.Where(x => x.MaTruongPhong == id && x.TrangThai == true).Include(x => x.NhanVien).AsNoTracking().ToListAsync();
         }
     }
 }

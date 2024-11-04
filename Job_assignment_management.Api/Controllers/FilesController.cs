@@ -3,6 +3,7 @@ using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Domain.Interfaces;
 using Job_assignment_management.Infrastructure.Repositories;
 using Job_assignment_management.Shared.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -11,6 +12,7 @@ namespace Job_assignment_management.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class FilesController : ControllerBase
     {
         private readonly IFilesRepository _filesRepository;
