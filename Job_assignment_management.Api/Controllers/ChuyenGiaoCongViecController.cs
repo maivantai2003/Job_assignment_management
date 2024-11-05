@@ -47,12 +47,13 @@ namespace Job_assignment_management.Api.Controllers
                 MaNhanVienChuyenGiao = model.MaNhanVienChuyenGiao,
                 MaNhanVienThucHien = model.MaNhanVienThucHien,
                 MaPhanCong = model.MaPhanCong,
-                NgayChuyenGiao = model.NgayChuyenGiao
+                VaiTro=model.VaiTro,
+                TenCongViec = model.TenCongViec
             };
 
             var createdEntity = await _repository.CreateAsync(entity);
-            model.MaChuyenGiaoCongViec = createdEntity.MaChuyenGiaoCongViec;
-            return CreatedAtAction(nameof(GetChuyenGiaoCongViecById), new { id = model.MaChuyenGiaoCongViec }, model);
+            
+            return CreatedAtAction(nameof(GetChuyenGiaoCongViecById), new { id = createdEntity.MaChuyenGiaoCongViec }, model);
         }
 
         [HttpPut("{id}")]
@@ -65,7 +66,7 @@ namespace Job_assignment_management.Api.Controllers
                 MaNhanVienChuyenGiao = model.MaNhanVienChuyenGiao,
                 MaNhanVienThucHien = model.MaNhanVienThucHien,
                 MaPhanCong = model.MaPhanCong,
-                NgayChuyenGiao = model.NgayChuyenGiao
+                VaiTro = model.VaiTro
             };
 
             await _repository.UpdateAsync(id, entity);
