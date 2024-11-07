@@ -46,11 +46,11 @@ namespace Job_assignment_management.Infrastructure.Repositories
 
         public async Task<CongViecPhongBan> GetByIdAsync(int id)
         {
-            return await _context.congViecPhongBans.AsNoTracking().FirstOrDefaultAsync(x => x.MaCongViecPhongBan == id) ?? new CongViecPhongBan();
+            return await _context.congViecPhongBans.AsNoTracking().FirstOrDefaultAsync(x => x.MaCongViecPhongBan == id && x.TrangThai == true) ?? new CongViecPhongBan();
         }
         public async Task<List<CongViecPhongBan>> GetPhongBanPhanCongAsync(int id)
         {
-            return await _context.congViecPhongBans.AsNoTracking().Where(x => x.MaPhongBan == id).ToListAsync();
+            return await _context.congViecPhongBans.AsNoTracking().Where(x => x.MaPhongBan == id && x.TrangThai==true).ToListAsync();
         }
 
         public async Task<int> UpdateAsync(int id, CongViecPhongBan congViecPhongBan)

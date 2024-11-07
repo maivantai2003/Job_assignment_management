@@ -1,5 +1,6 @@
 ﻿using Job_assignment_management.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Migrations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,7 +21,7 @@ namespace Job_assignment_management.Infrastructure.Data
         public DbSet<ChuyenGiaoCongViec> chuyenGiaoCongViecs { get; set; }  
         public DbSet<ThongBao> thongBaos { get; set; }  
         public DbSet<MocThoiGian> mocThoiGians { get; set; }    
-        public DbSet<TienDoCongViec> tienDoCongViecs { get; set; }
+        public DbSet<LichSuCongViec> lichSuCongViecs { get; set; }
         public DbSet<DuAn> duAns { get; set; }
         public DbSet<PhanDuAn> phanDuAns { get; set; }  
         public DbSet<PhanCong> phanCongs { get; set; }  
@@ -29,6 +30,9 @@ namespace Job_assignment_management.Infrastructure.Data
         public DbSet<Files> files { get; set; }  
         public DbSet<PhongBan> phongBans { get; set; } 
         public DbSet<TaiKhoanRefreshToken> taiKhoanRefreshTokens { get; set; }
+        public DbSet<ChiTietFile>chiTietFiles { get; set; }
+        public DbSet<NhacNho> nhacNhos { get; set; }
+        public DbSet<ChiTietTraoDoiThongTin> chiTietTraoDoiThongTins { get; set; }  
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -53,5 +57,6 @@ namespace Job_assignment_management.Infrastructure.Data
                         .HasForeignKey(cg => cg.MaNhanVienThucHien)
                         .OnDelete(DeleteBehavior.Restrict);
         }
+
     }
 }

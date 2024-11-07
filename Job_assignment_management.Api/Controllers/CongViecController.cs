@@ -3,6 +3,7 @@ using Job_assignment_management.Api.Quarts;
 using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Domain.Interfaces;
 using Job_assignment_management.Shared.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -13,6 +14,7 @@ namespace Job_assignment_management.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CongViecController : ControllerBase
     {
         private readonly ICongViecRepository _congViecRepository;
@@ -23,7 +25,7 @@ namespace Job_assignment_management.Api.Controllers
         {
             _congViecRepository = congViecRepository;
             _hubContext = hubContext;
-            _schedulerFactory= schedulerFactory;    
+            _schedulerFactory = schedulerFactory;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllCongViec(string? search, int page = 1)
@@ -54,23 +56,20 @@ namespace Job_assignment_management.Api.Controllers
             };
             var result = await _congViecRepository.CreateAsync(congViec);
             await _hubContext.Clients.All.SendAsync("loadCongViec");
-            //var triggerTime = model.ThoiGianKetThuc.HasValue
-            //            ? model.ThoiGianKetThuc.Value.AddHours(-7).AddMinutes(-1)
-            //            : DateTime.Now.AddDays(1).AddHours(-7);
-            IScheduler scheduler = await _schedulerFactory.GetScheduler();
-            var job = JobBuilder.Create<myQuart>()
-                                .UsingJobData("TenCongViec", result.TenCongViec)
-                                .UsingJobData("MaCongViec", result.MaCongViec+"")
-                                .WithIdentity($"job-{result.MaCongViec}", "group2")
-                                .Build();
+            //IScheduler scheduler = await _schedulerFactory.GetScheduler();
+            //var job = JobBuilder.Create<myQuart>()
+            //                    .UsingJobData("TenCongViec", model.TenCongViec)
+            //                    .UsingJobData("MaCongViec", result.MaCongViec + "")
+            //                    .WithIdentity($"job-{result.MaCongViec}", "group2")
+            //                    .Build();
 
-            var trigger = TriggerBuilder.Create()
-                                        .WithIdentity($"trigger-{result.MaCongViec}", "group2")
-                                        .StartAt(model.ThoiGianKetThuc.Value)
-                                        .WithSimpleSchedule(x => x.WithMisfireHandlingInstructionFireNow())
-                                        .Build();
+            //var trigger = TriggerBuilder.Create()
+            //                            .WithIdentity($"trigger-{result.MaCongViec}", "group2")
+            //                            .StartAt(model.ThoiGianKetThuc.Value)
+            //                            .WithSimpleSchedule(x => x.WithMisfireHandlingInstructionFireNow())
+            //                            .Build();
 
-            await scheduler.ScheduleJob(job, trigger);
+            //await scheduler.ScheduleJob(job, trigger);
             return Ok(result);
         }
         [HttpPut("{id}")]
@@ -93,6 +92,18 @@ namespace Job_assignment_management.Api.Controllers
         public async Task<IActionResult> DeleteCongViec(int id)
         {
             var result = await _congViecRepository.DeleteAsync(id);
+            return Ok(result);
+        }
+        [HttpPut("[action]/{id}")]
+        public async Task<IActionResult> UpdateCompleteTask(int id,bool trangThai)
+        {
+            var result=await _congViecRepository.UpdateComplete(id, trangThai);
+            return Ok(result);  
+        }
+        [HttpPost("[action]")]
+        public async Task<IActionResult> UpdateTaskDay(int id,DateTime ngayKetThuc)
+        {
+            var result=await _congViecRepository.UpdateTaskDay(id, ngayKetThuc);
             return Ok(result);
         }
     }

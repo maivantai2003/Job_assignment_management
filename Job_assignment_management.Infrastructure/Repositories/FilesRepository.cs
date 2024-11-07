@@ -35,6 +35,11 @@ namespace Job_assignment_management.Infrastructure.Repositories
             return id;
         }
 
+        public async Task<List<Files>> GetAllAsync()
+        {
+            return await _context.files.AsNoTracking().ToListAsync();
+        }
+
         public async Task<Files> GetByIdAsync(int id)
         {
             return await _context.files.AsNoTracking().FirstOrDefaultAsync(f => f.MaFile == id) ?? new Files();

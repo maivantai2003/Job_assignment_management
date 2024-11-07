@@ -22,6 +22,35 @@ namespace Job_assignment_management.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Job_assignment_management.Domain.Entities.ChiTietFile", b =>
+                {
+                    b.Property<int>("MaChiTietFile")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaChiTietFile"));
+
+                    b.Property<int>("MaFile")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaPhanCong")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("NgayGui")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("TrangThai")
+                        .HasColumnType("bit");
+
+                    b.HasKey("MaChiTietFile");
+
+                    b.HasIndex("MaFile");
+
+                    b.HasIndex("MaPhanCong");
+
+                    b.ToTable("chiTietFiles");
+                });
+
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.ChiTietQuyen", b =>
                 {
                     b.Property<int>("MaChiTietQuyen")
@@ -47,6 +76,32 @@ namespace Job_assignment_management.Infrastructure.Migrations
                     b.HasIndex("MaNhomQuyen");
 
                     b.ToTable("chiTietQuyens", (string)null);
+                });
+
+            modelBuilder.Entity("Job_assignment_management.Domain.Entities.ChiTietTraoDoiThongTin", b =>
+                {
+                    b.Property<int>("MaChiTietTraoDoiThongTin")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaChiTietTraoDoiThongTin"));
+
+                    b.Property<int>("MaFile")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaTraoDoi")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("TrangThaiTraoDoi")
+                        .HasColumnType("bit");
+
+                    b.HasKey("MaChiTietTraoDoiThongTin");
+
+                    b.HasIndex("MaFile");
+
+                    b.HasIndex("MaTraoDoi");
+
+                    b.ToTable("chiTietTraoDoiThongTins");
                 });
 
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.ChucNang", b =>
@@ -94,8 +149,14 @@ namespace Job_assignment_management.Infrastructure.Migrations
                     b.Property<int?>("NhanVienMaNhanVien")
                         .HasColumnType("int");
 
+                    b.Property<string>("TenCongViec")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("TrangThai")
                         .HasColumnType("bit");
+
+                    b.Property<string>("VaiTro")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("MaChuyenGiaoCongViec");
 
@@ -213,6 +274,9 @@ namespace Job_assignment_management.Infrastructure.Migrations
                     b.Property<string>("DuongDan")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("KichThuocFile")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("LoaiFile")
                         .HasColumnType("nvarchar(max)");
 
@@ -225,6 +289,33 @@ namespace Job_assignment_management.Infrastructure.Migrations
                     b.HasKey("MaFile");
 
                     b.ToTable("files", (string)null);
+                });
+
+            modelBuilder.Entity("Job_assignment_management.Domain.Entities.LichSuCongViec", b =>
+                {
+                    b.Property<int>("MaLichSuCongViec")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaLichSuCongViec"));
+
+                    b.Property<int>("MaCongViec")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("NgayCapNhat")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("NoiDung")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TrangThai")
+                        .HasColumnType("bit");
+
+                    b.HasKey("MaLichSuCongViec");
+
+                    b.HasIndex("MaCongViec");
+
+                    b.ToTable("lichSuCongViecs");
                 });
 
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.MocThoiGian", b =>
@@ -252,6 +343,33 @@ namespace Job_assignment_management.Infrastructure.Migrations
                     b.HasIndex("MaCongViec");
 
                     b.ToTable("mocThoiGians", (string)null);
+                });
+
+            modelBuilder.Entity("Job_assignment_management.Domain.Entities.NhacNho", b =>
+                {
+                    b.Property<int>("MaNhacNho")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaNhacNho"));
+
+                    b.Property<int>("MaCongViec")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NoiDungNhacNho")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("ThoiGianNhacNho")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("TrangThai")
+                        .HasColumnType("bit");
+
+                    b.HasKey("MaNhacNho");
+
+                    b.HasIndex("MaCongViec");
+
+                    b.ToTable("nhacNhos");
                 });
 
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.NhanVien", b =>
@@ -482,6 +600,7 @@ namespace Job_assignment_management.Infrastructure.Migrations
                     b.ToTable("thongBaos", (string)null);
                 });
 
+<<<<<<< HEAD
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.TienDoCongViec", b =>
                 {
                     b.Property<int>("MaTienDoCongViec")
@@ -512,6 +631,8 @@ namespace Job_assignment_management.Infrastructure.Migrations
                     b.ToTable("tienDoCongViecs", (string)null);
                 });
 
+=======
+>>>>>>> 886adef4b264690fb33066bb70f328422c3fb6d2
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.TraoDoiThongTin", b =>
                 {
                     b.Property<int>("MaTraoDoiThongTin")
@@ -521,9 +642,6 @@ namespace Job_assignment_management.Infrastructure.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaTraoDoiThongTin"));
 
                     b.Property<int>("MaCongViec")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("MaFile")
                         .HasColumnType("int");
 
                     b.Property<int>("MaNhanVien")
@@ -542,11 +660,28 @@ namespace Job_assignment_management.Infrastructure.Migrations
 
                     b.HasIndex("MaCongViec");
 
-                    b.HasIndex("MaFile");
-
                     b.HasIndex("MaNhanVien");
 
                     b.ToTable("traoDoiThongTins", (string)null);
+                });
+
+            modelBuilder.Entity("Job_assignment_management.Domain.Entities.ChiTietFile", b =>
+                {
+                    b.HasOne("Job_assignment_management.Domain.Entities.Files", "Files")
+                        .WithMany("chiTietFiles")
+                        .HasForeignKey("MaFile")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Job_assignment_management.Domain.Entities.PhanCong", "PhanCong")
+                        .WithMany("chiTietFiles")
+                        .HasForeignKey("MaPhanCong")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Files");
+
+                    b.Navigation("PhanCong");
                 });
 
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.ChiTietQuyen", b =>
@@ -566,6 +701,25 @@ namespace Job_assignment_management.Infrastructure.Migrations
                     b.Navigation("ChucNang");
 
                     b.Navigation("NhomQuyen");
+                });
+
+            modelBuilder.Entity("Job_assignment_management.Domain.Entities.ChiTietTraoDoiThongTin", b =>
+                {
+                    b.HasOne("Job_assignment_management.Domain.Entities.Files", "Files")
+                        .WithMany("chiTietTraoDoiThongTins")
+                        .HasForeignKey("MaFile")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Job_assignment_management.Domain.Entities.TraoDoiThongTin", "TraoDoiThongTin")
+                        .WithMany("chiTietTraoDoiThongTins")
+                        .HasForeignKey("MaTraoDoi")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Files");
+
+                    b.Navigation("TraoDoiThongTin");
                 });
 
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.ChuyenGiaoCongViec", b =>
@@ -636,10 +790,32 @@ namespace Job_assignment_management.Infrastructure.Migrations
                     b.Navigation("PhongBan");
                 });
 
+            modelBuilder.Entity("Job_assignment_management.Domain.Entities.LichSuCongViec", b =>
+                {
+                    b.HasOne("Job_assignment_management.Domain.Entities.CongViec", "CongViec")
+                        .WithMany("lichSuCongViecs")
+                        .HasForeignKey("MaCongViec")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CongViec");
+                });
+
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.MocThoiGian", b =>
                 {
                     b.HasOne("Job_assignment_management.Domain.Entities.CongViec", "CongViec")
                         .WithMany("MocThoiGians")
+                        .HasForeignKey("MaCongViec")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CongViec");
+                });
+
+            modelBuilder.Entity("Job_assignment_management.Domain.Entities.NhacNho", b =>
+                {
+                    b.HasOne("Job_assignment_management.Domain.Entities.CongViec", "CongViec")
+                        .WithMany("nhacNhos")
                         .HasForeignKey("MaCongViec")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -747,17 +923,6 @@ namespace Job_assignment_management.Infrastructure.Migrations
                     b.Navigation("NhanVien");
                 });
 
-            modelBuilder.Entity("Job_assignment_management.Domain.Entities.TienDoCongViec", b =>
-                {
-                    b.HasOne("Job_assignment_management.Domain.Entities.CongViec", "CongViec")
-                        .WithMany("tienDoCongViecs")
-                        .HasForeignKey("MaCongViec")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("CongViec");
-                });
-
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.TraoDoiThongTin", b =>
                 {
                     b.HasOne("Job_assignment_management.Domain.Entities.CongViec", "CongViec")
@@ -766,10 +931,6 @@ namespace Job_assignment_management.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Job_assignment_management.Domain.Entities.Files", "Files")
-                        .WithMany("TraoDoiThongTins")
-                        .HasForeignKey("MaFile");
-
                     b.HasOne("Job_assignment_management.Domain.Entities.NhanVien", "NhanVien")
                         .WithMany("TraoDoiThongTins")
                         .HasForeignKey("MaNhanVien")
@@ -777,8 +938,6 @@ namespace Job_assignment_management.Infrastructure.Migrations
                         .IsRequired();
 
                     b.Navigation("CongViec");
-
-                    b.Navigation("Files");
 
                     b.Navigation("NhanVien");
                 });
@@ -800,9 +959,11 @@ namespace Job_assignment_management.Infrastructure.Migrations
 
                     b.Navigation("congViecPhongBans");
 
+                    b.Navigation("lichSuCongViecs");
+
                     b.Navigation("listCongViecCon");
 
-                    b.Navigation("tienDoCongViecs");
+                    b.Navigation("nhacNhos");
                 });
 
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.DuAn", b =>
@@ -812,7 +973,9 @@ namespace Job_assignment_management.Infrastructure.Migrations
 
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.Files", b =>
                 {
-                    b.Navigation("TraoDoiThongTins");
+                    b.Navigation("chiTietFiles");
+
+                    b.Navigation("chiTietTraoDoiThongTins");
                 });
 
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.NhanVien", b =>
@@ -835,6 +998,8 @@ namespace Job_assignment_management.Infrastructure.Migrations
 
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.PhanCong", b =>
                 {
+                    b.Navigation("chiTietFiles");
+
                     b.Navigation("chuyenGiaoCongViecs");
                 });
 
@@ -853,6 +1018,11 @@ namespace Job_assignment_management.Infrastructure.Migrations
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.TaiKhoan", b =>
                 {
                     b.Navigation("RefreshTokens");
+                });
+
+            modelBuilder.Entity("Job_assignment_management.Domain.Entities.TraoDoiThongTin", b =>
+                {
+                    b.Navigation("chiTietTraoDoiThongTins");
                 });
 #pragma warning restore 612, 618
         }
