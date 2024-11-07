@@ -72,5 +72,12 @@ namespace Job_assignment_management.Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return id;
         }
+
+        public async Task<int> UpdateTaskDay(int id, DateTime ngayKetThuc)
+        {
+            return await _context.congViecs.Where(x => x.MaCongViec == id)
+              .ExecuteUpdateAsync(x => x
+                  .SetProperty(t => t.ThoiGianKetThuc, ngayKetThuc));
+        }
     }
 }

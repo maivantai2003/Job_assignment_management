@@ -100,5 +100,11 @@ namespace Job_assignment_management.Api.Controllers
             var result=await _congViecRepository.UpdateComplete(id, trangThai);
             return Ok(result);  
         }
+        [HttpPost("[action]")]
+        public async Task<IActionResult> UpdateTaskDay(int id,DateTime ngayKetThuc)
+        {
+            var result=await _congViecRepository.UpdateTaskDay(id, ngayKetThuc);
+            return Ok(result);
+        }
     }
 }

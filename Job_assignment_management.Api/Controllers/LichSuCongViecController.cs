@@ -23,9 +23,9 @@ namespace Job_assignment_management.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllLichSuCongViec(string? search, int page = 1)
+        public async Task<IActionResult> GetAllLichSuCongViec()
         {
-            var listTienDoCongViec = await _lichSuCongViecRepository.GetAllAsync(search, page);
+            var listTienDoCongViec = await _lichSuCongViecRepository.GetAllAsync();
             return Ok(listTienDoCongViec);
         }
 

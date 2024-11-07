@@ -21,7 +21,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
 
         public async Task<List<TaiKhoan>> GetAllAsync(string? search, int page = 1)
         {
-            var listTaiKhoan = _context.taiKhoans.AsNoTracking().AsQueryable();
+            var listTaiKhoan = _context.taiKhoans.AsNoTracking().Include(x=>x.NhomQuyen).AsQueryable();
             if (!string.IsNullOrEmpty(search))
             {
                 listTaiKhoan = listTaiKhoan.Where(x => x.TenTaiKhoan.Contains(search));
