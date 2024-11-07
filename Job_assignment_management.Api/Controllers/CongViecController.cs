@@ -56,20 +56,20 @@ namespace Job_assignment_management.Api.Controllers
             };
             var result = await _congViecRepository.CreateAsync(congViec);
             await _hubContext.Clients.All.SendAsync("loadCongViec");
-            IScheduler scheduler = await _schedulerFactory.GetScheduler();
-            var job = JobBuilder.Create<myQuart>()
-                                .UsingJobData("TenCongViec", model.TenCongViec)
-                                .UsingJobData("MaCongViec", result.MaCongViec + "")
-                                .WithIdentity($"job-{result.MaCongViec}", "group2")
-                                .Build();
+            //IScheduler scheduler = await _schedulerFactory.GetScheduler();
+            //var job = JobBuilder.Create<myQuart>()
+            //                    .UsingJobData("TenCongViec", model.TenCongViec)
+            //                    .UsingJobData("MaCongViec", result.MaCongViec + "")
+            //                    .WithIdentity($"job-{result.MaCongViec}", "group2")
+            //                    .Build();
 
-            var trigger = TriggerBuilder.Create()
-                                        .WithIdentity($"trigger-{result.MaCongViec}", "group2")
-                                        .StartAt(model.ThoiGianKetThuc.Value)
-                                        .WithSimpleSchedule(x => x.WithMisfireHandlingInstructionFireNow())
-                                        .Build();
+            //var trigger = TriggerBuilder.Create()
+            //                            .WithIdentity($"trigger-{result.MaCongViec}", "group2")
+            //                            .StartAt(model.ThoiGianKetThuc.Value)
+            //                            .WithSimpleSchedule(x => x.WithMisfireHandlingInstructionFireNow())
+            //                            .Build();
 
-            await scheduler.ScheduleJob(job, trigger);
+            //await scheduler.ScheduleJob(job, trigger);
             return Ok(result);
         }
         [HttpPut("{id}")]
