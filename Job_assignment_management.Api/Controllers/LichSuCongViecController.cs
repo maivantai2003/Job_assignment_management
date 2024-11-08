@@ -10,7 +10,7 @@ namespace Job_assignment_management.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class LichSuCongViecController : ControllerBase
     {
         private readonly ILichSuCongViecRepository _lichSuCongViecRepository;

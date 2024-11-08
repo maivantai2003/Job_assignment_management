@@ -117,6 +117,11 @@ var app = builder.Build();
 app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod()
                             .SetIsOriginAllowed(origin => true)
                             .AllowCredentials());
+//app.UseCors(policy => policy
+//    .WithOrigins("https://job-assignment-manager-deploy.vercel.app")
+//    .AllowAnyHeader()
+//    .AllowAnyMethod()
+//    .AllowCredentials());
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
