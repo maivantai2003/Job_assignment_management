@@ -46,7 +46,7 @@ namespace Job_assignment_management.Api.Controllers
                 NoiDung = model.NoiDung
             };
             var result = await _lichSuCongViecRepository.CreateAsync(tienDoCongViec);
-            //await _hubContext.Clients.All.SendAsync("loadLichSuCongViec");
+            await _hubContext.Clients.All.SendAsync("loadLichSuCongViec");
             return Ok(result);
         }
 

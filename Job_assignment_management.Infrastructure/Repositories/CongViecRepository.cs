@@ -65,10 +65,11 @@ namespace Job_assignment_management.Infrastructure.Repositories
             return id;
         }
 
-        public async Task<int> UpdateComplete(int id,bool trangThai)
+        public async Task<int> UpdateComplete(int id,bool trangThai, double mucDo)
         {
             var congViec=await _context.congViecs.FirstOrDefaultAsync(x=>x.MaCongViec==id);
             congViec.TrangThaiCongViec = trangThai;
+            congViec.MucDoHoanThanh=mucDo;
             await _context.SaveChangesAsync();
             return id;
         }

@@ -1,8 +1,10 @@
-﻿using Job_assignment_management.Domain.Entities;
+﻿using Job_assignment_management.Api.Hubs;
+using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Domain.Interfaces;
 using Job_assignment_management.Shared.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,10 +16,11 @@ namespace Job_assignment_management.Api.Controllers
     public class ChuyenGiaoCongViecController : ControllerBase
     {
         private readonly IChuyenGiaoCongViecRepository _repository;
-
-        public ChuyenGiaoCongViecController(IChuyenGiaoCongViecRepository repository)
+        private readonly IHubContext<myHub> _hubContext; 
+        public ChuyenGiaoCongViecController(IChuyenGiaoCongViecRepository repository,IHubContext<myHub> hubContext)
         {
             _repository = repository;
+            _hubContext = hubContext;
         }
 
         [HttpGet]
@@ -52,7 +55,11 @@ namespace Job_assignment_management.Api.Controllers
             };
 
             var createdEntity = await _repository.CreateAsync(entity);
-            
+            if (model.MaNhanVienThucHien==null)
+            {
+                await _hubContext.Clients.All.SendAsync("loadPhanCong");
+                await _hubContext.Clients.All.SendAsync("loadCongViec");
+            }
             return CreatedAtAction(nameof(GetChuyenGiaoCongViecById), new { id = createdEntity.MaChuyenGiaoCongViec }, model);
         }
 
