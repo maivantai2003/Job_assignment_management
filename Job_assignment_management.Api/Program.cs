@@ -121,21 +121,22 @@ builder.Services.AddAuthentication(options =>
     };
 });
 var app = builder.Build();
-app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod()
-                            .SetIsOriginAllowed(origin => true)
-                            .AllowCredentials());
-//app.UseCors(policy => policy
-//    .WithOrigins("https://job-assignment-manager-deploy.vercel.app")
-//    .AllowAnyHeader()
-//    .AllowAnyMethod()
-//    .AllowCredentials());
+//app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod()
+//                            .SetIsOriginAllowed(origin => true)
+//                            .AllowCredentials());
+app.UseCors(policy => policy
+    .WithOrigins("https://deploy-h75nnmpyc-vantais-projects.vercel.app")
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowCredentials());
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
+//if (app.Environment.IsDevelopment())
+//{
+//    app.UseSwagger();
+//    app.UseSwaggerUI();
+//}
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseHttpsRedirection();
 //app.UseWebSockets(new WebSocketOptions
 //{
