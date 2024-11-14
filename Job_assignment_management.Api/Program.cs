@@ -146,5 +146,4 @@ app.MapHub<myHub>("/hub");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
-
 app.Run();
