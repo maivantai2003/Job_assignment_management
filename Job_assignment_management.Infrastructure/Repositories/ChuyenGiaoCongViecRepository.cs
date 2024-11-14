@@ -60,6 +60,8 @@ namespace Job_assignment_management.Infrastructure.Repositories
                     .SetProperty(m => m.MaNhanVienChuyenGiao, chuyenGiaoCongViec.MaNhanVienChuyenGiao)
                     .SetProperty(m => m.MaNhanVienThucHien, chuyenGiaoCongViec.MaNhanVienThucHien)
                     .SetProperty(m => m.MaPhanCong, chuyenGiaoCongViec.MaPhanCong)
+                    .SetProperty(m=>m.VaiTro,chuyenGiaoCongViec.VaiTro)
+                    .SetProperty(m=>m.TenCongViec,chuyenGiaoCongViec.TenCongViec)
                     .SetProperty(m => m.NgayChuyenGiao, chuyenGiaoCongViec.NgayChuyenGiao));
         }
     }

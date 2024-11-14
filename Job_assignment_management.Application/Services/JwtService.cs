@@ -53,7 +53,7 @@ namespace RefreshToken.Services
             var useRefreshToken = new TaiKhoanRefreshToken
             {
                 CreateDate = DateTime.UtcNow,
-                ExpirationDate = DateTime.UtcNow.AddMinutes(50),
+                ExpirationDate = DateTime.UtcNow.AddDays(2),
                 IpAddress = ipAddress,
                 IsInvalidades = false,
                 RefreshToken = refreshToken,
@@ -95,7 +95,11 @@ namespace RefreshToken.Services
             var descriptor = new SecurityTokenDescriptor()
             {
                 Subject = new System.Security.Claims.ClaimsIdentity(claims),
+<<<<<<< HEAD
                 Expires = DateTime.UtcNow.AddDays(30),
+=======
+                Expires = DateTime.UtcNow.AddDays(1),
+>>>>>>> 443832bf76a49f668a21c3438faeb6fa1d383827
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(keyBytes),
                 SecurityAlgorithms.HmacSha256
                 )

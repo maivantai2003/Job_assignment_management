@@ -21,7 +21,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
 
         public async Task<List<TaiKhoan>> GetAllAsync(string? search, int page = 1)
         {
-            var listTaiKhoan = _context.taiKhoans.AsNoTracking().AsQueryable();
+            var listTaiKhoan = _context.taiKhoans.AsNoTracking().Include(x=>x.NhomQuyen).AsQueryable();
             if (!string.IsNullOrEmpty(search))
             {
                 listTaiKhoan = listTaiKhoan.Where(x => x.TenTaiKhoan.Contains(search));
@@ -33,7 +33,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
         public async Task<TaiKhoan> GetByIdAsync(int id)
         {
             return await _context.taiKhoans.AsNoTracking()
-                .FirstOrDefaultAsync(x => x.MaNhanVien == id) ?? new TaiKhoan();
+                .FirstOrDefaultAsync(x => x.MaNhanVien == id && x.TrangThai == true) ?? new TaiKhoan();
         }
 
         public async Task<TaiKhoan> CreateAsync(TaiKhoan taiKhoan)

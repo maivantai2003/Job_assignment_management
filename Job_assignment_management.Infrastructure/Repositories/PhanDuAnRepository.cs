@@ -33,7 +33,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
         public async Task<PhanDuAn> GetByIdAsync(int id)
         {
             return await _context.phanDuAns.AsNoTracking()
-                .FirstOrDefaultAsync(x => x.MaPhanDuAn == id) ?? new PhanDuAn();
+                .FirstOrDefaultAsync(x => x.MaPhanDuAn == id && x.TrangThai == true) ?? new PhanDuAn();
         }
 
         public async Task<PhanDuAn> CreateAsync(PhanDuAn phanDuAn)

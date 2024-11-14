@@ -52,7 +52,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
 
         public async Task<NhomQuyen> GetByIdAsync(int id)
         {
-            return await _context.nhomQuyens.Include(x=>x.ChiTietQuyens).ThenInclude(x => x.ChucNang).AsNoTracking().FirstOrDefaultAsync(x => x.MaQuyen == id)??new NhomQuyen();
+            return await _context.nhomQuyens.Include(x=>x.ChiTietQuyens).ThenInclude(x => x.ChucNang).AsNoTracking().FirstOrDefaultAsync(x => x.MaQuyen == id && x.TrangThai == true)??new NhomQuyen();
         }
 
         public async Task<int> UpdateAsync(int id, NhomQuyen nhomQuyen)

@@ -46,7 +46,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
 
         public async Task<TraoDoiThongTin> GetByIdAsync(int id)
         {
-            return await _context.traoDoiThongTins.AsNoTracking().FirstOrDefaultAsync(x => x.MaTraoDoiThongTin == id) ?? new TraoDoiThongTin();
+            return await _context.traoDoiThongTins.AsNoTracking().FirstOrDefaultAsync(x => x.MaTraoDoiThongTin == id && x.TrangThai==true) ?? new TraoDoiThongTin();
         }
 
         public async Task<int> UpdateAsync(int id, TraoDoiThongTin traodoiThongTin)

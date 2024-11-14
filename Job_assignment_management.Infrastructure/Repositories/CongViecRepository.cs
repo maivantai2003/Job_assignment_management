@@ -22,7 +22,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
 
         public async Task<List<CongViec>> GetAllAsync(string? search, int page = 1)
         {
-            var listCongViec = _context.congViecs.Include(x=>x.listCongViecCon).AsNoTracking().AsQueryable();
+            var listCongViec = _context.congViecs.AsNoTracking().Include(x=>x.listCongViecCon).AsQueryable();
             if (!string.IsNullOrEmpty(search))
             {
                 listCongViec = listCongViec.Where(x => x.TenCongViec.Contains(search));
@@ -32,8 +32,8 @@ namespace Job_assignment_management.Infrastructure.Repositories
         }
         public async Task<CongViec> GetByIdAsync(int id)
         {
-            return await _context.congViecs.Include(x=>x.PhanCongs).ThenInclude(x=>x.NhanVien).AsNoTracking()
-                .FirstOrDefaultAsync(x => x.MaCongViec == id) ?? new CongViec();
+            return await _context.congViecs.AsNoTracking().Include(x=>x.PhanCongs).ThenInclude(x=>x.NhanVien)
+                .FirstOrDefaultAsync(x => x.MaCongViec == id && x.TrangThai == true) ?? new CongViec();
         }
 
         public async Task<CongViec> CreateAsync(CongViec congViec)
@@ -59,18 +59,26 @@ namespace Job_assignment_management.Infrastructure.Repositories
             var congViec = await _context.congViecs.FirstOrDefaultAsync(x => x.MaCongViec == id);
             if (congViec != null)
             {
-                _context.congViecs.Remove(congViec);
+                congViec.TrangThai = false;
                 await _context.SaveChangesAsync();
             }
             return id;
         }
 
-        public async Task<int> UpdateComplete(int id,bool trangThai)
+        public async Task<int> UpdateComplete(int id,bool trangThai, double mucDo)
         {
             var congViec=await _context.congViecs.FirstOrDefaultAsync(x=>x.MaCongViec==id);
             congViec.TrangThaiCongViec = trangThai;
+            congViec.MucDoHoanThanh=mucDo;
             await _context.SaveChangesAsync();
             return id;
+        }
+
+        public async Task<int> UpdateTaskDay(int id, DateTime ngayKetThuc)
+        {
+            return await _context.congViecs.Where(x => x.MaCongViec == id)
+              .ExecuteUpdateAsync(x => x
+                  .SetProperty(t => t.ThoiGianKetThuc, ngayKetThuc));
         }
     }
 }

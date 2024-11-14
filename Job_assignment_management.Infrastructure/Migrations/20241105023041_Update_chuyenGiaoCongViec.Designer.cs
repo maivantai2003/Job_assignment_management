@@ -4,6 +4,7 @@ using Job_assignment_management.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Job_assignment_management.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241105023041_Update_chuyenGiaoCongViec")]
+    partial class Update_chuyenGiaoCongViec
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -137,7 +140,7 @@ namespace Job_assignment_management.Infrastructure.Migrations
                     b.Property<int>("MaNhanVienChuyenGiao")
                         .HasColumnType("int");
 
-                    b.Property<int?>("MaNhanVienThucHien")
+                    b.Property<int>("MaNhanVienThucHien")
                         .HasColumnType("int");
 
                     b.Property<int>("MaPhanCong")
@@ -148,9 +151,6 @@ namespace Job_assignment_management.Infrastructure.Migrations
 
                     b.Property<int?>("NhanVienMaNhanVien")
                         .HasColumnType("int");
-
-                    b.Property<string>("TenCongViec")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("TrangThai")
                         .HasColumnType("bit");
@@ -700,7 +700,8 @@ namespace Job_assignment_management.Infrastructure.Migrations
                     b.HasOne("Job_assignment_management.Domain.Entities.NhanVien", "NhanVienThucHien")
                         .WithMany()
                         .HasForeignKey("MaNhanVienThucHien")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.HasOne("Job_assignment_management.Domain.Entities.PhanCong", "PhanCong")
                         .WithMany("chuyenGiaoCongViecs")

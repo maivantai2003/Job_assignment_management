@@ -31,15 +31,15 @@ namespace Job_assignment_management.Infrastructure.Repositories
             return id;
         }
 
-        public async Task<List<LichSuCongViec>> GetAllAsync(string? search, int page = 1)
+        public async Task<List<LichSuCongViec>> GetAllAsync()
         {
             var listTienDoCongViec = _context.lichSuCongViecs.AsNoTracking().AsQueryable();
-            if (!string.IsNullOrEmpty(search))
-            {
-                listTienDoCongViec = listTienDoCongViec.Where(x => x.NoiDung.Contains(search));
-            }
-            var result = PageList<LichSuCongViec>.Create(listTienDoCongViec, 10, page);
-            return result.ToList();
+            //if (!string.IsNullOrEmpty(search))
+            //{
+            //    listTienDoCongViec = listTienDoCongViec.Where(x => x.NoiDung.Contains(search));
+            //}
+            //var result = PageList<LichSuCongViec>.Create(listTienDoCongViec, 10, page);
+            return listTienDoCongViec.ToList();
         }
 
         public async Task<List<LichSuCongViec>> GetByIdAsync(int id)
