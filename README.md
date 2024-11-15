@@ -6,7 +6,7 @@ Task Management System is an application that helps users organize, track and ma
 - Staff management
 - Task management
 - Notification 
-## Build with
+## Built with
 ![.Net](https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white) 
   ![MicrosoftSQLServer](https://img.shields.io/badge/Microsoft%20SQL%20Sever-CC2927?style=for-the-badge&logo=microsoft%20sql%20server&logoColor=white)
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
@@ -27,13 +27,16 @@ Change connectionString on Job_assignment_management.Api/appsettings.json
 "ConnectionStrings": {
     "Connection": "Data Source=[YOUR_SERVER_NAME];Initial Catalog=FinalAssignmentManagement;Integrated Security=True;Encrypt=True;Trust Server Certificate=True"
   }
-  //if your use user-password server
+```
+If your use user-password server
+```json
     "ConnectionStrings":  {
 "Connection":  "Data Source=[YOUR_SERVER_NAME];Initial Catalog=TestJobAssignmentManagement;User Id=sa;Password=[YOUR_PASSWORD];Encrypt=True;Trust Server Certificate=True"
 
 },
 ```
-Migration
+
+  Migration & run
 ```bash
 #install dotnet-ef if you don not have
 dotnet tool install --global dotnet-ef 
