@@ -74,7 +74,7 @@ npm run dev
 <img src="./demo_image/create_department.png" >
 **Employee management**
 <img src="./demo_image/staff.png" >
-<img src="./demo_image/create_staff.png" >
+<img src="./demo_image/create-staff.png" >
 **Account management**
 <img src="./demo_image/account.png" >
 <img src="./demo_image/authorization.png" >
