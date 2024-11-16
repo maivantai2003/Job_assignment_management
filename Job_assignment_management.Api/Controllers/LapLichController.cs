@@ -24,13 +24,14 @@ namespace Job_assignment_management.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> SendNotification(SendNotification notification) 
         {
+            string jobId = $"{notification.MaCongViec}-{Guid.NewGuid()}";
             IScheduler scheduler = await _schedulerFactory.GetScheduler();
             var job = JobBuilder.Create<myQuart>()
                                 .UsingJobData("TenCongViec", notification.TenCongViec)
                                 .UsingJobData("MaCongViec", notification.MaCongViec + "")
                                 .UsingJobData("NoiDung",notification.NoiDung)
                                 .UsingJobData("Email",notification.Email)
-                                .WithIdentity($"job-{notification.MaCongViec}", "group")
+                                .WithIdentity(jobId, "group")
             .Build();
             var trigger = TriggerBuilder.Create()
                                         .WithIdentity($"trigger-{notification.MaCongViec}-{Guid.NewGuid()}", "group")
@@ -39,12 +40,6 @@ namespace Job_assignment_management.Api.Controllers
                                         .Build();
 
             await scheduler.ScheduleJob(job, trigger);
-            return Ok(true);
-        }
-        [HttpPost("[action]")]
-        public async Task<IActionResult> TestNhanTin(int maNhanVien,string message)
-        {
-            await _hubContext.Clients.All.SendAsync("nhantin","Hello");
             return Ok(true);
         }
     }
