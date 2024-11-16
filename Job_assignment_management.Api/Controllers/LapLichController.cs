@@ -35,7 +35,7 @@ namespace Job_assignment_management.Api.Controllers
                                 .WithIdentity(jobId, "group")
             .Build();
             var trigger = TriggerBuilder.Create()
-                                        .WithIdentity($"trigger-{notification.MaCongViec}-{timeStamp}-{Guid.NewGuid()}")
+                                        .WithIdentity($"trigger-{notification.MaCongViec}-{timeStamp}-{Guid.NewGuid()}", "group")
                                         .StartAt(notification.ThoiGianKetThuc.Value)
                                         .WithSimpleSchedule(x => x.WithMisfireHandlingInstructionFireNow())
                                         .Build();
