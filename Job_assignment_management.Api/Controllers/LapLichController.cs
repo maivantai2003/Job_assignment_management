@@ -24,7 +24,8 @@ namespace Job_assignment_management.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> SendNotification(SendNotification notification) 
         {
-            string jobId = $"{notification.MaCongViec}-{Guid.NewGuid()}";
+            string timeStamp = DateTime.UtcNow.ToString("yyyyMMddHHmmssfff");
+            string jobId = $"{notification.MaCongViec}-{timeStamp}-{Guid.NewGuid()}";
             IScheduler scheduler = await _schedulerFactory.GetScheduler();
             var job = JobBuilder.Create<myQuart>()
                                 .UsingJobData("TenCongViec", notification.TenCongViec)
@@ -34,7 +35,7 @@ namespace Job_assignment_management.Api.Controllers
                                 .WithIdentity(jobId, "group")
             .Build();
             var trigger = TriggerBuilder.Create()
-                                        .WithIdentity($"trigger-{notification.MaCongViec}-{Guid.NewGuid()}", "group")
+                                        .WithIdentity($"trigger-{notification.MaCongViec}-{timeStamp}-{Guid.NewGuid()}", "group")
                                         .StartAt(notification.ThoiGianKetThuc.Value)
                                         .WithSimpleSchedule(x => x.WithMisfireHandlingInstructionFireNow())
                                         .Build();
