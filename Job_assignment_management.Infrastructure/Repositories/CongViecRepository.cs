@@ -32,8 +32,21 @@ namespace Job_assignment_management.Infrastructure.Repositories
         }
         public async Task<CongViec> GetByIdAsync(int id)
         {
-            return await _context.congViecs.AsNoTracking().Include(x=>x.PhanCongs).ThenInclude(x=>x.NhanVien)
-                .FirstOrDefaultAsync(x => x.MaCongViec == id && x.TrangThai == true) ?? new CongViec();
+            //return await _context.congViecs.AsNoTracking().Include(x=>x.PhanCongs).ThenInclude(x=>x.NhanVien)
+            //    .FirstOrDefaultAsync(x => x.MaCongViec == id && x.TrangThai == true) ?? new CongViec();
+            var congViec = await _context.congViecs.FindAsync(id);
+
+            if (congViec == null || !congViec.TrangThai)
+            {
+                return new CongViec();
+            }
+            await _context.Entry(congViec)
+                .Collection(c => c.PhanCongs)
+                .Query()
+                .Include(pc => pc.NhanVien)
+                .LoadAsync();
+
+            return congViec;
         }
 
         public async Task<CongViec> CreateAsync(CongViec congViec)

@@ -21,12 +21,10 @@ namespace Job_assignment_management.Infrastructure.Repositories
             throw new NotImplementedException();
 
         }
-
         public Task<ThongKePhongBan> PhongBan(int maPhongBan, DateTime thoiGianBatDau, DateTime thoiGianKetThuc, string? trangThai)
         {
             throw new NotImplementedException();
         }
-
         public Task<List<ThongKeNhanVien>> ThongKeNhanVien(DateTime thoiGianBatDau, DateTime thoiGianKetThuc, string? trangThai)
         {
             throw new NotImplementedException();
