@@ -39,7 +39,6 @@ namespace Job_assignment_management.Api.Controllers
                                         .StartAt(notification.ThoiGianKetThuc.Value)
                                         .WithSimpleSchedule(x => x.WithMisfireHandlingInstructionFireNow())
                                         .Build();
-
             await scheduler.ScheduleJob(job, trigger);
             return Ok(true);
         }
