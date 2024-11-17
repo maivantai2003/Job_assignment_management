@@ -115,12 +115,6 @@ builder.Services.AddAuthentication(options =>
     };
 });
 var app = builder.Build();
-app.UseCors(policy => policy
-    .WithOrigins("https://deploy-api-chi.vercel.app")
-    .AllowAnyHeader()
-    .AllowAnyMethod()
-    .AllowCredentials());
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -128,8 +122,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.MapHub<myHub>("/hub");
+app.UseCors(policy => policy
+    .WithOrigins("https://deploy-api-chi.vercel.app")
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowCredentials());
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapHub<myHub>("/hub");
 app.MapControllers();
 app.Run();
