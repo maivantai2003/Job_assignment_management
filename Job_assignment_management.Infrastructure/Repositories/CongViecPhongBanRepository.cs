@@ -52,7 +52,6 @@ namespace Job_assignment_management.Infrastructure.Repositories
         {
             return await _context.congViecPhongBans.AsNoTracking().Where(x => x.MaPhongBan == id && x.TrangThai==true).ToListAsync();
         }
-
         public async Task<int> UpdateAsync(int id, CongViecPhongBan congViecPhongBan)
         {
             return await _context.congViecPhongBans.Where(x => x.MaCongViecPhongBan == id).
