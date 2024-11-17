@@ -115,9 +115,6 @@ builder.Services.AddAuthentication(options =>
     };
 });
 var app = builder.Build();
-app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod()
-                            .SetIsOriginAllowed(origin => true)
-                            .AllowCredentials());
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -125,8 +122,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.MapHub<myHub>("/hub");
+app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod()
+                            .SetIsOriginAllowed(origin => true)
+                            .AllowCredentials());
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapHub<myHub>("/hub");
 app.MapControllers();
 app.Run();
