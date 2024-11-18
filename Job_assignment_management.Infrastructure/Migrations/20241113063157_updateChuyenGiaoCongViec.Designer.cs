@@ -4,6 +4,7 @@ using Job_assignment_management.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Job_assignment_management.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241113063157_updateChuyenGiaoCongViec")]
+    partial class updateChuyenGiaoCongViec
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -75,7 +78,7 @@ namespace Job_assignment_management.Infrastructure.Migrations
 
                     b.HasIndex("MaNhomQuyen");
 
-                    b.ToTable("chiTietQuyens", (string)null);
+                    b.ToTable("chiTietQuyens");
                 });
 
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.ChiTietTraoDoiThongTin", b =>
@@ -120,7 +123,7 @@ namespace Job_assignment_management.Infrastructure.Migrations
 
                     b.HasKey("MaChucNang");
 
-                    b.ToTable("chucNangs", (string)null);
+                    b.ToTable("chucNangs");
                 });
 
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.ChuyenGiaoCongViec", b =>
@@ -168,7 +171,7 @@ namespace Job_assignment_management.Infrastructure.Migrations
 
                     b.HasIndex("NhanVienMaNhanVien");
 
-                    b.ToTable("chuyenGiaoCongViecs", (string)null);
+                    b.ToTable("chuyenGiaoCongViecs");
                 });
 
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.CongViec", b =>
@@ -215,7 +218,7 @@ namespace Job_assignment_management.Infrastructure.Migrations
 
                     b.HasIndex("MaPhanDuAn");
 
-                    b.ToTable("congViecs", (string)null);
+                    b.ToTable("congViecs");
                 });
 
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.CongViecPhongBan", b =>
@@ -241,7 +244,7 @@ namespace Job_assignment_management.Infrastructure.Migrations
 
                     b.HasIndex("MaPhongBan");
 
-                    b.ToTable("congViecPhongBans", (string)null);
+                    b.ToTable("congViecPhongBans");
                 });
 
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.DuAn", b =>
@@ -260,7 +263,7 @@ namespace Job_assignment_management.Infrastructure.Migrations
 
                     b.HasKey("MaDuAn");
 
-                    b.ToTable("duAns", (string)null);
+                    b.ToTable("duAns");
                 });
 
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.Files", b =>
@@ -288,7 +291,7 @@ namespace Job_assignment_management.Infrastructure.Migrations
 
                     b.HasKey("MaFile");
 
-                    b.ToTable("files", (string)null);
+                    b.ToTable("files");
                 });
 
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.LichSuCongViec", b =>
@@ -342,7 +345,7 @@ namespace Job_assignment_management.Infrastructure.Migrations
 
                     b.HasIndex("MaCongViec");
 
-                    b.ToTable("mocThoiGians", (string)null);
+                    b.ToTable("mocThoiGians");
                 });
 
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.NhacNho", b =>
@@ -402,7 +405,7 @@ namespace Job_assignment_management.Infrastructure.Migrations
 
                     b.HasIndex("MaPhongBan");
 
-                    b.ToTable("nhanViens", (string)null);
+                    b.ToTable("nhanViens");
                 });
 
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.NhomQuyen", b =>
@@ -421,7 +424,7 @@ namespace Job_assignment_management.Infrastructure.Migrations
 
                     b.HasKey("MaQuyen");
 
-                    b.ToTable("nhomQuyens", (string)null);
+                    b.ToTable("nhomQuyens");
                 });
 
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.PhanCong", b =>
@@ -453,7 +456,7 @@ namespace Job_assignment_management.Infrastructure.Migrations
 
                     b.HasIndex("MaNhanVien");
 
-                    b.ToTable("phanCongs", (string)null);
+                    b.ToTable("phanCongs");
                 });
 
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.PhanDuAn", b =>
@@ -477,7 +480,7 @@ namespace Job_assignment_management.Infrastructure.Migrations
 
                     b.HasIndex("MaDuAn");
 
-                    b.ToTable("phanDuAns", (string)null);
+                    b.ToTable("phanDuAns");
                 });
 
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.PhongBan", b =>
@@ -501,7 +504,7 @@ namespace Job_assignment_management.Infrastructure.Migrations
 
                     b.HasIndex("MaTruongPhong");
 
-                    b.ToTable("phongBans", (string)null);
+                    b.ToTable("phongBans");
                 });
 
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.TaiKhoan", b =>
@@ -525,7 +528,7 @@ namespace Job_assignment_management.Infrastructure.Migrations
 
                     b.HasIndex("MaNhomQuyen");
 
-                    b.ToTable("taiKhoans", (string)null);
+                    b.ToTable("taiKhoans");
                 });
 
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.TaiKhoanRefreshToken", b =>
@@ -564,7 +567,7 @@ namespace Job_assignment_management.Infrastructure.Migrations
 
                     b.HasIndex("MaTaiKhoan");
 
-                    b.ToTable("taiKhoanRefreshTokens", (string)null);
+                    b.ToTable("taiKhoanRefreshTokens");
                 });
 
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.ThongBao", b =>
@@ -597,42 +600,9 @@ namespace Job_assignment_management.Infrastructure.Migrations
 
                     b.HasIndex("MaNhanVien");
 
-                    b.ToTable("thongBaos", (string)null);
+                    b.ToTable("thongBaos");
                 });
 
-<<<<<<< HEAD
-            modelBuilder.Entity("Job_assignment_management.Domain.Entities.TienDoCongViec", b =>
-                {
-                    b.Property<int>("MaTienDoCongViec")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MaTienDoCongViec"));
-
-                    b.Property<int>("MaCongViec")
-                        .HasColumnType("int");
-
-                    b.Property<double>("MucDoHoanThanh")
-                        .HasColumnType("float");
-
-                    b.Property<DateTime>("NgayCapNhat")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("NoiDung")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TrangThai")
-                        .HasColumnType("bit");
-
-                    b.HasKey("MaTienDoCongViec");
-
-                    b.HasIndex("MaCongViec");
-
-                    b.ToTable("tienDoCongViecs", (string)null);
-                });
-
-=======
->>>>>>> 886adef4b264690fb33066bb70f328422c3fb6d2
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.TraoDoiThongTin", b =>
                 {
                     b.Property<int>("MaTraoDoiThongTin")
@@ -662,7 +632,7 @@ namespace Job_assignment_management.Infrastructure.Migrations
 
                     b.HasIndex("MaNhanVien");
 
-                    b.ToTable("traoDoiThongTins", (string)null);
+                    b.ToTable("traoDoiThongTins");
                 });
 
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.ChiTietFile", b =>

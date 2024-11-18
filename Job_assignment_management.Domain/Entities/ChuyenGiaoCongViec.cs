@@ -13,7 +13,7 @@ namespace Job_assignment_management.Domain.Entities
         [Key]
         public int MaChuyenGiaoCongViec {  get; set; }
         public int MaPhanCong {  get; set; }   
-        public int MaNhanVienThucHien {  get; set; }
+        public int? MaNhanVienThucHien {  get; set; }
         public int MaNhanVienChuyenGiao {  get; set; }  
         public string ?LyDoChuyenGiao { get; set; }  
         public string? TenCongViec { get; set; }
