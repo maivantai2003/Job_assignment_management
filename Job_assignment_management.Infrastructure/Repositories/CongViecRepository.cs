@@ -63,9 +63,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
                     .SetProperty(t => t.MoTa, congViec.MoTa)
                     .SetProperty(t => t.MucDoUuTien, congViec.MucDoUuTien)
                     .SetProperty(t => t.ThoiGianBatDau, congViec.ThoiGianBatDau)
-                    .SetProperty(t => t.ThoiGianKetThuc, congViec.ThoiGianKetThuc)
-                    .SetProperty(t => t.TrangThaiCongViec, congViec.TrangThaiCongViec)
-                    .SetProperty(t => t.MucDoHoanThanh, congViec.MucDoHoanThanh));
+                    .SetProperty(t => t.ThoiGianKetThuc, congViec.ThoiGianKetThuc));
         }
         public async Task<int> DeleteAsync(int id)
         {
@@ -92,6 +90,11 @@ namespace Job_assignment_management.Infrastructure.Repositories
             return await _context.congViecs.Where(x => x.MaCongViec == id)
               .ExecuteUpdateAsync(x => x
                   .SetProperty(t => t.ThoiGianKetThuc, ngayKetThuc));
+        }
+
+        public Task<bool> UpdateTaskAsync(CongViec congViec)
+        {
+            throw new NotImplementedException();
         }
     }
 }

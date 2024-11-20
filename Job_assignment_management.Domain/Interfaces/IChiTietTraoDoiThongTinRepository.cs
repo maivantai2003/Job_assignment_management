@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Job_assignment_management.Domain.Interfaces
 {
-    public interface IThongKeRepository
+    public interface IChiTietTraoDoiThongTinRepository
     {
-
-        public Task<List<CongViec>> ThongKeCongViec();
+        Task<int> AddAsync(ChiTietTraoDoiThongTin chiTietTraoDoiThongTin);
+        Task<int> DeleteAsync(int id);
     }
 }

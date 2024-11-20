@@ -16,5 +16,6 @@ namespace Job_assignment_management.Domain.Interfaces
         Task<int> UpdateTaskDay(int id, DateTime ngayKetThuc);
         Task<int> DeleteAsync(int id);
         Task<int> UpdateComplete(int id,bool trangThai, double mucDo);
+        Task<bool> UpdateTaskAsync(CongViec congViec);
     }
 }
