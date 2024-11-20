@@ -50,14 +50,12 @@ If your use user-password server
 ```
 
 Set Default Project
-```json
 1. Open Package Manager Console (go to Tools > NuGet Package Manager > Package Manager Console).
 
 2. In the Package Manager Console, look for the dropdown labeled Default project on the right-hand side.
 
 3. Select Job_assignment_management.Infrastructure as the Default Project.
- 
-```
+
 Run Commands
 
 ```bash
