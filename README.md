@@ -54,7 +54,14 @@ dotnet build
 #run
 dotnet run
 ```
-3. Run client
+3. Run Client (Different Project)
+
+Clone the `QLPB` project from GitHub:
+```bash
+git clone https://github.com/Khoadangdo123/QLPB.git
+```
+
+Install dependencies and run app:
 ```bash
 cd client
 
@@ -71,7 +78,9 @@ npm run dev
 <img src="./demo_image/gant.png" >
 **Project management**
 <img src="./demo_image/project.png" >
-<img src="./demo_image/project2.png" >
+<img src="./demo_image/job_change.png" >
+<img src="./demo_image/job_history.png" >
+<img src="./demo_image/job_submitted.png" >
 **Department management**
 <img src="./demo_image/department.png" >
 <img src="./demo_image/create_department.png" >
@@ -83,3 +92,20 @@ npm run dev
 <img src="./demo_image/authorization.png" >
 
 
+#### Any question you can contact with us
+
+
+Author:
+
+| Leader          | Member         | Member         | Member            | Member           | Member         |
+|-----------------|----------------|----------------|-------------------|------------------|----------------|
+|Mai Văn Tài      | Lê Ngọc Giàu   | Đỗ Minh Quân   | Nguyễn Thanh Sang | Nguyễn Quốc Toàn | Trần Quốc Sĩ   |
+
+
+#### Contact email:
+- [vantai0812200@gmail.com](mailto:vantai0812200@gmail.com)
+- [lengocgiau2k3@gmail.com](mailto:lengocgiau2k3@gmail.com)
+- [dominhquan15623@gmail.com](mailto:dominhquan15623@gmail.com)
+- [sangthanhnguyen2910@gmail.com](mailto:sangthanhnguyen2910@gmail.com)
+- [ngquoctoan2001@gmail.com](mailto:ngquoctoan2001@gmail.com)
+- [quocsi014@gmail.com](mailto:quocsi014@gmail.com)
