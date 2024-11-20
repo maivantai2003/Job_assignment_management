@@ -1,20 +1,28 @@
-﻿using Job_assignment_management.Domain.Entities;
+﻿using Job_assignment_management.Api.Hubs;
+using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Domain.Interfaces;
 using Job_assignment_management.Infrastructure.Repositories;
 using Job_assignment_management.Shared.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 
 namespace Job_assignment_management.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ChiTietQuyenController : ControllerBase
     {
         private readonly IChiTietQuyenReposity _chiTietQuyenReposity;
-        public ChiTietQuyenController(IChiTietQuyenReposity chiTietQuyenReposity)
+        private readonly IChucNangRepository _chucNangRepository;
+        private readonly IHubContext<myHub> _hubContext;
+        public ChiTietQuyenController(IChiTietQuyenReposity chiTietQuyenReposity, IChucNangRepository chucNangRepository, IHubContext<myHub> hubContext)
         {
             _chiTietQuyenReposity = chiTietQuyenReposity;
+            _chucNangRepository = chucNangRepository;
+            _hubContext = hubContext;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllChiTietQuyen()
@@ -37,17 +45,23 @@ namespace Job_assignment_management.Api.Controllers
                 MaNhomQuyen = model.MaNhomQuyen,
                 HanhDong=model.HanhDong,
             };
-            var result=await _chiTietQuyenReposity.CreateAsync(chiTietQuyen);   
+            var result=await _chiTietQuyenReposity.CreateAsync(chiTietQuyen);
+            await _hubContext.Clients.All.SendAsync("loadHanhDong");
             return Ok(result);
         }
         [HttpPost("[action]")]
-        public async Task<IActionResult> CheckQuyen(ChiTietQuyenViewModel chiTietQuyenViewModel)
+        public async Task<IActionResult> KiemTraQuyen(ChiTietChucNangQuyenViewModel chiTietChucNangQuyen)
         {
+            var tmp = await _chucNangRepository.GetFunctionAsync(chiTietChucNangQuyen.tenChucNang);
+            if(tmp== null)
+            {
+                return Ok(new List<string>());
+            }
             var chiTietQuyen = new ChiTietQuyen()
             {
-                MaChucNang = chiTietQuyenViewModel.MaChucNang,
-                MaNhomQuyen = chiTietQuyenViewModel.MaNhomQuyen,
-                HanhDong = chiTietQuyenViewModel.HanhDong
+                MaChucNang = tmp.MaChucNang,
+                MaNhomQuyen = chiTietChucNangQuyen.MaQuyen,
+                HanhDong = chiTietChucNangQuyen.HanhDong
             };
             var result=await _chiTietQuyenReposity.CheckQuyenAsync(chiTietQuyen);
             return Ok(result);
@@ -72,6 +86,7 @@ namespace Job_assignment_management.Api.Controllers
             {
                 return BadRequest();
             }
+            await _hubContext.Clients.All.SendAsync("loadHanhDong");
             return Ok(maChiTietQuyen);
         }
     }

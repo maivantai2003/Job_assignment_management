@@ -2,6 +2,7 @@
 using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Infrastructure.Repositories;
 using Job_assignment_management.Shared.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -10,6 +11,7 @@ namespace Job_assignment_management.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class NhomQuyenController : ControllerBase
     {
         private readonly INhomQuyenRepository _nhomQuyenRepository;
@@ -27,7 +29,7 @@ namespace Job_assignment_management.Api.Controllers
                 TenQuyen=nhomQuyenVM.TenQuyen,
             };
             var create = await _nhomQuyenRepository.CreateAsync(nhomQuyen);
-            await _hubContext.Clients.All.SendAsync("loadnhomQuyen");
+            await _hubContext.Clients.All.SendAsync("loadNhomQuyen");
             return Ok(create);
         }
         /*[HttpGet]

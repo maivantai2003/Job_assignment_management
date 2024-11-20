@@ -25,7 +25,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
 
         public async Task<int> DeleteAsync(int id)
         {
-            var chiTietFile=await _context.chiTietFiles.AsNoTracking().FirstOrDefaultAsync(x=>x.MaChiTietFile==id);
+            var chiTietFile=await _context.chiTietFiles.FirstOrDefaultAsync(x=>x.MaChiTietFile==id);
             chiTietFile.TrangThai=false;
             await _context.SaveChangesAsync();
             return id;

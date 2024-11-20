@@ -29,7 +29,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
             var phanCong = await _context.phanCongs.FirstOrDefaultAsync(x => x.MaPhanCong == id);
             if (phanCong != null)
             {
-                _context.phanCongs.Remove(phanCong);
+                phanCong.TrangThai = false;
                 await _context.SaveChangesAsync();
             }
         }
@@ -48,13 +48,13 @@ namespace Job_assignment_management.Infrastructure.Repositories
 
         public async Task<List<PhanCong>> GetPhanCongNhanVienAsync(int maNhanVien)
         {
-            var listPhanCong = _context.phanCongs.Where(x=>x.MaNhanVien==maNhanVien).Include(x=>x.CongViec).AsNoTracking().AsQueryable();
-            return listPhanCong.ToList();
+            var listPhanCong =await _context.phanCongs.AsNoTracking().Where(x=>x.MaNhanVien==maNhanVien && x.TrangThai==true).Include(x=>x.CongViec).ToListAsync();
+            return listPhanCong ?? new List<PhanCong>();
         }
 
         public async Task<PhanCong> GetByIdAsync(int id)
         {
-            return await _context.phanCongs.AsNoTracking().FirstOrDefaultAsync(x => x.MaPhanCong == id) ?? new PhanCong();
+            return await _context.phanCongs.AsNoTracking().FirstOrDefaultAsync(x => x.MaPhanCong == id && x.TrangThai==true) ?? new PhanCong();
         }
 
         public async Task UpdateAsync(int id, PhanCong phanCong)

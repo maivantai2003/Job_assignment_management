@@ -5,10 +5,14 @@ namespace Job_assignment_management.Api.Hubs
 {
     public class myHub:Hub
     {
+        public static Dictionary<string, string> userConnections = new Dictionary<string, string>();
         public override Task OnConnectedAsync()
         {
-            var connectionId = Context.ConnectionId;
             var userId = Context.UserIdentifier;
+            if (!string.IsNullOrEmpty(userId))
+            {
+                userConnections[userId] = Context.ConnectionId;
+            }
             return base.OnConnectedAsync();
         }
         public async Task TraoDoiThongTin(string maCongViec, string maNhanVien, string message)
@@ -36,8 +40,11 @@ namespace Job_assignment_management.Api.Hubs
         }
         public override Task OnDisconnectedAsync(Exception exception)
         {
-            var connectionId = Context.ConnectionId;
             var userId = Context.UserIdentifier;
+            if (!string.IsNullOrEmpty(userId))
+            {
+                userConnections.Remove(userId);
+            }
             return base.OnDisconnectedAsync(exception);
         }
     }

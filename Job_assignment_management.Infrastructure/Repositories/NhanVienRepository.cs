@@ -54,7 +54,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
         public async Task<NhanVien> GetByIdAsync(int id)
         {
             return await _context.nhanViens.AsNoTracking()
-                .FirstOrDefaultAsync(x => x.MaNhanVien == id) ?? new NhanVien();
+                .FirstOrDefaultAsync(x => x.MaNhanVien == id && x.TrangThai == true) ?? new NhanVien();
         }
 
         public async Task<int> UpdateAsync(int id, NhanVien nhanVien)

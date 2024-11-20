@@ -1,6 +1,7 @@
 ﻿using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Domain.Interfaces;
 using Job_assignment_management.Shared.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace Job_assignment_management.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class TraoDoiThongTinController : ControllerBase
     {
         private readonly ITraoDoiThongTinRepository _traoDoiThongTinRepository;
@@ -34,7 +36,6 @@ namespace Job_assignment_management.Api.Controllers
             var traoDoiThongTin = new TraoDoiThongTin()
             {
                 NoiDungTraoDoi = model.NoiDungTraoDoi,
-                MaFile = model.MaFile,
                 MaCongViec = model.MaCongViec,
                 MaNhanVien = model.MaNhanVien
             };
@@ -48,7 +49,6 @@ namespace Job_assignment_management.Api.Controllers
             var traoDoiThongTin = new TraoDoiThongTin()
             {
                 NoiDungTraoDoi = model.NoiDungTraoDoi,
-                MaFile = model.MaFile,
                 MaCongViec = model.MaCongViec,
                 MaNhanVien = model.MaNhanVien
             };

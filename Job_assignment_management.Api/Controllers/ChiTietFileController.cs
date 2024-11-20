@@ -2,6 +2,7 @@
 using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Domain.Interfaces;
 using Job_assignment_management.Shared.Common;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -10,6 +11,7 @@ namespace Job_assignment_management.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ChiTietFileController : ControllerBase
     {
         private readonly IChiTietFileRepository _chiTietFileRepository;
@@ -36,6 +38,13 @@ namespace Job_assignment_management.Api.Controllers
         {
             var listFile=await _chiTietFileRepository.GetByFilePhanCongAsync(id);
             return Ok(listFile);    
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> DeleteFile(int id)
+        {
+            var result=await _chiTietFileRepository.DeleteAsync(id);
+            await _hubContext.Clients.All.SendAsync("loadFile");
+            return Ok(result);
         }
     }
 }

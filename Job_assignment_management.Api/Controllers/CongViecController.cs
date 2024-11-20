@@ -3,6 +3,8 @@ using Job_assignment_management.Api.Quarts;
 using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Domain.Interfaces;
 using Job_assignment_management.Shared.Common;
+using Job_assignment_management.Shared.Common.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
@@ -13,6 +15,7 @@ namespace Job_assignment_management.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CongViecController : ControllerBase
     {
         private readonly ICongViecRepository _congViecRepository;
@@ -34,41 +37,42 @@ namespace Job_assignment_management.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetCongViecById(int id)
         {
-            var congViec = await _congViecRepository.GetByIdAsync(id);
-            return Ok(congViec);
+            try
+            {
+                var congViec = await _congViecRepository.GetByIdAsync(id);
+                return Ok(congViec);
+            }
+            catch (Exception ex) {
+                return Ok(new
+                {
+                    error = ErrorMessages.FindFailed
+                });
+            }
         }
         [HttpPost]
         public async Task<IActionResult> CreateCongViec(CongViecViewModel model)
         {
-            var congViec = new CongViec
+            try
             {
-                MaPhanDuAn = model.MaPhanDuAn,
-                MaCongViecCha = model.MaCongViecCha,
-                TenCongViec = model.TenCongViec,
-                MoTa = model.MoTa,
-                MucDoUuTien = model.MucDoUuTien,
-                ThoiGianBatDau = model.ThoiGianBatDau,
-                ThoiGianKetThuc = model.ThoiGianKetThuc,
-                TrangThaiCongViec = model.TrangThaiCongViec,
-                MucDoHoanThanh = model.MucDoHoanThanh
-            };
-            var result = await _congViecRepository.CreateAsync(congViec);
-            await _hubContext.Clients.All.SendAsync("loadCongViec");
-            IScheduler scheduler = await _schedulerFactory.GetScheduler();
-            var job = JobBuilder.Create<myQuart>()
-                                .UsingJobData("TenCongViec", model.TenCongViec)
-                                .UsingJobData("MaCongViec", result.MaCongViec + "")
-                                .WithIdentity($"job-{result.MaCongViec}", "group2")
-                                .Build();
-
-            var trigger = TriggerBuilder.Create()
-                                        .WithIdentity($"trigger-{result.MaCongViec}", "group2")
-                                        .StartAt(model.ThoiGianKetThuc.Value)
-                                        .WithSimpleSchedule(x => x.WithMisfireHandlingInstructionFireNow())
-                                        .Build();
-
-            await scheduler.ScheduleJob(job, trigger);
-            return Ok(result);
+                var congViec = new CongViec
+                {
+                    MaPhanDuAn = model.MaPhanDuAn,
+                    MaCongViecCha = model.MaCongViecCha,
+                    TenCongViec = model.TenCongViec,
+                    MoTa = model.MoTa,
+                    MucDoUuTien = model.MucDoUuTien,
+                    ThoiGianBatDau = model.ThoiGianBatDau,
+                    ThoiGianKetThuc = model.ThoiGianKetThuc,
+                    TrangThaiCongViec = model.TrangThaiCongViec,
+                    MucDoHoanThanh = model.MucDoHoanThanh
+                };
+                var result = await _congViecRepository.CreateAsync(congViec);
+                await _hubContext.Clients.All.SendAsync("loadCongViec");
+                return Ok(result);
+            }
+            catch (Exception ex) { 
+                return BadRequest(ex.Message);
+            }
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateCongViec(int id, CongViecViewModel model)
@@ -93,10 +97,25 @@ namespace Job_assignment_management.Api.Controllers
             return Ok(result);
         }
         [HttpPut("[action]/{id}")]
-        public async Task<IActionResult> UpdateCompleteTask(int id,bool trangThai)
+        public async Task<IActionResult> UpdateCompleteTask(int id,bool trangThai,double mucDo)
         {
-            var result=await _congViecRepository.UpdateComplete(id, trangThai);
+            var result=await _congViecRepository.UpdateComplete(id, trangThai,mucDo);
             return Ok(result);  
+        }
+        [HttpPost("[action]")]
+        public async Task<IActionResult> UpdateTaskDay(int id,DateTime thoiGianKetThuc)
+        {
+            try
+            {
+                var result = await _congViecRepository.UpdateTaskDay(id, thoiGianKetThuc);
+                return Ok(result);
+            }
+            catch (Exception ex) {
+                return Ok(new
+                {
+                    error=ErrorMessages.UpdateDateFailed
+                });
+            }
         }
     }
 }

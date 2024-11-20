@@ -29,13 +29,21 @@ namespace Job_assignment_management.Domain.Entities
         [JsonIgnore]
         [ForeignKey(nameof(MaCongViecCha))]
         public CongViec? CongViecCha{ get; set; }
+        [JsonIgnore]
         public ICollection<CongViec>? listCongViecCon { get; set;}
+        [JsonIgnore]
         public ICollection<CongViecPhongBan>? congViecPhongBans { get; set; }
+        [JsonIgnore]
         public ICollection<MocThoiGian>? MocThoiGians { get; set; }  
-        public ICollection<PhanCong>? PhanCongs { get; set; } 
+        public ICollection<PhanCong>? PhanCongs { get; set; }
+        [JsonIgnore] 
+        
         public ICollection<LichSuCongViec>? lichSuCongViecs { get; set; }
+        [JsonIgnore]
         public ICollection<ThongBao>? ThongBaos { get; set; }
+        [JsonIgnore]
         public ICollection<TraoDoiThongTin>? TraoDoiThongTins { get; set; }
+        [JsonIgnore]
         public ICollection<NhacNho>? nhacNhos { get; set; }
     }
 }

@@ -78,6 +78,8 @@ builder.Services.AddTransient<IChuyenGiaoCongViecRepository, ChuyenGiaoCongViecR
 builder.Services.AddTransient<IPhanCongRepository, PhanCongRepository>();
 builder.Services.AddTransient<ISendGmailService, SendGmailService>();
 builder.Services.AddTransient<IChiTietFileRepository, ChiTietFileRepository>();
+builder.Services.AddTransient<INhacNhoRepository,NhacNhoRepository>();
+builder.Services.AddTransient<IThongKeRepository, ThongKeRepository>();
 builder.Services.AddSingleton<IJobFactory, SingletonJobFactory>();
 builder.Services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
 builder.Services.AddSingleton<myQuart>();
@@ -113,10 +115,6 @@ builder.Services.AddAuthentication(options =>
     };
 });
 var app = builder.Build();
-app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod()
-                            .SetIsOriginAllowed(origin => true)
-                            .AllowCredentials());
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -124,9 +122,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.MapHub<myHub>("/hub");
+app.UseCors(policy => policy
+    .WithOrigins("https://deploy-api-chi.vercel.app")
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowCredentials());
+app.UseAuthentication();
 app.UseAuthorization();
-
+app.MapHub<myHub>("/hub");
 app.MapControllers();
-
 app.Run();

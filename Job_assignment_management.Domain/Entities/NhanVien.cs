@@ -25,6 +25,7 @@ namespace Job_assignment_management.Domain.Entities
         [ForeignKey(nameof(MaPhongBan))]
         public PhongBan? PhongBan { get; set; }
         public ICollection<ChuyenGiaoCongViec>? chuyenGiaoCongViecs { get; set; }
+        [JsonIgnore]
         public ICollection<ThongBao>? ThongBaos { get; set; }    
         public ICollection<TraoDoiThongTin>? TraoDoiThongTins { get; set; }
         //[JsonIgnore]
