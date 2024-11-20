@@ -18,11 +18,11 @@ namespace Job_assignment_management.Infrastructure.Repositories
         {
             _context = context;
         }
-        public async Task<TraoDoiThongTin> CreateAsync(TraoDoiThongTin traodoiThongTin)
+        public async Task<int> CreateAsync(TraoDoiThongTin traodoiThongTin)
         {
             await _context.AddAsync(traodoiThongTin);
             await _context.SaveChangesAsync();
-            return traodoiThongTin;
+            return traodoiThongTin.MaTraoDoiThongTin;
         }
 
         public async Task<int> DeleteAsync(int id)

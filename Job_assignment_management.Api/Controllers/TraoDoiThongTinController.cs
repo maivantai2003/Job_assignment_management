@@ -1,6 +1,7 @@
 ﻿using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Domain.Interfaces;
 using Job_assignment_management.Shared.Common;
+using Job_assignment_management.Shared.Common.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -33,15 +34,24 @@ namespace Job_assignment_management.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateTraoDoiThongTin(TraoDoiThongTinViewModel model)
         {
-            var traoDoiThongTin = new TraoDoiThongTin()
+            try
             {
-                NoiDungTraoDoi = model.NoiDungTraoDoi,
-                MaCongViec = model.MaCongViec,
-                MaNhanVien = model.MaNhanVien,
-                TenNhanVien=model.TenNhanVien
-            };
-            var res = await _traoDoiThongTinRepository.CreateAsync(traoDoiThongTin);
-            return Ok(res);
+                var traoDoiThongTin = new TraoDoiThongTin()
+                {
+                    NoiDungTraoDoi = model.NoiDungTraoDoi,
+                    MaCongViec = model.MaCongViec,
+                    MaNhanVien = model.MaNhanVien,
+                    TenNhanVien = model.TenNhanVien
+                };
+                var res = await _traoDoiThongTinRepository.CreateAsync(traoDoiThongTin);
+                return Ok(res);
+            }
+            catch (Exception ex) {
+                return Ok(new
+                {
+                    error = ErrorMessages.CreateFailed
+                });
+            }
         }
 
         [HttpPut("{id}")]
