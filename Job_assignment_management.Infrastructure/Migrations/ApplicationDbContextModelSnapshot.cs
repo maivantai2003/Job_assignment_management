@@ -600,7 +600,6 @@ namespace Job_assignment_management.Infrastructure.Migrations
                     b.ToTable("thongBaos", (string)null);
                 });
 
-<<<<<<< HEAD
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.TienDoCongViec", b =>
                 {
                     b.Property<int>("MaTienDoCongViec")
@@ -631,8 +630,6 @@ namespace Job_assignment_management.Infrastructure.Migrations
                     b.ToTable("tienDoCongViecs", (string)null);
                 });
 
-=======
->>>>>>> 886adef4b264690fb33066bb70f328422c3fb6d2
             modelBuilder.Entity("Job_assignment_management.Domain.Entities.TraoDoiThongTin", b =>
                 {
                     b.Property<int>("MaTraoDoiThongTin")
