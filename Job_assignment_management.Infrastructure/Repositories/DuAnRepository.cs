@@ -52,7 +52,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
 
         public async Task<int> DeleteAsync(int id)
         {
-            var duAn = await _context.duAns.FirstOrDefaultAsync(x => x.MaDuAn == id);
+            var duAn = await _context.duAns.AsNoTracking().FirstOrDefaultAsync(x => x.MaDuAn == id);
             if (duAn != null)
             {
                 duAn.TrangThai = false;

@@ -23,7 +23,7 @@ namespace Job_assignment_management.Api.Controllers
         {
             _congViecRepository = congViecRepository;
             _hubContext = hubContext;
-            _schedulerFactory= schedulerFactory;    
+            _schedulerFactory = schedulerFactory;
         }
         [HttpGet]
         public async Task<IActionResult> GetAllCongViec(string? search, int page = 1)
@@ -54,13 +54,10 @@ namespace Job_assignment_management.Api.Controllers
             };
             var result = await _congViecRepository.CreateAsync(congViec);
             await _hubContext.Clients.All.SendAsync("loadCongViec");
-            //var triggerTime = model.ThoiGianKetThuc.HasValue
-            //            ? model.ThoiGianKetThuc.Value.AddHours(-7).AddMinutes(-1)
-            //            : DateTime.Now.AddDays(1).AddHours(-7);
             IScheduler scheduler = await _schedulerFactory.GetScheduler();
             var job = JobBuilder.Create<myQuart>()
-                                .UsingJobData("TenCongViec", result.TenCongViec)
-                                .UsingJobData("MaCongViec", result.MaCongViec+"")
+                                .UsingJobData("TenCongViec", model.TenCongViec)
+                                .UsingJobData("MaCongViec", result.MaCongViec + "")
                                 .WithIdentity($"job-{result.MaCongViec}", "group2")
                                 .Build();
 
@@ -94,6 +91,12 @@ namespace Job_assignment_management.Api.Controllers
         {
             var result = await _congViecRepository.DeleteAsync(id);
             return Ok(result);
+        }
+        [HttpPut("[action]/{id}")]
+        public async Task<IActionResult> UpdateCompleteTask(int id,bool trangThai)
+        {
+            var result=await _congViecRepository.UpdateComplete(id, trangThai);
+            return Ok(result);  
         }
     }
 }

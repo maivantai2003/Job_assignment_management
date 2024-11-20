@@ -18,9 +18,14 @@ namespace Job_assignment_management.Infrastructure.Repositories
             _context = context; 
         }
 
-        public Task<bool> CheckQuyen(int MaQuyen, int MaChucNang, string HanhDong)
+        public async Task<bool> CheckQuyenAsync(ChiTietQuyen chiTietQuyen)
         {
-            throw new NotImplementedException();
+            var result= await _context.chiTietQuyens.AsNoTracking().FirstOrDefaultAsync(x=>x.MaNhomQuyen==chiTietQuyen.MaNhomQuyen && x.MaChucNang==chiTietQuyen.MaChucNang && x.HanhDong==x.HanhDong);
+            if (result == null)
+            {
+                return true;
+            }
+            return false;
         }
 
         public async Task<ChiTietQuyen> CreateAsync(ChiTietQuyen chiTietQuyen)
@@ -33,20 +38,20 @@ namespace Job_assignment_management.Infrastructure.Repositories
         public async Task<int> DeleteAsync(int id)
         {
             var chiTietQuyen = await _context.chiTietQuyens.FirstOrDefaultAsync(x => x.MaChiTietQuyen == id);
-            chiTietQuyen.HanhDong = "X";
+            _context.chiTietQuyens.Remove(chiTietQuyen);
             await _context.SaveChangesAsync();
             return id;
         }
-
-        public async Task<List<ChiTietQuyen>> GetAllAsync(string? search, int page = 1)
+        public async Task<List<ChiTietQuyen>> GetAllAsync()
         {
             var listChiTietQuyen = _context.chiTietQuyens.Include(x=>x.ChucNang).Include(x=>x.NhomQuyen).AsNoTracking().AsQueryable();
-            if (!string.IsNullOrEmpty(search))
-            {
-                listChiTietQuyen= listChiTietQuyen.Where(x => x.ChucNang.TenChucNang.Contains(search) || x.NhomQuyen.TenQuyen.Contains(search));
-            }
-            var result = PageList<ChiTietQuyen>.Create(listChiTietQuyen, 10, page);
-            return result.ToList();
+            //if (!string.IsNullOrEmpty(search))
+            //{
+            //    listChiTietQuyen= listChiTietQuyen.Where(x => x.ChucNang.TenChucNang.Contains(search) || x.NhomQuyen.TenQuyen.Contains(search));
+            //}
+            //var result = PageList<ChiTietQuyen>.Create(listChiTietQuyen, 10, page);
+            //return result.ToList();
+            return listChiTietQuyen.ToList();
         }
 
         public async Task<ChiTietQuyen> GetByIdAsync(int id)

@@ -54,7 +54,6 @@ namespace Job_assignment_management.Infrastructure.Repositories
                     .SetProperty(t => t.TrangThaiCongViec, congViec.TrangThaiCongViec)
                     .SetProperty(t => t.MucDoHoanThanh, congViec.MucDoHoanThanh));
         }
-
         public async Task<int> DeleteAsync(int id)
         {
             var congViec = await _context.congViecs.FirstOrDefaultAsync(x => x.MaCongViec == id);
@@ -63,6 +62,14 @@ namespace Job_assignment_management.Infrastructure.Repositories
                 _context.congViecs.Remove(congViec);
                 await _context.SaveChangesAsync();
             }
+            return id;
+        }
+
+        public async Task<int> UpdateComplete(int id,bool trangThai)
+        {
+            var congViec=await _context.congViecs.FirstOrDefaultAsync(x=>x.MaCongViec==id);
+            congViec.TrangThaiCongViec = trangThai;
+            await _context.SaveChangesAsync();
             return id;
         }
     }

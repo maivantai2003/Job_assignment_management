@@ -17,9 +17,9 @@ namespace Job_assignment_management.Api.Controllers
             _chiTietQuyenReposity = chiTietQuyenReposity;
         }
         [HttpGet]
-        public async Task<IActionResult> GetAllChiTietQuyen(string ?search,int page=1)
+        public async Task<IActionResult> GetAllChiTietQuyen()
         {
-            var listChiTietQuyen=await _chiTietQuyenReposity.GetAllAsync(search,page);
+            var listChiTietQuyen=await _chiTietQuyenReposity.GetAllAsync();
             return Ok(listChiTietQuyen);
         }
         [HttpGet("{id}")]
@@ -31,12 +31,25 @@ namespace Job_assignment_management.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> AddChiTietQuyen(ChiTietQuyenViewModel model)
         {
-            var chiTietQuyen = new ChiTietQuyen()
+            var chiTietQuyen = new ChiTietQuyen()  
             {
                 MaChucNang = model.MaChucNang,
                 MaNhomQuyen = model.MaNhomQuyen,
+                HanhDong=model.HanhDong,
             };
             var result=await _chiTietQuyenReposity.CreateAsync(chiTietQuyen);   
+            return Ok(result);
+        }
+        [HttpPost("[action]")]
+        public async Task<IActionResult> CheckQuyen(ChiTietQuyenViewModel chiTietQuyenViewModel)
+        {
+            var chiTietQuyen = new ChiTietQuyen()
+            {
+                MaChucNang = chiTietQuyenViewModel.MaChucNang,
+                MaNhomQuyen = chiTietQuyenViewModel.MaNhomQuyen,
+                HanhDong = chiTietQuyenViewModel.HanhDong
+            };
+            var result=await _chiTietQuyenReposity.CheckQuyenAsync(chiTietQuyen);
             return Ok(result);
         }
         [HttpPut("{id}")]
@@ -46,6 +59,7 @@ namespace Job_assignment_management.Api.Controllers
             {
                 MaChucNang = model.MaChucNang,
                 MaNhomQuyen = model.MaNhomQuyen,
+                HanhDong = model.HanhDong,
             };
             var ChiTietQuyen = await _chiTietQuyenReposity.UpdateAsync(id,chiTietQuyen);
             return Ok(ChiTietQuyen);    

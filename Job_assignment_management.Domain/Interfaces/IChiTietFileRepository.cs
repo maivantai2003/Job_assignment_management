@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Job_assignment_management.Domain.Interfaces
 {
-    public interface IFilesRepository
+    public interface IChiTietFileRepository
     {
-        Task<List<Files>> GetAllAsync();
-        Task<Files> GetByIdAsync(int id);
-        Task<Files> CreateAsync(Files file);
+        Task<List<ChiTietFile>> GetByIdAsync(int maPhanCong);
+        Task<List<ChiTietFile>> GetByFilePhanCongAsync(int maPhanCong);
+        Task<ChiTietFile> CreateAsync(ChiTietFile chiTietFile);
         Task<int> DeleteAsync(int id);
     }
 }
