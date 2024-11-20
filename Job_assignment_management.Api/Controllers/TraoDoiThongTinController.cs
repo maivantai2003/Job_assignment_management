@@ -19,9 +19,9 @@ namespace Job_assignment_management.Api.Controllers
             _traoDoiThongTinRepository = traoDoiThongTinRepository;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAllTraoDoiThongTin(string? search, int page = 1) {
-            return Ok(await _traoDoiThongTinRepository.GetAllAsync(search, page));
+        [HttpGet("[action]/{id}")]
+        public async Task<IActionResult> GetAll(int id) {
+            return Ok(await _traoDoiThongTinRepository.GetAllAsync(id));
         }
         
         [HttpGet("{id}")]
@@ -37,7 +37,8 @@ namespace Job_assignment_management.Api.Controllers
             {
                 NoiDungTraoDoi = model.NoiDungTraoDoi,
                 MaCongViec = model.MaCongViec,
-                MaNhanVien = model.MaNhanVien
+                MaNhanVien = model.MaNhanVien,
+                TenNhanVien=model.TenNhanVien
             };
             var res = await _traoDoiThongTinRepository.CreateAsync(traoDoiThongTin);
             return Ok(res);

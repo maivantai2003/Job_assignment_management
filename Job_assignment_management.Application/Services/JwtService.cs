@@ -11,6 +11,7 @@ using Job_assignment_management.Infrastructure.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using Microsoft.EntityFrameworkCore;
+using Job_assignment_management.Application.Interfaces;
 namespace RefreshToken.Services
 {
     public class JwtService : IJwtService
@@ -19,6 +20,7 @@ namespace RefreshToken.Services
         private readonly IConfiguration _configuration;
         public static int MaNhomQuyen;
         public static string TenQuyen;
+        public static string TenNhanVien;
         public static List<string> listChucNang;
         public JwtService(ApplicationDbContext context, IConfiguration configuration)
         {
@@ -36,13 +38,13 @@ namespace RefreshToken.Services
 
         public async Task<AuthResponse> GetTokenAsync(AuthRequest request, string ipAddress)
         {
-            var user =await _context.taiKhoans.AsNoTracking().Include(x=>x.NhomQuyen).FirstOrDefaultAsync(x => x.TenTaiKhoan.Equals(request.TenTaiKhoan) && x.MatKhau.Equals(request.MatKhau));
+            var user =await _context.taiKhoans.AsNoTracking().Include(x=>x.NhanVien).FirstOrDefaultAsync(x => x.TenTaiKhoan.Equals(request.TenTaiKhoan) && x.MatKhau.Equals(request.MatKhau) && x.TrangThai==true);
             if (user == null)
             {
                 return await Task.FromResult<AuthResponse>(null);
             }
             MaNhomQuyen = user.MaNhomQuyen;
-            TenQuyen = user.NhomQuyen?.TenQuyen;
+            TenNhanVien=user.NhanVien.TenNhanVien;
             string tokenString = GenerateToken(user.TenTaiKhoan,user.MaNhanVien);
             string refreshToken = GenerateRefreshToken();
             return await SaveTokenDetails(ipAddress, user.MaNhanVien, tokenString, refreshToken);
@@ -88,9 +90,11 @@ namespace RefreshToken.Services
             var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.NameIdentifier, TenTaiKhoan),
-                        new Claim(ClaimTypes.Role, TenQuyen),
+                        new Claim(ClaimTypes.Role, userId.ToString()),
                         new Claim("MaTaiKhoan", userId.ToString()),
-                        new Claim("MaNhomQuyen",MaNhomQuyen.ToString())
+                        new Claim("MaNhomQuyen",MaNhomQuyen.ToString()),
+                        new Claim("TenNhanVien",TenNhanVien)
+                        
                     };
             var descriptor = new SecurityTokenDescriptor()
             {

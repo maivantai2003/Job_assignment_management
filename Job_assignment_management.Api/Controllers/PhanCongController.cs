@@ -94,6 +94,7 @@ namespace Job_assignment_management.Api.Controllers
         public async Task<IActionResult> DeletePhanCong(int id)
         {
             await _repository.DeleteAsync(id);
+            await _hubContext.Clients.All.SendAsync("deletePhanCong");
             return NoContent();
         }
     }

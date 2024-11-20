@@ -1,4 +1,5 @@
-﻿using Job_assignment_management.Application.Services;
+﻿using Job_assignment_management.Application.Interfaces;
+using Job_assignment_management.Application.Services;
 using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Infrastructure.Data;
 using Job_assignment_management.Shared.Common;

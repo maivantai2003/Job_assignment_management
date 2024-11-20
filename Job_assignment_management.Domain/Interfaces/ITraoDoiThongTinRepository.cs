@@ -9,7 +9,7 @@ namespace Job_assignment_management.Domain.Interfaces
 {
     public interface ITraoDoiThongTinRepository
     {
-        Task<List<TraoDoiThongTin>> GetAllAsync(string? search, int page = 1);
+        Task<List<TraoDoiThongTin>> GetAllAsync(int maCongViec);
         Task<TraoDoiThongTin> GetByIdAsync(int id);
         Task<TraoDoiThongTin> CreateAsync(TraoDoiThongTin traodoiThongTin);
         Task<int> UpdateAsync(int id, TraoDoiThongTin traodoiThongTin);

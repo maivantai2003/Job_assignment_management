@@ -80,6 +80,7 @@ builder.Services.AddTransient<ISendGmailService, SendGmailService>();
 builder.Services.AddTransient<IChiTietFileRepository, ChiTietFileRepository>();
 builder.Services.AddTransient<INhacNhoRepository,NhacNhoRepository>();
 builder.Services.AddTransient<IThongKeRepository, ThongKeRepository>();
+builder.Services.AddTransient<IChiTietTraoDoiThongTinRepository, ChiTietTraoDoiThongTinRepository>();
 builder.Services.AddSingleton<IJobFactory, SingletonJobFactory>();
 builder.Services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
 builder.Services.AddSingleton<myQuart>();

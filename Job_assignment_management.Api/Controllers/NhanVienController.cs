@@ -2,6 +2,7 @@
 using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Domain.Interfaces;
 using Job_assignment_management.Shared.Common;
+using Job_assignment_management.Shared.Common.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -32,38 +33,67 @@ namespace Job_assignment_management.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetNhanVienById(int id)
         {
-            var nhanVien = await _nhanVienRepository.GetByIdAsync(id);
-            return Ok(nhanVien);
+            try
+            {
+                var nhanVien = await _nhanVienRepository.GetByIdAsync(id);
+                return Ok(nhanVien);
+            }
+            catch (Exception ex) {
+                return Ok(new
+                {
+                    error = ErrorMessages.FindFailed
+                });
+            }
         }
         [HttpPost]
         public async Task<IActionResult> CreateNhanVien(NhanVienViewModel model)
         {
-            var nhanVien = new NhanVien
+            try
             {
-                TenNhanVien = model.TenNhanVien,
-                TenChucVu = model.TenChucVu,
-                SoDienThoai = model.SoDienThoai,
-                Email = model.Email,
-                MaPhongBan = model.MaPhongBan
-            };
-            var result = await _nhanVienRepository.CreateAsync(nhanVien);
-            await _hubContext.Clients.All.SendAsync("loadEmployee");
-            return Ok(result);
+                var nhanVien = new NhanVien
+                {
+                    TenNhanVien = model.TenNhanVien,
+                    TenChucVu = model.TenChucVu,
+                    SoDienThoai = model.SoDienThoai,
+                    Email = model.Email,
+                    MaPhongBan = model.MaPhongBan
+                };
+                var result = await _nhanVienRepository.CreateAsync(nhanVien);
+                await _hubContext.Clients.All.SendAsync("loadEmployee");
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return Ok(new
+                {
+                    error = ErrorMessages.CreateFailed
+                });
+            }
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateNhanVien(int id, NhanVienViewModel model)
         {
-            var nhanVien = new NhanVien
+            try
             {
-                TenNhanVien = model.TenNhanVien,
-                TenChucVu = model.TenChucVu,
-                SoDienThoai = model.SoDienThoai,
-                Email = model.Email,
-                MaPhongBan = model.MaPhongBan
-            };
-            var result = await _nhanVienRepository.UpdateAsync(id, nhanVien);
-            await _hubContext.Clients.All.SendAsync("loadEmployee");
-            return NoContent();
+                var nhanVien = new NhanVien
+                {
+                    TenNhanVien = model.TenNhanVien,
+                    TenChucVu = model.TenChucVu,
+                    SoDienThoai = model.SoDienThoai,
+                    Email = model.Email,
+                    MaPhongBan = model.MaPhongBan
+                };
+                var result = await _nhanVienRepository.UpdateAsync(id, nhanVien);
+                await _hubContext.Clients.All.SendAsync("loadEmployee");
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                return Ok(new
+                {
+                    error = ErrorMessages.UpdateFailed
+                });
+            }
         }
 
         [HttpDelete("{id}")]

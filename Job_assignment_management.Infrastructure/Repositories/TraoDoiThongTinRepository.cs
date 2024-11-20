@@ -32,16 +32,17 @@ namespace Job_assignment_management.Infrastructure.Repositories
             await _context.SaveChangesAsync();
             return id;
         }
-
-        public async Task<List<TraoDoiThongTin>> GetAllAsync(string? search, int page = 1)
+        public async Task<List<TraoDoiThongTin>> GetAllAsync(int maCongViec)
         {
-            var listTraoDoiTT = _context.traoDoiThongTins.AsNoTracking().AsQueryable();
-            if (!string.IsNullOrEmpty(search))
-            {
-                listTraoDoiTT = listTraoDoiTT.Where(x => x.NoiDungTraoDoi.Contains(search) || x.ThoiGianGui.ToString().Contains(search));
-            }
-            var result = PageList<TraoDoiThongTin>.Create(listTraoDoiTT, 10, page);
-            return result.ToList();
+            var listTraoDoiThongTin=await _context.traoDoiThongTins.AsNoTracking().Where(x=>x.MaCongViec==maCongViec && x.TrangThai==true).Include(x=>x.chiTietTraoDoiThongTins).ToListAsync();
+            //var listTraoDoiTT = _context.traoDoiThongTins.AsNoTracking().AsQueryable();
+            //if (!string.IsNullOrEmpty(search))
+            //{
+            //    listTraoDoiTT = listTraoDoiTT.Where(x => x.NoiDungTraoDoi.Contains(search) || x.ThoiGianGui.ToString().Contains(search));
+            //}
+            //var result = PageList<TraoDoiThongTin>.Create(listTraoDoiTT, 10, page);
+            //return result.ToList();
+            return listTraoDoiThongTin;
         }
 
         public async Task<TraoDoiThongTin> GetByIdAsync(int id)

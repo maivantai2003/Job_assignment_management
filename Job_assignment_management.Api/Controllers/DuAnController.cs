@@ -2,6 +2,7 @@
 using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Domain.Interfaces;
 using Job_assignment_management.Shared.Common;
+using Job_assignment_management.Shared.Common.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -31,29 +32,56 @@ namespace Job_assignment_management.Api.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetDuAnById(int id)
         {
-            var duAn = await _duAnRepository.GetByIdAsync(id);
-            return Ok(duAn);
+            try
+            {
+                var duAn = await _duAnRepository.GetByIdAsync(id);
+                return Ok(duAn);
+            }
+            catch (Exception ex) {
+                return Ok(new
+                {
+                    error = ErrorMessages.FindFailed
+                });
+            }
         }
         [HttpPost]
         public async Task<IActionResult> CreateDuAn(DuAnViewModel model)
         {
-            var duAn = new DuAn
+            try
             {
-                TenDuAn = model.TenDuAn
-            };
-            var result = await _duAnRepository.CreateAsync(duAn);
-            await _hubContext.Clients.All.SendAsync("loadDuAn");
-            return Ok(result);
+                var duAn = new DuAn
+                {
+                    TenDuAn = model.TenDuAn
+                };
+                var result = await _duAnRepository.CreateAsync(duAn);
+                await _hubContext.Clients.All.SendAsync("loadDuAn");
+                return Ok(result);
+            }
+            catch (Exception ex) {
+                return Ok(new
+                {
+                    error = ErrorMessages.CreateFailed
+                });
+            }
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateDuAn(int id, DuAnViewModel model)
         {
-            var duAn = new DuAn
+            try
             {
-                TenDuAn = model.TenDuAn
-            };
-            var result = await _duAnRepository.UpdateAsync(id, duAn);
-            return NoContent();
+                var duAn = new DuAn
+                {
+                    TenDuAn = model.TenDuAn
+                };
+                var result = await _duAnRepository.UpdateAsync(id, duAn);
+                return NoContent();
+            }
+            catch (Exception ex) {
+                return Ok(new
+                {
+                    error = ErrorMessages.UpdateFailed
+                });
+            }
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteDuAn(int id)
