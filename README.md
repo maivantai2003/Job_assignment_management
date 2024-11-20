@@ -1,16 +1,24 @@
 ## Overview
 Task Management System is an application that helps users organize, track and manage personal and team tasks or projects effectively. The application provides intuitive and easy-to-use features to optimize workflow, increase productivity and improve collaboration among team members.
 ## Features
-- Authentication & Authorization
-- Department management
-- Staff management
-- Task management
-- Notification 
+🌟 Authentication & Authorization  
+🌟 Department management  
+🌟 Staff management  
+🌟 Task management  
+🌟 Notification  
+🌟 Scheduling  
+🌟 Chat  
+🌟 Realtime Updates
 ## Built with
-![.Net](https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white) 
-  ![MicrosoftSQLServer](https://img.shields.io/badge/Microsoft%20SQL%20Sever-CC2927?style=for-the-badge&logo=microsoft%20sql%20server&logoColor=white)
+![.Net](https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white)
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+
+![MicrosoftSQLServer](https://img.shields.io/badge/Microsoft%20SQL%20Sever-CC2927?style=for-the-badge&logo=microsoft%20sql%20server&logoColor=white)
+![SignalR](https://img.shields.io/badge/SignalR-0078D4?style=for-the-badge&logo=signalr&logoColor=white)
+
 ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
+![SignalR](https://img.shields.io/badge/Quartz.NET-ffffff?style=for-the-badge&logo=Quartz.NET&logoColor=0078D4)
+
 ## Run project
 ### Requierment
 - Dotnet version 8 or later
@@ -18,7 +26,12 @@ Task Management System is an application that helps users organize, track and ma
 ### Installation
 1. Clone this project
 ```bash
+# Backend
 git clone https://github.com/maivantai2003/Job_assignment_management.git
+
+# Frontend
+git clone https://github.com/Khoadangdo123/QLPB.git
+
 ```
 2. Run server (You can do this step on IDE like Visual Studio)
 Change connectionString on Job_assignment_management.Api/appsettings.json
@@ -36,35 +49,32 @@ If your use user-password server
 },
 ```
 
-  Migration & run
+Set Default Project
+1. Open Package Manager Console (go to Tools > NuGet Package Manager > Package Manager Console).
+
+2. In the Package Manager Console, look for the dropdown labeled Default project on the right-hand side.
+
+3. Select Job_assignment_management.Infrastructure as the Default Project.
+
+Run Commands
+
 ```bash
-#install dotnet-ef if you don not have
-dotnet tool install --global dotnet-ef 
+# Create a Migration
+Add-Migration InitialCreate
 
-#migration
-dotnet ef migrations add [migration-name] --project Job_assignment_management.Infrastructure/Job_assignment_management.Infrastructure.csproj --startup-project Job_assignment_management.Api/Job_assignment_management.Api.csproj -o Job_assignment_management.Infrastructure/Migrations
-dotnet ef database update --project Job_assignment_management.Infrastructure/Job_assignment_management.Infrastructure.csproj --startup-project Job_assignment_management.Api/Job_assignment_management.Api.csproj
-
-#restore pakages
-dotnet restore
-
-#build
-dotnet build
-
-#run
-dotnet run
+# Update the Database
+Update-Database
 ```
-3. Run Client (Different Project)
 
-Clone the `QLPB` project from GitHub:
-```bash
-git clone https://github.com/Khoadangdo123/QLPB.git
-```
+Important Notes
+
+- Make sure Job_assignment_management.Api is set as the Startup Project in Visual Studio (right-click the project > select Set as Startup Project).
+- Ensure the correct connection string is configured in the appsettings.json or appsettings.Development.json file of the API project.
+
+3. Run Client
 
 Install dependencies and run app:
 ```bash
-cd client
-
 npm install
 
 npm run dev
@@ -103,7 +113,7 @@ Author:
 
 
 #### Contact email:
-- [vantai0812200@gmail.com](mailto:vantai0812200@gmail.com)
+- [vantai08122003@gmail.com](mailto:vantai08122003@gmail.com)
 - [lengocgiau2k3@gmail.com](mailto:lengocgiau2k3@gmail.com)
 - [dominhquan15623@gmail.com](mailto:dominhquan15623@gmail.com)
 - [sangthanhnguyen2910@gmail.com](mailto:sangthanhnguyen2910@gmail.com)

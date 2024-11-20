@@ -20,12 +20,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
-//builder.Services.AddSignalR(options =>
-//{
-//    options.KeepAliveInterval = TimeSpan.FromMinutes(30);
-//    options.ClientTimeoutInterval = TimeSpan.FromMinutes(2);
-//    options.HandshakeTimeout = TimeSpan.FromSeconds(15);
-//});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -85,7 +79,8 @@ builder.Services.AddTransient<IPhanCongRepository, PhanCongRepository>();
 builder.Services.AddTransient<ISendGmailService, SendGmailService>();
 builder.Services.AddTransient<IChiTietFileRepository, ChiTietFileRepository>();
 builder.Services.AddTransient<INhacNhoRepository,NhacNhoRepository>();
-//builder.Services.AddTransient<IThongKeRepository, ThongKeRepository>();
+builder.Services.AddTransient<IThongKeRepository, ThongKeRepository>();
+builder.Services.AddTransient<IChiTietTraoDoiThongTinRepository, ChiTietTraoDoiThongTinRepository>();
 builder.Services.AddSingleton<IJobFactory, SingletonJobFactory>();
 builder.Services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
 builder.Services.AddSingleton<myQuart>();
@@ -137,14 +132,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-//app.UseWebSockets(new WebSocketOptions
-//{
-//    KeepAliveInterval = TimeSpan.FromMinutes(1),
-//    ReceiveBufferSize = 4 * 1024
-//});
-app.MapHub<myHub>("/hub");
+app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod()
+                            .SetIsOriginAllowed(origin => true)
+                            .AllowCredentials());
 app.UseAuthentication();
 app.UseAuthorization();
+app.MapHub<myHub>("/hub");
 app.MapControllers();
-
 app.Run();
