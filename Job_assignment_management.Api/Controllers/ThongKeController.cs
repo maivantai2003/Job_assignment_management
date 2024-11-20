@@ -14,9 +14,9 @@ namespace Job_assignment_management.Api.Controllers
             _thongKeRepository = thongKeRepository;
         }
         [HttpGet]
-        public async Task<IActionResult> ThongKeNhanVien()
+        public async Task<IActionResult> ThongKeCongViec()
         {
-            return Ok(true);
+            return Ok(await _thongKeRepository.ThongKeCongViec());
         }
     }
 }
