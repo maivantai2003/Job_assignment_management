@@ -27,6 +27,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
 
         public async Task<int> DeleteAsync(int id)
         {
+            //Tìm bản ghi cần xóa bằng FirstOrDefaultAsync
             var existingTraoDoiTT = await _context.traoDoiThongTins.FirstOrDefaultAsync(x => x.MaTraoDoiThongTin == id);
             existingTraoDoiTT.TrangThai = false;
             await _context.SaveChangesAsync();
@@ -34,7 +35,8 @@ namespace Job_assignment_management.Infrastructure.Repositories
         }
 
         public async Task<List<TraoDoiThongTin>> GetAllAsync(string? search, int page = 1)
-        {
+        {//Khi gọi AsNoTracking, các thực thể được truy vấn sẽ không được Entity Framework theo dõi trạng thái. 
+            //Chuyển dữ liệu thành dạng truy vấn LINQ để có thể áp dụng các bộ lọc, sắp xếp hoặc phân trang sau này.
             var listTraoDoiTT = _context.traoDoiThongTins.AsNoTracking().AsQueryable();
             if (!string.IsNullOrEmpty(search))
             {

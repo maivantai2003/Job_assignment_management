@@ -32,6 +32,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
         }
 
         public async Task<List<LichSuCongViec>> GetAllAsync()
+        //Chuyển dữ liệu thành dạng truy vấn LINQ để có thể áp dụng các bộ lọc, sắp xếp hoặc phân trang sau này.
         {
             var listTienDoCongViec = _context.lichSuCongViecs.AsNoTracking().AsQueryable();
             //if (!string.IsNullOrEmpty(search))

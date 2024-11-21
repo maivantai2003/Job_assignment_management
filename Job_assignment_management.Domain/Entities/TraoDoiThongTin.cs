@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+//ánh xạ tới một bảng trong cơ sở dữ liệu, với mục đích lưu trữ thông tin về các trao đổi thông tin liên quan đến công việc và nhân viên.
 namespace Job_assignment_management.Domain.Entities
 {
     public class TraoDoiThongTin
