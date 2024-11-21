@@ -117,10 +117,4 @@ Author:
 |Mai Văn Tài      | Lê Ngọc Giàu   | Đỗ Minh Quân   | Nguyễn Thanh Sang | Nguyễn Quốc Toàn | Trần Quốc Sĩ   |
 
 
-#### Contact email:
-- [vantai08122003@gmail.com](mailto:vantai08122003@gmail.com)
-- [lengocgiau2k3@gmail.com](mailto:lengocgiau2k3@gmail.com)
-- [dominhquan15623@gmail.com](mailto:dominhquan15623@gmail.com)
-- [sangthanhnguyen2910@gmail.com](mailto:sangthanhnguyen2910@gmail.com)
-- [ngquoctoan2001@gmail.com](mailto:ngquoctoan2001@gmail.com)
-- [quocsi014@gmail.com](mailto:quocsi014@gmail.com)
+
