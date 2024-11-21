@@ -128,7 +128,6 @@ app.UseCors(policy => policy
     .AllowAnyHeader()
     .AllowAnyMethod()
     .AllowCredentials());
-app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapHub<myHub>("/hub");
