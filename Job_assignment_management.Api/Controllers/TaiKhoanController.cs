@@ -58,6 +58,7 @@ namespace Job_assignment_management.Api.Controllers
                 MaNhomQuyen = model.MaNhomQuyen
             };
             var result = await _taiKhoanRepository.UpdateAsync(id, taiKhoan);
+            await _hubContext.Clients.All.SendAsync("loadTaiKhoan");
             return NoContent();
         }
 

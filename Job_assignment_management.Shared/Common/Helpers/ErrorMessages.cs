@@ -8,45 +8,46 @@ namespace Job_assignment_management.Shared.Common.Helpers
 {
     public static class ErrorMessages
     {
-        public const string CreateFailed = "Failed to add the new item.";
-        public const string UpdateFailed = "Failed to update the item.";
-        public const string DeleteFailed = "Failed to delete the item.";
-        public const string FindFailed = "Failed to find the requested item.";
-        public const string InvalidDate = "The provided date is invalid or in an incorrect format.";
-        public const string UpdateDateFailed = "Failed to update the date. Please check the date format and try again.";
+        public const string CreateFailed = "Thêm mới thất bại.";
+        public const string UpdateFailed = "Cập nhật thất bại.";
+        public const string DeleteFailed = "Xóa thất bại.";
+        public const string FindFailed = "Tìm kiếm thất bại.";
+        public const string InvalidDate = "Ngày cung cấp không hợp lệ hoặc định dạng không đúng.";
+        public const string UpdateDateFailed = "Cập nhật ngày thất bại. Vui lòng kiểm tra lại định dạng ngày và thử lại.";
+
         public static string CreateFailedMessage(string itemName)
         {
-            return $"Failed to add the item '{itemName}'.";
+            return $"Thêm mới '{itemName}' thất bại.";
         }
 
         public static string UpdateFailedMessage(string itemName)
         {
-            return $"Failed to update the item '{itemName}'.";
+            return $"Cập nhật '{itemName}' thất bại.";
         }
 
         public static string DeleteFailedMessage(string itemName)
         {
-            return $"Failed to delete the item '{itemName}'.";
+            return $"Xóa '{itemName}' thất bại.";
         }
 
         public static string SearchFailedMessage(string searchCriteria)
         {
-            return $"Failed to find the item with the criteria '{searchCriteria}'.";
+            return $"Tìm kiếm thất bại với tiêu chí '{searchCriteria}'.";
         }
 
         public static string InvalidDateMessage(string fieldName)
         {
-            return $"The date provided for '{fieldName}' is invalid or in an incorrect format.";
+            return $"Ngày cung cấp cho '{fieldName}' không hợp lệ hoặc định dạng không đúng.";
         }
 
         public static string UpdateDateFailedMessage(string fieldName)
         {
-            return $"Failed to update the date for '{fieldName}'. Please check the date format and try again.";
+            return $"Cập nhật ngày cho '{fieldName}' thất bại. Vui lòng kiểm tra lại định dạng ngày và thử lại.";
         }
 
         public static string NotFoundMessage(string itemName)
         {
-            return $"The requested item '{itemName}' was not found.";
+            return $"Không tìm thấy mục yêu cầu '{itemName}'.";
         }
     }
 }

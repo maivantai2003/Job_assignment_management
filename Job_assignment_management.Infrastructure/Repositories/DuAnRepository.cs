@@ -21,7 +21,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
         }
         public async Task<List<DuAn>> GetAllAsync(string? search, int page = 1)
         {
-            var listDuAn = _context.duAns.Include(x=>x.PhanDuAn).ThenInclude(x => x.congViecs).AsNoTracking().AsQueryable();
+            var listDuAn = _context.duAns.AsNoTracking().Include(x=>x.PhanDuAn).ThenInclude(x => x.congViecs).AsQueryable();
             if (!string.IsNullOrEmpty(search))
             {
                 listDuAn = listDuAn.Where(x => x.TenDuAn.Contains(search));
@@ -32,7 +32,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
         }
         public async Task<DuAn> GetByIdAsync(int id)
         {
-            return await _context.duAns.Include(x => x.PhanDuAn).ThenInclude(x => x.congViecs).ThenInclude(x => x.listCongViecCon).AsNoTracking()
+            return await _context.duAns.AsNoTracking().Include(x => x.PhanDuAn).ThenInclude(x => x.congViecs)
                 .FirstOrDefaultAsync(x => x.MaDuAn == id && x.TrangThai == true) ?? new DuAn();
         }
 

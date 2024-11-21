@@ -48,8 +48,8 @@ namespace Job_assignment_management.Infrastructure.Repositories
 
         public async Task<List<PhanCong>> GetPhanCongNhanVienAsync(int maNhanVien)
         {
-            var listPhanCong = _context.phanCongs.AsNoTracking().Where(x=>x.MaNhanVien==maNhanVien && x.TrangThai==true).Include(x=>x.CongViec).AsQueryable();
-            return listPhanCong.ToList();
+            var listPhanCong =await _context.phanCongs.AsNoTracking().Where(x=>x.MaNhanVien==maNhanVien && x.TrangThai==true).Include(x=>x.CongViec).ToListAsync();
+            return listPhanCong ?? new List<PhanCong>();
         }
 
         public async Task<PhanCong> GetByIdAsync(int id)
