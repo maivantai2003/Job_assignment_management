@@ -124,7 +124,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseCors(policy => policy
-    .WithOrigins("https://deploy-api-chi.vercel.app")
+    .WithOrigins("https://job-assignment-manager-deploy-azure.vercel.app")
     .AllowAnyHeader()
     .AllowAnyMethod()
     .AllowCredentials());
