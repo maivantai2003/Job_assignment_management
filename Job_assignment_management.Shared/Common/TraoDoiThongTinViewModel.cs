@@ -14,6 +14,7 @@ namespace Job_assignment_management.Shared.Common
 
         [Required]
         public int MaNhanVien { get; set; }
+        public string? TenNhanVien { get; set; }
         public string? NoiDungTraoDoi { get; set; }
     }
 }

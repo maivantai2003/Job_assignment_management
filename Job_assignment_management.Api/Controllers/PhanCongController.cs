@@ -2,6 +2,7 @@
 using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Domain.Interfaces;
 using Job_assignment_management.Shared.Common;
+using Job_assignment_management.Shared.Common.Helpers;
 using Job_assignment_management.Shared.Common.Heplers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -70,23 +71,30 @@ namespace Job_assignment_management.Api.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdatePhanCong(int id, PhanCongViewModel model)
         {
-            var entity = new PhanCong
+            try
             {
-                MaCongViec = model.MaCongViec,
-                MaNhanVien = model.MaNhanVien,
-                VaiTro = model.VaiTro,
-                //TrangThai = model.TrangThai,
-                TrangThaiCongViec = model.TrangThaiCongViec,
-            };
-            await _repository.UpdateAsync(id, entity);
-            await _hubContext.Clients.All.SendAsync("updateCongViec");
-            return NoContent();
+                var entity = new PhanCong
+                {
+                    MaCongViec = model.MaCongViec,
+                    MaNhanVien = model.MaNhanVien,
+                    VaiTro = model.VaiTro,
+                    //TrangThai = model.TrangThai,
+                    TrangThaiCongViec = model.TrangThaiCongViec,
+                };
+                await _repository.UpdateAsync(id, entity);
+                await _hubContext.Clients.All.SendAsync("updateCongViec");
+                return Ok(true);
+            }
+            catch (Exception ex) {
+                return Ok(ErrorMessages.UpdateFailed);
+            }
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePhanCong(int id)
         {
             await _repository.DeleteAsync(id);
+            await _hubContext.Clients.All.SendAsync("deletePhanCong");
             return NoContent();
         }
     }

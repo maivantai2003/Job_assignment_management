@@ -55,7 +55,7 @@ namespace Job_assignment_management.Api.Controllers
                 return BadRequest(uploadResult.Error.Message);
             }
 
-            return Ok(new { url = uploadResult.Url.ToString(), publicId = uploadResult.PublicId });
+            return Ok(new { url = uploadResult.SecureUrl.ToString(), publicId = uploadResult.PublicId });
         }
         [HttpPost("[action]")]
         public async Task<IActionResult> UpdateFile(string publicId, IFormFile file)

@@ -32,8 +32,21 @@ namespace Job_assignment_management.Infrastructure.Repositories
         }
         public async Task<CongViec> GetByIdAsync(int id)
         {
-            return await _context.congViecs.AsNoTracking().Include(x=>x.PhanCongs).ThenInclude(x=>x.NhanVien)
-                .FirstOrDefaultAsync(x => x.MaCongViec == id && x.TrangThai == true) ?? new CongViec();
+            //return await _context.congViecs.AsNoTracking().Include(x=>x.PhanCongs).ThenInclude(x=>x.NhanVien)
+            //    .FirstOrDefaultAsync(x => x.MaCongViec == id && x.TrangThai == true) ?? new CongViec();
+            var congViec = await _context.congViecs.FindAsync(id);
+
+            if (congViec == null || !congViec.TrangThai)
+            {
+                return new CongViec();
+            }
+            await _context.Entry(congViec)
+                .Collection(c => c.PhanCongs)
+                .Query()
+                .Include(pc => pc.NhanVien)
+                .LoadAsync();
+
+            return congViec;
         }
 
         public async Task<CongViec> CreateAsync(CongViec congViec)
@@ -50,9 +63,7 @@ namespace Job_assignment_management.Infrastructure.Repositories
                     .SetProperty(t => t.MoTa, congViec.MoTa)
                     .SetProperty(t => t.MucDoUuTien, congViec.MucDoUuTien)
                     .SetProperty(t => t.ThoiGianBatDau, congViec.ThoiGianBatDau)
-                    .SetProperty(t => t.ThoiGianKetThuc, congViec.ThoiGianKetThuc)
-                    .SetProperty(t => t.TrangThaiCongViec, congViec.TrangThaiCongViec)
-                    .SetProperty(t => t.MucDoHoanThanh, congViec.MucDoHoanThanh));
+                    .SetProperty(t => t.ThoiGianKetThuc, congViec.ThoiGianKetThuc));
         }
         public async Task<int> DeleteAsync(int id)
         {
@@ -79,6 +90,11 @@ namespace Job_assignment_management.Infrastructure.Repositories
             return await _context.congViecs.Where(x => x.MaCongViec == id)
               .ExecuteUpdateAsync(x => x
                   .SetProperty(t => t.ThoiGianKetThuc, ngayKetThuc));
+        }
+
+        public Task<bool> UpdateTaskAsync(CongViec congViec)
+        {
+            throw new NotImplementedException();
         }
     }
 }

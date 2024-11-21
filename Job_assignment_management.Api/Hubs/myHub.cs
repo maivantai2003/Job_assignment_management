@@ -15,9 +15,9 @@ namespace Job_assignment_management.Api.Hubs
             }
             return base.OnConnectedAsync();
         }
-        public async Task TraoDoiThongTin(string maCongViec, string maNhanVien, string message)
+        public async Task TraoDoiThongTin(string maCongViec)
         {
-            await Clients.Group(maCongViec).SendAsync("ReceiveMessage", maNhanVien, message);
+            await Clients.Group(maCongViec).SendAsync("ReceiveMessage");
         }
 
         public async Task NhanTin(string maNhanVien, string message)
