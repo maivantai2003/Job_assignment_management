@@ -22,8 +22,7 @@ Task Management System is an application that helps users organize, track and ma
 
 ## Run project
 ### Requierment
-- Dotnet version 8 or later
-- Nodejs v20.15.0 or later
+
 ### Installation
 1. Clone this project
 ```bash
