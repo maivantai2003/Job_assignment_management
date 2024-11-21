@@ -123,6 +123,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseRouting();
 app.UseCors(policy => policy
     .WithOrigins("https://job-assignment-manager-deploy-azure.vercel.app")
     .AllowAnyHeader()
