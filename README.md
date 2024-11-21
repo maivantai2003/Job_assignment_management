@@ -107,8 +107,6 @@ npm run dev
 <img src="./demo_image/authorization.png" >
 
 
-#### Any question you can contact with us
-
 
 Author:
 
