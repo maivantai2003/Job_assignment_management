@@ -1,5 +1,5 @@
 ## Overview
-Task Management System is an application that helps users organize, track and manage personal and team tasks or projects effectively. The application provides intuitive and easy-to-use features to optimize workflow, increase productivity and improve collaboration among team members.
+
 ## Features
 🌟 Authentication & Authorization  
 🌟 Department management  
