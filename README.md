@@ -110,11 +110,7 @@ npm run dev
 
 
 
-Author:
 
-| Leader          | Member         | Member         | Member            | Member           | Member         |
-|-----------------|----------------|----------------|-------------------|------------------|----------------|
-|Mai Văn Tài      | Lê Ngọc Giàu   | Đỗ Minh Quân   | Nguyễn Thanh Sang | Nguyễn Quốc Toàn | Trần Quốc Sĩ   |
 
 
 #### Contact email:
