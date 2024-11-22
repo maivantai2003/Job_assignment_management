@@ -119,9 +119,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors(policy => policy.AllowAnyHeader().AllowAnyMethod()
-                            .SetIsOriginAllowed(origin => true)
-                            .AllowCredentials());
+app.UseRouting();
+app.UseCors(policy => policy
+    .WithOrigins("https://job-assignment-manager-deploy-azure.vercel.app")
+    .AllowAnyHeader()
+    .AllowAnyMethod()
+    .AllowCredentials());
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapHub<myHub>("/hub");
