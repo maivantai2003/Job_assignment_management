@@ -2,6 +2,7 @@
 using Job_assignment_management.Domain.Entities;
 using Job_assignment_management.Domain.Interfaces;
 using Job_assignment_management.Shared.Common;
+using Job_assignment_management.Shared.Common.Helpers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +12,7 @@ namespace Job_assignment_management.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class TaiKhoanController : ControllerBase
     {
         private readonly ITaiKhoanRepository _taiKhoanRepository;
@@ -65,8 +66,18 @@ namespace Job_assignment_management.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTaiKhoan(int id)
         {
-            var result = await _taiKhoanRepository.DeleteAsync(id);
-            return Ok(result);
+            try
+            {
+                var result = await _taiKhoanRepository.DeleteAsync(id);
+                await _hubContext.Clients.All.SendAsync("loadTaiKhoan");
+                return Ok(result);
+            }
+            catch (Exception ex) {
+                return Ok(new
+                {
+                    Error = ErrorMessages.DeleteFailed
+                });
+            }
         }
     }
 }

@@ -21,6 +21,7 @@ namespace RefreshToken.Services
         public static int MaNhomQuyen;
         public static string TenQuyen;
         public static string TenNhanVien;
+        public static int MaPhongBan;
         public static List<string> listChucNang;
         public JwtService(ApplicationDbContext context, IConfiguration configuration)
         {
@@ -45,6 +46,8 @@ namespace RefreshToken.Services
             }
             MaNhomQuyen = user.MaNhomQuyen;
             TenNhanVien=user.NhanVien.TenNhanVien;
+            TenQuyen = user.NhanVien.TenChucVu;
+            MaPhongBan = user.NhanVien.MaPhongBan;
             string tokenString = GenerateToken(user.TenTaiKhoan,user.MaNhanVien);
             string refreshToken = GenerateRefreshToken();
             return await SaveTokenDetails(ipAddress, user.MaNhanVien, tokenString, refreshToken);
@@ -90,11 +93,12 @@ namespace RefreshToken.Services
             var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.NameIdentifier, TenTaiKhoan),
-                        new Claim(ClaimTypes.Role, userId.ToString()),
+                        new Claim(ClaimTypes.Role, TenQuyen),
                         new Claim("MaTaiKhoan", userId.ToString()),
                         new Claim("MaNhomQuyen",MaNhomQuyen.ToString()),
-                        new Claim("TenNhanVien",TenNhanVien)
-                        
+                        new Claim("TenNhanVien",TenNhanVien),
+                        new Claim("MaPhongBan",MaPhongBan.ToString())
+
                     };
             var descriptor = new SecurityTokenDescriptor()
             {

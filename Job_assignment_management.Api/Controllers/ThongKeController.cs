@@ -18,5 +18,15 @@ namespace Job_assignment_management.Api.Controllers
         {
             return Ok(await _thongKeRepository.ThongKeCongViec());
         }
+        [HttpGet("[action]")]
+        public async Task<IActionResult> ThongKeNhanVien()
+        {
+            return Ok(await _thongKeRepository.ThongKeNhanVien()); 
+        }
+        [HttpGet("[action]")]
+        public async Task<IActionResult> ThongKePhongBan()
+        {
+            return Ok(await _thongKeRepository.ThongKePhongBan());
+        }
     }
 }

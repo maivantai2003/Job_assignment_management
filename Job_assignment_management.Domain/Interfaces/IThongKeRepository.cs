@@ -11,5 +11,8 @@ namespace Job_assignment_management.Domain.Interfaces
     {
 
         public Task<List<CongViec>> ThongKeCongViec();
+        public Task<List<ThongKeNhanVien>> ThongKeNhanVien();
+        public Task<List<ThongKePhongBan>> ThongKePhongBan();
+        
     }
 }

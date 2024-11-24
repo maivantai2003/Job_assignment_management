@@ -12,7 +12,7 @@ namespace Job_assignment_management.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class NhanVienController : ControllerBase
     {
         private readonly INhanVienRepository _nhanVienRepository;
@@ -28,8 +28,6 @@ namespace Job_assignment_management.Api.Controllers
             var listNhanVien = await _nhanVienRepository.GetAllAsync(search, page);
             return Ok(listNhanVien);
         }
-
-        // GET: api/NhanVien/{id}
         [HttpGet("{id}")]
         public async Task<IActionResult> GetNhanVienById(int id)
         {
@@ -99,8 +97,18 @@ namespace Job_assignment_management.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteNhanVien(int id)
         {
-            var result = await _nhanVienRepository.DeleteAsync(id);
-            return Ok(result);
+            try
+            {
+                var result = await _nhanVienRepository.DeleteAsync(id);
+                await _hubContext.Clients.All.SendAsync("loadEmployee");
+                return Ok(result);
+            }
+            catch (Exception ex) {
+                return Ok(new
+                {
+                    error = ErrorMessages.DeleteFailed
+                });
+            }
         }
     }
 }

@@ -11,7 +11,7 @@ namespace Job_assignment_management.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class PhongBanController : ControllerBase
     {
         private readonly IPhongBanRepository _phongBanRepository;

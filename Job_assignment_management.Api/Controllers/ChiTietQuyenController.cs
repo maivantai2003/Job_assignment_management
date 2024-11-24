@@ -12,7 +12,7 @@ namespace Job_assignment_management.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ChiTietQuyenController : ControllerBase
     {
         private readonly IChiTietQuyenReposity _chiTietQuyenReposity;
