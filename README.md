@@ -9,7 +9,7 @@ Task Management System is an application that helps users organize, track and ma
 🌟 Notification  
 🌟 Scheduling  
 🌟 Chat  
-🌟 Realtime Updates
+
 
 ## Built with
 ![.Net](https://img.shields.io/badge/.NET-5C2D91?style=for-the-badge&logo=.net&logoColor=white)
