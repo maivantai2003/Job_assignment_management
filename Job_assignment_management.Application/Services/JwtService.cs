@@ -39,7 +39,7 @@ namespace RefreshToken.Services
 
         public async Task<AuthResponse> GetTokenAsync(AuthRequest request, string ipAddress)
         {
-            var user =await _context.taiKhoans.AsNoTracking().Include(x=>x.NhanVien).FirstOrDefaultAsync(x => x.TenTaiKhoan.Equals(request.TenTaiKhoan) && x.MatKhau.Equals(request.MatKhau) && x.TrangThai==true);
+            var user =await _context.taiKhoans.AsNoTracking().Include(x=>x.NhanVien).FirstOrDefaultAsync(x => x.TenTaiKhoan.Equals(request.TenTaiKhoan) && x.MatKhau.Equals(request.MatKhau));
             if (user == null)
             {
                 return await Task.FromResult<AuthResponse>(null);

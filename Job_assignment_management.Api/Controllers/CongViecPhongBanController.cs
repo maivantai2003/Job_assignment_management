@@ -66,5 +66,16 @@ namespace Job_assignment_management.Api.Controllers
             }
             return Ok(maCongViecPhongBan);
         }
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetListDepartment(int id)
+        {
+            try
+            {
+                return Ok(await _congViecPhongBanRepository.ListDepartment(id));
+            }
+            catch (Exception ex) {
+                return Ok(ex.Message);
+            }
+        }
     }
 }

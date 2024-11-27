@@ -17,5 +17,6 @@ namespace Job_assignment_management.Domain.Interfaces
         Task<int> DeleteAsync(int id);
         Task<int> UpdateComplete(int id,bool trangThai, double mucDo);
         Task<bool> UpdateTaskAsync(CongViec congViec);
+        Task<List<CongViec>> SearchTasks(string nhanVien="All",string phongBan="All",string mucDo="All",string trangThai="All",string tenCongViec = "");
     }
 }

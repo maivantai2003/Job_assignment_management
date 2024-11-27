@@ -146,5 +146,10 @@ namespace Job_assignment_management.Api.Controllers
                 });
             }
         }
+        [HttpGet("[action]")]
+        public async Task<IActionResult> SeachTasks(string nhanVien = "All", string phongBan = "All", string mucDo = "All", string trangThai = "All", string tenCongViec = "")
+        {
+            return Ok(await _congViecRepository.SearchTasks(nhanVien,phongBan,mucDo,trangThai,tenCongViec));
+        }
     }
 }

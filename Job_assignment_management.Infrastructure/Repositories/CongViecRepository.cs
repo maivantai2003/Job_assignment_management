@@ -96,5 +96,45 @@ namespace Job_assignment_management.Infrastructure.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public async Task<List<CongViec>> SearchTasks(string nhanVien = "All", string phongBan = "All", string mucDo = "All", string trangThai = "All", string tenCongViec = "")
+        {
+            var query = _context.congViecs
+                .AsNoTracking()
+                .Include(cv => cv.PhanCongs)
+                    .ThenInclude(pc => pc.NhanVien)
+                .Include(cv => cv.congViecPhongBans)
+                    .ThenInclude(cvpb => cvpb.PhongBan)
+                .Where(cv => cv.TrangThai == true);
+
+            if (!string.Equals(nhanVien, "All", StringComparison.OrdinalIgnoreCase))
+            {
+                query = query.Where(cv => cv.PhanCongs.Any(pc => pc.NhanVien.TenNhanVien.ToLower().Contains(nhanVien.ToLower())));
+            }
+            if (!string.Equals(mucDo, "All", StringComparison.OrdinalIgnoreCase))
+            {
+                query = query.Where(cv => cv.MucDoUuTien != null && cv.MucDoUuTien==mucDo);
+            }
+            if (!string.Equals(phongBan, "All", StringComparison.OrdinalIgnoreCase))
+            {
+                query = query.Where(cv => cv.congViecPhongBans.Any(cvpb => cvpb.PhongBan.TenPhongBan.ToLower().Contains(phongBan.ToLower())));
+            }
+            if (!string.Equals(trangThai, "All", StringComparison.OrdinalIgnoreCase))
+            {
+                query = trangThai switch
+                {
+                    "Hoàn thành" => query.Where(cv => cv.MucDoHoanThanh == 100),
+                    "Chưa hoàn thành" => query.Where(cv => cv.MucDoHoanThanh > 0 && cv.MucDoHoanThanh < 100),
+                    "Trì hoãn" => query.Where(cv => cv.ThoiGianKetThuc < DateTime.Now && cv.MucDoHoanThanh < 100),
+                    _ => query
+                };
+            }
+            if (!string.Equals(tenCongViec, "", StringComparison.OrdinalIgnoreCase))
+            {
+                query = query.Where(cv => cv.TenCongViec != null && cv.TenCongViec.ToLower().Contains(tenCongViec.ToLower()));
+            }
+            return await query.ToListAsync();
+        }
+
     }
 }
