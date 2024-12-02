@@ -113,7 +113,7 @@ Author:
 
 | Leader          | Member         | Member         | Member            | Member           | Member         |
 |-----------------|----------------|----------------|-------------------|------------------|----------------|
-|Mai Văn Tài      | Lê Ngọc Giàu   | Đỗ Minh Quân   | Nguyễn Thanh Sang | Nguyễn Quốc Toàn | Trần Quốc Sĩ   |
+|Mai Văn Tài      | Lê Ngọc Giàu   | Đỗ Minh Quân   | Koong Chấn Phong  | Đỗ Đăng Khoa     | Đào Thị Nhi    |
 
 
 
@@ -121,7 +121,8 @@ Author:
 - [vantai08122003@gmail.com](mailto:vantai08122003@gmail.com)
 - [lengocgiau2k3@gmail.com](mailto:lengocgiau2k3@gmail.com)
 - [dominhquan15623@gmail.com](mailto:dominhquan15623@gmail.com)
-- [sangthanhnguyen2910@gmail.com](mailto:sangthanhnguyen2910@gmail.com)
-- [ngquoctoan2001@gmail.com](mailto:ngquoctoan2001@gmail.com)
+- [koongchanphong0712@gmail.com](mailto:koongchanphong0712@gmail.com)
+- [dodangkhoa@gmail.com](mailto:ngquoctoan2001@gmail.com)
 - [quocsi014@gmail.com](mailto:quocsi014@gmail.com)
-
+- [khoadodang1012@gmail.com](mailto:khoadodang1012@gmail.com)
+- [daothinhivivo@gmail.com](mailto:daothinhivivo@gmail.com)
