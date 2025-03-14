@@ -29,7 +29,7 @@ Task Management System is an application that helps users organize, track and ma
 1. Clone this project
 ```bash
 # Frontend
-git clone https://github.com/maivantai2003/job_assignment_manager_deploy_azure
+git clone https://github.com/maivantai2003/job_assignment_manager_deploy_azure.git
 
 # Backend
 git clone https://github.com/maivantai2003/Job_assignment_management.git
