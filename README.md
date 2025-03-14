@@ -28,11 +28,11 @@ Task Management System is an application that helps users organize, track and ma
 ### Installation
 1. Clone this project
 ```bash
+# Frontend
+git clone https://github.com/maivantai2003/job_assignment_manager_deploy_azure
+
 # Backend
 git clone https://github.com/maivantai2003/Job_assignment_management.git
-
-# Frontend
-git clone https://github.com/Khoadangdo123/QLPB.git
 
 ```
 2. Run server (You can do this step on IDE like Visual Studio)
