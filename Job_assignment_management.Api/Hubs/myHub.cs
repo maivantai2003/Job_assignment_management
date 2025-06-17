@@ -1,17 +1,24 @@
-﻿using Job_assignment_management.Domain.Entities;
+﻿using Job_assignment_management.Application.Services;
+using Job_assignment_management.Domain.Entities;
 using Microsoft.AspNetCore.SignalR;
+using Quartz.Util;
+using System.Collections.Concurrent;
 
 namespace Job_assignment_management.Api.Hubs
 {
     public class myHub:Hub
     {
-        public static Dictionary<string, string> userConnections = new Dictionary<string, string>();
+        private readonly ManagerConnectionService _managerConnectionService;
+        public myHub(ManagerConnectionService managerConnectionService)
+        {
+            _managerConnectionService = managerConnectionService;
+        }
         public override Task OnConnectedAsync()
         {
-            var userId = Context.UserIdentifier;
-            if (!string.IsNullOrEmpty(userId))
+            var userId = Context.User?.Claims.FirstOrDefault(c => c.Type == "MaTaiKhoan")?.Value;
+            if (userId != null)
             {
-                userConnections[userId] = Context.ConnectionId;
+                _managerConnectionService.AddConnection(userId, Context.ConnectionId);
             }
             return base.OnConnectedAsync();
         }
@@ -24,11 +31,10 @@ namespace Job_assignment_management.Api.Hubs
         {
             await Clients.User(maNhanVien).SendAsync("ReceiveMessage", message);
         }
-
         public async Task ThamGiaNhom(string maCongViec)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, maCongViec);
-            await Clients.Group(maCongViec).SendAsync("UserJoined", $"{Context.ConnectionId} has joined the group {maCongViec}");
+            await Clients.Group(maCongViec).SendAsync("UserJoined", $"{Context.User?.Claims.FirstOrDefault(c => c.Type == "MaNhomQuyen")?.Value} has joined the group {maCongViec}");
         }
         public async Task ThongBao(string maCongViec,string message)
         {
@@ -38,13 +44,30 @@ namespace Job_assignment_management.Api.Hubs
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, maCongViec);
         }
+        public async Task SendMessageToUser(string targetUserId, string message)
+        {
+            var connections = _managerConnectionService.GetConnections(targetUserId);
+            var size=_managerConnectionService.GetUserOnline();
+            foreach (var connectionId in connections)
+            {
+                await Clients.Client(connectionId).SendAsync("ReceiveMessageTest", $"{message} user online {size} id {targetUserId}");
+            }
+        }
+        public async Task JoinCallVideo(string maCongViec)
+        {
+            await Clients.Group(maCongViec).SendAsync("CallVideo",maCongViec);
+        }
+        public async Task ChatCallVideo(string maCongViec,string message)
+        {
+            await Clients.Group(maCongViec).SendAsync("ReceiveMessageCall",new { 
+                maCongViec=maCongViec,
+                message=message
+            });
+            await Clients.All.SendAsync("NotifiGroup", "new message in group");
+        }
         public override Task OnDisconnectedAsync(Exception exception)
         {
-            var userId = Context.UserIdentifier;
-            if (!string.IsNullOrEmpty(userId))
-            {
-                userConnections.Remove(userId);
-            }
+            _managerConnectionService.RemoveConnection(Context.ConnectionId);
             return base.OnDisconnectedAsync(exception);
         }
     }

@@ -1,4 +1,4 @@
-using Job_assignment_management.Api.Hubs;
+﻿using Job_assignment_management.Api.Hubs;
 using Job_assignment_management.Api.Quarts;
 using Job_assignment_management.Application.Interfaces;
 using Job_assignment_management.Application.Services;
@@ -17,6 +17,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
+ConfigurationManager configuration = builder.Configuration;
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddSignalR();
@@ -77,14 +78,20 @@ builder.Services.AddTransient<IThongBaoRepository, ThongBaoRepository>();
 builder.Services.AddTransient<IChuyenGiaoCongViecRepository, ChuyenGiaoCongViecRepository>();
 builder.Services.AddTransient<IPhanCongRepository, PhanCongRepository>();
 builder.Services.AddTransient<ISendGmailService, SendGmailService>();
+builder.Services.AddTransient<IRedisService, RedisService>();
 builder.Services.AddTransient<IChiTietFileRepository, ChiTietFileRepository>();
 builder.Services.AddTransient<INhacNhoRepository,NhacNhoRepository>();
+builder.Services.AddTransient<ManagerConnectionService>();
 builder.Services.AddTransient<IThongKeRepository, ThongKeRepository>();
 builder.Services.AddTransient<IChiTietTraoDoiThongTinRepository, ChiTietTraoDoiThongTinRepository>();
 builder.Services.AddSingleton<IJobFactory, SingletonJobFactory>();
 builder.Services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
 builder.Services.AddSingleton<myQuart>();
 builder.Services.AddHostedService<Job_assignment_management.Api.Quarts.QuartzHostedService>();
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = configuration["RedisCacheUrl"];
+});
 var jwtKey = builder.Configuration.GetValue<string>("Jwt:key");
 var keyBytes = Encoding.ASCII.GetBytes(jwtKey);
 TokenValidationParameters TokenValidation = new TokenValidationParameters
@@ -109,6 +116,16 @@ builder.Services.AddAuthentication(options =>
         var ipAddress = context?.Request?.HttpContext?.Connection?.RemoteIpAddress?.ToString();
         var jwtService = context?.Request.HttpContext.RequestServices.GetService<IJwtService>();
         var jwtToken = context?.SecurityToken as JwtSecurityToken;
+    };
+    options.Events.OnMessageReceived = context =>
+    {
+        var accessToken = context.Request.Query["access_token"];
+        var path = context.HttpContext.Request.Path;
+        if (!string.IsNullOrEmpty(accessToken) && path.StartsWithSegments("/hub"))
+        {
+            context.Token = accessToken;
+        }
+        return Task.CompletedTask;
     };
 });
 var app = builder.Build();

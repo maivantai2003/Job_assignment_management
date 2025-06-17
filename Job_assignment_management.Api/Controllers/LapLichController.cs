@@ -43,5 +43,10 @@ namespace Job_assignment_management.Api.Controllers
             await scheduler.ScheduleJob(job, trigger);
             return Ok(true);
         }
+        [HttpGet]
+        public async Task<IActionResult> GetContext()
+        {
+            return Ok(User.FindFirst("MaTaiKhoan")?.Value);
+        }
     }
 }

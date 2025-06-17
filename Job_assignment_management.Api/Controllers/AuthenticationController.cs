@@ -59,6 +59,17 @@ namespace Job_assignment_management.Api.Controllers
             var authResponse = await _jwtService.GetRefreshTokenAsync(ipAddress, userRefreshToken.MaTaiKhoan, userName);
             return Ok(authResponse);
         }
+        [HttpGet("[action]")]
+        public async Task<IActionResult> GetClaim()
+        {
+            var userClaims = HttpContext.User.Claims.Select(c => new
+            {
+                Type = c.Type,
+                Value = c.Value
+            });
+
+            return Ok(userClaims);
+        }
         private AuthResponse ValidateDetails(JwtSecurityToken token, TaiKhoanRefreshToken? userRefreshToken)
         {
             if (userRefreshToken == null)
